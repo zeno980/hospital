@@ -132,7 +132,7 @@
   </update>
   <!--注意返回值和参数-->
   <select id="selectById" parameterType="com.zakary.dao.Doctor" resultType="com.zakary.dao.Doctor">
-    select doctorId,password
+    select *
     from doctor
     where doctorId=#{doctorid}
   </select>

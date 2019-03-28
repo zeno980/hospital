@@ -37,7 +37,7 @@
 
          <property name="url" value="jdbc:mysql://127.0.0.1:3306/hospital?serverTimezone=GMT%2B8&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true" />
          <property name="username" value="root" />
-         <property name="password" value="123456" />
+         <property name="password" value="szx19818" />
          <!-- 初始化连接大小 -->
          <property name="initialSize" value="10"/>
          <!-- 连接池最大数量 -->
@@ -49,6 +49,21 @@
          <!-- 获取连接最大等待时间 -->
          <property name="maxWait" value="10000"/>
      </bean>
+
+
+     <!--配置拦截器-->
+     <!--
+     <mvc:interceptors>
+         <mvc:interceptor>
+
+             <mvc:mapping path="/**"/>
+
+             <mvc:exclude-mapping path="/login"/>
+             <bean class="com.zakary.controller.LoginInterceptor"/>
+         </mvc:interceptor>
+     </mvc:interceptors>
+    -->
+
 
      <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
      <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -97,6 +112,6 @@
         <!--用于支持Servlet、JSP视图解析-->
         <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
             <property name="prefix" value="/WEB-INF/jsp/"/>
-            <property name="suffix" value=".html"/>
+            <property name="suffix" value=".jsp"/>
         </bean>
     </beans>
