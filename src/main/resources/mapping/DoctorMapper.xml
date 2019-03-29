@@ -136,4 +136,9 @@
     from doctor
     where doctorId=#{doctorid}
   </select>
+
+  <select id="selectDoctorAll" resultType="com.zakary.dao.Doctor">
+    select *
+    from doctor
+  </select>
 </mapper>

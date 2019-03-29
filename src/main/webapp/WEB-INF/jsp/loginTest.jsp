@@ -15,14 +15,14 @@
 <body>
 <form name="user">
     <label>用户名</label>
-    <input type=number id="name"/><br>
+    <input type=number id="id"/><br>
     <label>密码</label>
     <input type="password" id="pwd"/><br>
     <button onclick="sub()" type="button">登录</button>
 </form>
 <script type="text/javascript"><!--检查用户名 密码-->
 function sub() {
-    var username = document.getElementById("name").value;
+    var doctorid = document.getElementById("id").value;
     var password = document.getElementById("pwd").value;
     $.ajax({
         type:"POST",
@@ -30,7 +30,7 @@ function sub() {
         contentType:"application/json",
         dataType:"json",
         data:JSON.stringify({
-            "doctorid":username,
+            "doctorid":doctorid,
             "password":password
         }),
         success:function (data) {

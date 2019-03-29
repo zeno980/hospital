@@ -22,10 +22,6 @@ public class UserController {
     public String rootSelectPage(){
         return "rootSelect";
     }
-    @RequestMapping("/rootDoctor")
-    public  String rootDoctorPage(){
-        return "rootDoctor";
-    }
     @RequestMapping("/rootPatient")
     public  String rootPatientPage(){
         return "rootPatient";
