@@ -2,6 +2,8 @@ package com.zakary.mapper;
 
 import com.zakary.dao.Doctor;
 
+import java.util.List;
+
 public interface DoctorMapper {
     int deleteByPrimaryKey(Integer doctorid);
 
@@ -16,4 +18,6 @@ public interface DoctorMapper {
     int updateByPrimaryKey(Doctor record);
 
     Doctor selectById(Doctor record);
+
+    List<Doctor> selectDoctorAll();
 }
