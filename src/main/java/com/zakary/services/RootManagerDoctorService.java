@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface RootManagerDoctorService {
     List<Doctor> getDoctorAll();
+    int insertDoctor(Doctor doctor);
 }

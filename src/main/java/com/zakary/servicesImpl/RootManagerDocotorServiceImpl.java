@@ -12,8 +12,12 @@ import java.util.List;
 public class RootManagerDocotorServiceImpl implements RootManagerDoctorService {
     @Autowired
     private DoctorMapper dao;
+
     public List<Doctor> getDoctorAll(){
         return dao.selectDoctorAll();
+    }
+    public int insertDoctor(Doctor doctor){
+        return dao.insert(doctor);
     }
 
 }
