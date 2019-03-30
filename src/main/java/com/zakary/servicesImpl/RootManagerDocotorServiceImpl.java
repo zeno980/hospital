@@ -20,4 +20,13 @@ public class RootManagerDocotorServiceImpl implements RootManagerDoctorService {
         return dao.insert(doctor);
     }
 
+    @Override
+    public int updateInformation(Doctor doctor) {
+        return dao.updateByPrimaryKey(doctor);
+    }
+
+    @Override
+    public int deleteDoctor(Doctor doctor) {
+        return dao.deleteByPrimaryKey(doctor.getDoctorid());
+    }
 }
