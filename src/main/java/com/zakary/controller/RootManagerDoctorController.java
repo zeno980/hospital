@@ -32,7 +32,7 @@ public class RootManagerDoctorController {
     }
 
     @Autowired
-    private DoctorService service;//判断数据库中有无重复的id
+    private DoctorService service;//自动注入数据库中的对象
 
     @RequestMapping("/RootInsertDoctor")
     @ResponseBody
@@ -61,6 +61,51 @@ public class RootManagerDoctorController {
                 jsonEntity.setCode("success");
                 jsonEntity.setData("添加成功！");
             }
+        }
+        return jsonEntity;
+    }
+
+    @RequestMapping("/RootUpdateDoctor")
+    @ResponseBody
+    public JSONEntity rootUpdateDoctor(@RequestBody Doctor doctor){
+        System.out.print("需要修改的信息：");
+        System.out.println(doctor);
+        JSONEntity jsonEntity=new JSONEntity();
+        Doctor realUser=service.getDoctor(doctor);
+        System.out.print("数据库中的信息：");
+        System.out.println(realUser);
+        if((doctor.getDoctorname()==null)
+                ||(doctor.getDoctordepartment()==null)
+                ||(doctor.getDoctorposition()==null)
+                ||(doctor.getDoctorgender()==null)
+                ||(doctor.getDoctortel()==null)
+                ||(doctor.getPassword()==null)) {
+            jsonEntity.setCode("empty");
+            jsonEntity.setData("输入值不能为空！");
+        }
+        else{
+            doctor.setType(1);
+            rootManagerDoctorService.updateInformation(doctor);
+            jsonEntity.setCode("success");
+            jsonEntity.setData("修改成功！");
+        }
+        return jsonEntity;
+    }
+
+    @RequestMapping("/RootDeleteDoctor")
+    @ResponseBody
+    public JSONEntity rootDeleteDoctor(@RequestBody Doctor doctor){
+        JSONEntity jsonEntity=new JSONEntity();
+        Doctor realUser=service.getDoctor(doctor);
+        System.out.print("数据库需要删除的中的信息：");
+        if(realUser.getDoctorid()!=1) {
+            rootManagerDoctorService.deleteDoctor(doctor);
+            jsonEntity.setCode("success");
+            jsonEntity.setData("删除成功！");
+        }
+        else{
+            jsonEntity.setCode("error");
+            jsonEntity.setData("不能删除管理员用户");
         }
         return jsonEntity;
     }
