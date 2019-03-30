@@ -123,7 +123,7 @@
             <p>修改医生信息 </p>
             <!--
             <label>编号</label>
-            <input type=text value="${Doctor.doctorid}"/><br>
+            <input type=text value="doctorid"/><br>
             -->
             <label>姓名</label>
             <input type=text id="uname"/><br>

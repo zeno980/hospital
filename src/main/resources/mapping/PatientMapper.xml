@@ -103,4 +103,15 @@
       type = #{type,jdbcType=VARCHAR}
     where patientId = #{patientid,jdbcType=INTEGER}
   </update>
+
+  <select id="selectById" parameterType="com.zakary.dao.Patient" resultType="com.zakary.dao.Patient">
+    select *
+    from patient
+    where patientId=#{patientid}
+  </select>
+
+  <select id="selectPatientAll" resultType="com.zakary.dao.Patient">
+    select *
+    from patient
+  </select>
 </mapper>
