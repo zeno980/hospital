@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zakary.mapper.DoctorMapper">
+  <resultMap id="BaseResultMap" type="com.zakary.dao.Doctor">
+    <id column="doctorId" jdbcType="INTEGER" property="doctorid" />
+    <result column="doctorName" jdbcType="VARCHAR" property="doctorname" />
+    <result column="doctorDepartment" jdbcType="VARCHAR" property="doctordepartment" />
+    <result column="doctorPosition" jdbcType="VARCHAR" property="doctorposition" />
+    <result column="doctorGender" jdbcType="CHAR" property="doctorgender" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="doctorTel" jdbcType="VARCHAR" property="doctortel" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    doctorId, doctorName, doctorDepartment, doctorPosition, doctorGender, type, doctorTel, 
+    password
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from doctor
+    where doctorId = #{doctorid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from doctor
+    where doctorId = #{doctorid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zakary.dao.Doctor">
+    insert into doctor (doctorId, doctorName, doctorDepartment, 
+      doctorPosition, doctorGender, type, 
+      doctorTel, password)
+    values (#{doctorid,jdbcType=INTEGER}, #{doctorname,jdbcType=VARCHAR}, #{doctordepartment,jdbcType=VARCHAR}, 
+      #{doctorposition,jdbcType=VARCHAR}, #{doctorgender,jdbcType=CHAR}, #{type,jdbcType=INTEGER}, 
+      #{doctortel,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
+
+  </insert>
+  <insert id="insertSelective" parameterType="com.zakary.dao.Doctor">
+    insert into doctor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="doctorid != null">
+        doctorId,
+      </if>
+      <if test="doctorname != null">
+        doctorName,
+      </if>
+      <if test="doctordepartment != null">
+        doctorDepartment,
+      </if>
+      <if test="doctorposition != null">
+        doctorPosition,
+      </if>
+      <if test="doctorgender != null">
+        doctorGender,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="doctortel != null">
+        doctorTel,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="doctorid != null">
+        #{doctorid,jdbcType=INTEGER},
+      </if>
+      <if test="doctorname != null">
+        #{doctorname,jdbcType=VARCHAR},
+      </if>
+      <if test="doctordepartment != null">
+        #{doctordepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorposition != null">
+        #{doctorposition,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorgender != null">
+        #{doctorgender,jdbcType=CHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="doctortel != null">
+        #{doctortel,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.zakary.dao.Doctor">
+    update doctor
+    <set>
+      <if test="doctorname != null">
+        doctorName = #{doctorname,jdbcType=VARCHAR},
+      </if>
+      <if test="doctordepartment != null">
+        doctorDepartment = #{doctordepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorposition != null">
+        doctorPosition = #{doctorposition,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorgender != null">
+        doctorGender = #{doctorgender,jdbcType=CHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="doctortel != null">
+        doctorTel = #{doctortel,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where doctorId = #{doctorid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.zakary.dao.Doctor">
+    update doctor
+    set doctorName = #{doctorname,jdbcType=VARCHAR},
+      doctorDepartment = #{doctordepartment,jdbcType=VARCHAR},
+      doctorPosition = #{doctorposition,jdbcType=VARCHAR},
+      doctorGender = #{doctorgender,jdbcType=CHAR},
+      type = #{type,jdbcType=INTEGER},
+      doctorTel = #{doctortel,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR}
+    where doctorId = #{doctorid,jdbcType=INTEGER}
+  </update>
+  <!--注意返回值和参数-->
+  <select id="selectById" parameterType="com.zakary.dao.Doctor" resultType="com.zakary.dao.Doctor">
+    select *
+    from doctor
+    where doctorId=#{doctorid}
+  </select>
+  <select id="findByDoctorId"  resultType="com.zakary.dao.Doctor">
+    select *
+    from doctor
+    where doctorId=#{doctorid}
+  </select>
+  <select id="selectDoctorAll" resultType="com.zakary.dao.Doctor">
+    select *
+    from doctor
+  </select>
+</mapper>
