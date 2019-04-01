@@ -40,7 +40,7 @@ $(document).ready(function () {
             $('#myModal').modal('show');
         }else if(obj.event=='del'){
             var layer = layui.layer;
-            layer.confirm('删除用户:'+data.doctorname+"?", {icon: 3, title:'提示'}, function(index){
+            layer.confirm('删除用户:'+data.doctorname+"?", {icon: 7, title:'提示'}, function(index){
                 console.log('yes')
                 layer.close(index);
             });

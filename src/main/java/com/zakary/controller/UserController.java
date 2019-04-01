@@ -21,18 +21,6 @@ public class UserController {
     public String loginPage(){
         return "login";
     }
-    @RequestMapping("/rootSelectPage")
-    public String rootSelectPage(){
-        return "rootSelect";
-    }
-    @RequestMapping("/rootPatient")
-    public  String rootPatientPage(){
-        return "rootPatient";
-    }
-    @RequestMapping("/doctorManagerPage")
-    public String doctorManagerPage(){
-        return "doctorManager";
-    }
 
     @RequestMapping("/login.do")
     @ResponseBody
@@ -41,16 +29,5 @@ public class UserController {
         HttpSession session = request.getSession();
         session.setAttribute("doctorId",doctor.getDoctorid());
         return new JSONEntity(doctor.getPage());
-    }
-
-    @RequestMapping("/rootSelect" )
-    public JSONEntity selectPage(@RequestParam("user") String user){
-        System.out.println(user);
-        JSONEntity jsonEntity = new JSONEntity();
-        if(user.equals("doctor"))
-            jsonEntity.setCode("doctor");
-        else if(user.equals("patient"))
-            jsonEntity.setCode("patient");
-        return jsonEntity;
     }
 }
