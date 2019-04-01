@@ -137,8 +137,11 @@
     where doctorId=#{doctorid}
   </select>
 
-  <select id="selectDoctorAll" resultType="com.zakary.dao.Doctor">
+  <select id="selectDoctorAll" resultType="com.zakary.dao.Doctor" parameterType="com.zakary.dao.Page">
     select *
-    from doctor
+    from doctor limit #{page},#{limit}
+  </select>
+  <select id="getDoctorsCounts" resultType="java.lang.Integer">
+    select count(doctorId) from doctor;
   </select>
 </mapper>

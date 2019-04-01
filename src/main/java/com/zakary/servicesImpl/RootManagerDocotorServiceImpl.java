@@ -2,6 +2,7 @@ package com.zakary.servicesImpl;
 
 import com.zakary.dao.Doctor;
 import com.zakary.dao.JSONEntity;
+import com.zakary.dao.Page;
 import com.zakary.exp.BusinessException;
 import com.zakary.mapper.DoctorMapper;
 import com.zakary.services.RootManagerDoctorService;
@@ -15,8 +16,8 @@ public class RootManagerDocotorServiceImpl implements RootManagerDoctorService {
     @Autowired
     private DoctorMapper dao;
 
-    public List<Doctor> getDoctorAll(){
-        return dao.selectDoctorAll();
+    public List<Doctor> getDoctorAll(Page page){
+        return dao.selectDoctorAll(page);
     }
     public boolean insertDoctor(Doctor doctor){
         if((doctor.getDoctorid()==null)
@@ -56,5 +57,10 @@ public class RootManagerDocotorServiceImpl implements RootManagerDoctorService {
         if(doctor.getDoctorid()==1)
             throw new BusinessException("此用户无法删除");
         return dao.deleteByPrimaryKey(doctor.getDoctorid());
+    }
+
+    @Override
+    public int getDoctorsCounts() {
+        return dao.getDoctorsCounts();
     }
 }

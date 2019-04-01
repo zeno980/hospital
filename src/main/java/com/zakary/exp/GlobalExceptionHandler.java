@@ -15,9 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    private Logger logger = LoggerFactory.getLogger(getClass());
     @ExceptionHandler
     @ResponseBody
     JSONEntity handleException(Exception e){
+        logger.error(e.getMessage());
         e.printStackTrace();
         JSONEntity jsonEntity = new JSONEntity();
         jsonEntity.setSuccess(false);
@@ -27,7 +29,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
     JSONEntity handleBusinessException(BusinessException e){
-        e.printStackTrace();
+        logger.error(e.getMessage());
         JSONEntity jsonEntity = new JSONEntity();
         jsonEntity.setSuccess(false);
         jsonEntity.setMsg(e.getMessage());

@@ -24,12 +24,12 @@ public class RootManagerDoctorController {
     @Autowired
     private RootManagerDoctorService rootManagerDoctorService;
 
-    @RequestMapping("/rootDoctor")
-    public String rootDoctor(Model m) {
-        List<Doctor> doctors = rootManagerDoctorService.getDoctorAll();
-        m.addAttribute("doctors",doctors);
-        return "rootDoctor";
-    }
+//    @RequestMapping("/rootDoctor")
+//    public String rootDoctor(Model m) {
+//        List<Doctor> doctors = rootManagerDoctorService.getDoctorAll();
+//        m.addAttribute("doctors",doctors);
+//        return "rootDoctor";
+//    }
 
     @RequestMapping("/RootInsertDoctor")
     @ResponseBody

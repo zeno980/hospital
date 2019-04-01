@@ -32,7 +32,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         //if(session.getAttribute("LOGIN_USER")!=null || uri.indexOf("system/login")!=-1) {// 说明登录成功 或者 执行登录功能
         if(session.getAttribute("doctorId")!=null) {
             // 登录成功不拦截
-            System.out.println(true);
             return true;
         }else {
             // 拦截后进入登录页面
