@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/hospital/js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="/hospital/layui/css/layui.css">
+    <script src="/hospital/layui/layui.all.js"></script>
+    <script src="/hospital/js/md5.js"></script>
+    <script src="/hospital/js/login.js"></script>
+</head>
+<body>
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-md4">
+            &nbsp;
+        </div>
+        <div class="layui-col-md4" style="margin-top: 18%">
+            <fieldset class="layui-elem-field">
+                <legend>登录</legend>
+                <div class="layui-field-box">
+                    <form class="layui-form" action="" style="margin-left: -18%;margin-top: 5%">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">账号</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="account" required  lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item" style="margin-top: 5%">
+                            <label class="layui-form-label">密码</label>
+                            <div class="layui-input-block">
+                                <input type="password" id="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">身份</label>
+                            <div class="layui-input-block">
+                                <select id="status" lay-verify="required">
+                                    <option value=""></option>
+                                    <option value="doctor">医生管理系统</option>
+                                    <option value="patient">患者管理系统</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                            <a style="float:left;color: #01AAED;">重置密码</a><a style="float:right;color: #01AAED">注册账号</a>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block" style="margin-top: -5%">
+                                <button class="layui-btn layui-btn-normal layui-btn-fluid" type="button" lay-submit onclick="login()">登&nbsp;&nbsp;录</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+        </div>
+        <div class="layui-col-md4">
+            &nbsp;
+        </div>
+    </div>
+</div>
+</body>
+</html>

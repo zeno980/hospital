@@ -20,9 +20,8 @@
         <!-- 开启注解 -->
         <mvc:annotation-driven/>
 
-        <!-- 静态资源(js、image等)的访问 -->
+        <!-- 静态资源(js、mage等)的访问 -->
         <mvc:default-servlet-handler/>
-
 
      <!-- spring mybatis -->
      <!-- 引入配置文件 -->
@@ -36,7 +35,7 @@
          <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
 
          <property name="url" value="jdbc:mysql://127.0.0.1:3306/hospital?serverTimezone=GMT%2B8&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true" />
-         <property name="username" value="root" />
+         <property name="username" value="hospital_user" />
          <property name="password" value="szx19818" />
          <!-- 初始化连接大小 -->
          <property name="initialSize" value="10"/>
@@ -49,20 +48,6 @@
          <!-- 获取连接最大等待时间 -->
          <property name="maxWait" value="10000"/>
      </bean>
-
-
-     <!--配置拦截器-->
-     <!--
-     <mvc:interceptors>
-         <mvc:interceptor>
-
-             <mvc:mapping path="/**"/>
-
-             <mvc:exclude-mapping path="/login"/>
-             <bean class="com.zakary.controller.LoginInterceptor"/>
-         </mvc:interceptor>
-     </mvc:interceptors>
-    -->
 
 
      <!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
@@ -84,30 +69,6 @@
          <property name="dataSource" ref="dataSource" />
      </bean>
 
-     <!-- 通知 -->
-     <!--<tx:advice id="transactionAdvice" transaction-manager="transactionManager">-->
-         <!--<tx:attributes>-->
-             <!--&lt;!&ndash; 传播行为 &ndash;&gt;-->
-             <!--<tx:method name="add*" propagation="REQUIRED" />-->
-             <!--<tx:method name="append*" propagation="REQUIRED" />-->
-             <!--<tx:method name="save*" propagation="REQUIRED" />-->
-             <!--<tx:method name="update*" propagation="REQUIRED" />-->
-             <!--<tx:method name="modify*" propagation="REQUIRED" />-->
-             <!--<tx:method name="edit*" propagation="REQUIRED" />-->
-             <!--<tx:method name="insert*" propagation="REQUIRED" />-->
-             <!--<tx:method name="delete*" propagation="REQUIRED" />-->
-             <!--<tx:method name="remove*" propagation="REQUIRED" />-->
-             <!--<tx:method name="repair" propagation="REQUIRED" />-->
-
-             <!--<tx:method name="get*" propagation="REQUIRED"  />-->
-             <!--<tx:method name="find*" propagation="REQUIRED" read-only="true" />-->
-             <!--<tx:method name="load*" propagation="REQUIRED" read-only="true" />-->
-             <!--<tx:method name="search*" propagation="REQUIRED" read-only="true" />-->
-             <!--<tx:method name="datagrid*" propagation="REQUIRED" read-only="true" />-->
-
-             <!--<tx:method name="*" propagation="REQUIRED"  />-->
-         <!--</tx:attributes>-->
-     <!--</tx:advice>-->
         <!--ViewResolver 视图解析器-->
         <!--用于支持Servlet、JSP视图解析-->
         <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

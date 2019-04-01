@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface RootManagerDoctorService {
     List<Doctor> getDoctorAll();
-    int insertDoctor(Doctor doctor);
+    boolean insertDoctor(Doctor doctor);
     int updateInformation(Doctor doctor);
     int deleteDoctor(Doctor doctor);
 }

@@ -7,16 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 
 @Controller
 public class UserController {
 
     @Autowired  //这个别忘了
-    private DoctorService service;
+    private DoctorService doctorService;
     //这部分是页面映射
     @RequestMapping("/login")
     public String loginPage(){
-        return "loginTest";
+        return "login";
     }
     @RequestMapping("/rootSelectPage")
     public String rootSelectPage(){
@@ -33,27 +36,11 @@ public class UserController {
 
     @RequestMapping("/login.do")
     @ResponseBody
-    public JSONEntity login(@RequestBody Doctor doctor){
-        System.out.println(doctor);
-        Doctor realUser = service.getDoctor(doctor);
-        System.out.println(realUser);
-        JSONEntity jsonEntity = new JSONEntity();
-        //if(doctor.equals(realUser)){
-        if(null!=realUser){
-            //类型检查
-            if(realUser.getType()==0)
-                jsonEntity.setCode("root");
-            else
-                jsonEntity.setCode("doctor");
-            jsonEntity.setData("登录成功");
-            //jsonEntity.setCode("success");
-            return jsonEntity;
-        }
-        else{
-            jsonEntity.setData("账号或密码错误");
-            jsonEntity.setCode("login");
-            return jsonEntity;
-        }
+    public JSONEntity login(@RequestBody Doctor doctor, HttpServletRequest request){
+        doctorService.getDoctor(doctor);
+        HttpSession session = request.getSession();
+        session.setAttribute("doctorId",doctor.getDoctorid());
+        return new JSONEntity(doctor.getPage());
     }
 
     @RequestMapping("/rootSelect" )
