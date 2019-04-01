@@ -11,4 +11,5 @@ public interface RootManagerDoctorService {
     int updateInformation(Doctor doctor);
     int deleteDoctor(Doctor doctor);
     int getDoctorsCounts();
+    List<Doctor> getDoctorsById(Integer doctorId);
 }

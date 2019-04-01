@@ -67,7 +67,17 @@
 
     <div class="layui-body">
         <blockquote class="layui-elem-quote">医生信息管理</blockquote>
-        <table id="doctor_cursor" lay-filter="doctor_table"></table>
+        <div style="padding: 1%">
+            <div>
+                搜索ID：
+                <div class="layui-inline">
+                    <input class="layui-input" name="id" id="search_id" autocomplete="off">
+                </div>
+                <button class="layui-btn" onclick="search()">搜索</button>
+            </div>
+            <table id="doctor_cursor" lay-filter="doctor_table"></table>
+        </div>
+
     </div>
 
     <div class="layui-footer">
@@ -79,9 +89,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        &times;
-                    </button>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title" id="myModalLabel">修改信息</h4>
                 </div>
                 <div class="modal-body">

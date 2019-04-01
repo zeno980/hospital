@@ -1,3 +1,4 @@
+var tableIns;
 $(document).ready(function () {
     var element = layui.element;
     element.init();
@@ -5,12 +6,12 @@ $(document).ready(function () {
         // console.log(elem.context.innerText)
     })
     var table = layui.table;
-    table.render({
+    tableIns = table.render({
         elem: '#doctor_cursor',
         url: '/hospital/getDoctors.do', //数据接口
         skin: 'row ', //行边框风格
         page:true,
-        toolbar:'<div><input type="text" placeholder="搜索..." autocomplete="off" class="layui-input layui-input-search"><div>',
+        id:'testReload',
         cols: [[ //表头
             {field: 'doctorid', title: '编号', width:'10%',  unresize:true},
             {field: 'doctorname', title: '姓名', width:'10%',unresize:true},
@@ -36,9 +37,38 @@ $(document).ready(function () {
         }else if(obj.event=='del'){
             var layer = layui.layer;
             layer.confirm('删除用户:'+data.doctorname+"?", {icon: 7, title:'提示'}, function(index){
-                console.log('yes')
-                layer.close(index);
+                layer.close(index)
+                var v = layer.load(2);
+                $.ajax({
+                    url:'/hospital/RootDeleteDoctor',
+                    type:'post',
+                    contentType:"application/json",
+                    datatype:"json",
+                    data : JSON.stringify({"doctorid":data.doctorid})
+                }).done(function (data) {
+                    if(data.success==true){
+                        layer.close(v);
+                        layer.msg("删除成功",{time: 1000},function () {
+                            tableIns.reload({where: {doctorId: '',}, page: {curr: 1}});
+                            $('#search_id').val('');
+                        })
+                    }else{
+                        layer.close(v);
+                        layer.msg(data.msg)
+                    }
+                })
             });
         }
-    })
+    });
 })
+function search() {
+    tableIns.reload({
+        where: {
+            doctorId: $('#search_id').val(),
+        },
+        page: {
+            curr: 1
+        }
+    })
+    $('#search_id').val('');
+}

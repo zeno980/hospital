@@ -19,6 +19,6 @@ public interface DoctorMapper {
     int updateByPrimaryKey(Doctor record);
     int getDoctorsCounts();
     Doctor selectById(Doctor record);
-
+    List<Doctor> getDoctorsById(Integer doctorId);
     List<Doctor> selectDoctorAll(Page page);
 }

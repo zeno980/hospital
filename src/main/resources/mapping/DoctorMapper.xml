@@ -144,4 +144,7 @@
   <select id="getDoctorsCounts" resultType="java.lang.Integer">
     select count(doctorId) from doctor;
   </select>
+  <select id="getDoctorsById" resultType="com.zakary.dao.Doctor" parameterType="java.lang.Integer">
+    select doctorName,doctorPosition,doctorDepartment,doctorTel,doctorGender,password,doctorId from doctor where doctorId=#{doctorId}
+  </select>
 </mapper>

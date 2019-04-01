@@ -63,4 +63,10 @@ public class RootManagerDocotorServiceImpl implements RootManagerDoctorService {
     public int getDoctorsCounts() {
         return dao.getDoctorsCounts();
     }
+    public List<Doctor> getDoctorsById(Integer doctorId){
+        if (doctorId==null){
+            throw new BusinessException("参数为空");
+        }
+        return dao.getDoctorsById(doctorId);
+    }
 }

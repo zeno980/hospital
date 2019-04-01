@@ -43,9 +43,5 @@ public class RootManagerDoctorController {
         return new JSONEntity(rootManagerDoctorService.updateInformation(doctor));
     }
 
-    @RequestMapping("/RootDeleteDoctor")
-    @ResponseBody
-    public JSONEntity rootDeleteDoctor(@RequestBody Doctor doctor){
-        return new JSONEntity(rootManagerDoctorService.deleteDoctor(doctor));
-    }
+
 }
