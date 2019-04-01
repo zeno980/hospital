@@ -75,4 +75,15 @@
             <property name="prefix" value="/WEB-INF/page/"/>
             <property name="suffix" value=".html"/>
         </bean>
+     <mvc:interceptors>
+         <mvc:interceptor>
+             <!-- 拦截所有 -->
+             <mvc:mapping path="/*"/>
+             <!-- 白名单 -->
+             <mvc:exclude-mapping path="/login.do"/>
+             <mvc:exclude-mapping path="/login"/>
+             <!-- 拦截器 -->
+             <bean class="com.zakary.controller.LoginInterceptor" />
+         </mvc:interceptor>
+     </mvc:interceptors>
     </beans>

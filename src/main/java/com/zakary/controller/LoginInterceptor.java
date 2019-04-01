@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 
 
 public class LoginInterceptor implements HandlerInterceptor {
-    private Logger logger=LoggerFactory.getLogger(getClass());
     @Override
     public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
             throws Exception {
@@ -29,15 +28,15 @@ public class LoginInterceptor implements HandlerInterceptor {
         // 在拦截点执行前拦截，如果返回true则不执行拦截点后的操作（拦截成功）
         // 返回false则不执行拦截
         HttpSession session = request.getSession();
-        logger.info("session:"+session.getAttribute("username"));
         //String uri = request.getRequestURI(); // 获取登录的uri，这个是不进行拦截的
         //if(session.getAttribute("LOGIN_USER")!=null || uri.indexOf("system/login")!=-1) {// 说明登录成功 或者 执行登录功能
-        if(session.getAttribute("doctor")!=null) {
+        if(session.getAttribute("doctorId")!=null) {
             // 登录成功不拦截
+            System.out.println(true);
             return true;
         }else {
             // 拦截后进入登录页面
-            response.sendRedirect(request.getContextPath()+"/login");
+            response.sendRedirect("/hospital/login");
             return false;
         }
     }

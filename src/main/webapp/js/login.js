@@ -22,8 +22,10 @@ function login() {
     }).done(function (data) {
         if(data.success==true){
             layer.close(index)
-            layer.msg("成功")
-            console.log(data)
+            layer.msg("登录成功，正在跳转...",{time: 1000},function () {
+                console.log(data)
+                window.location.href='/hospital/'+data.data;
+            })
         }else{
             layer.close(index)
             layer.msg(data.msg)

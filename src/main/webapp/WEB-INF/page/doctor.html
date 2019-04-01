@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="/hospital/js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/hospital/layui/css/layui.css">
+    <script src="/hospital/layui/layui.all.js"></script>
+    <script src="/hospital/js/doctor.js"></script>
+    <style>
+        .layui-table-view .layui-table {width:100%}
+        .layui-table-cell {height: auto;line-height: 28px;}
+    </style>
+</head>
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">医生管理系统</div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    admin
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree"  lay-filter="nav_left">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">信息管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">医生信息管理</a></dd>
+                        <dd><a href="javascript:;">功能2</a></dd>
+                        <dd><a href="javascript:;">功能3</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">功能区2</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">功能4</a></dd>
+                        <dd><a href="javascript:;">功能5</a></dd>
+                        <dd><a href="javascript:;">功能6</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">功能区3</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">功能7</a></dd>
+                        <dd><a href="javascript:;">功能8</a></dd>
+                        <dd><a href="javascript:;">功能9</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <blockquote class="layui-elem-quote">医生信息管理</blockquote>
+        <table id="doctor_cursor" lay-filter="doctor_table"></table>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        底部固定区域
+    </div>
+</div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">修改信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="layui-form" action="">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">ID</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="doctorid" required  lay-verify="required" disabled  autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">姓名</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="doctorname" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">部门</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="doctordepartment" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">职位</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="doctorposition" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">性别</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="doctorgender" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">电话</label>
+                            <div class="layui-input-block">
+                                <input type="number" id="doctortel" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">密码</label>
+                            <div class="layui-input-block">
+                                <input type="password" id="password" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary">提交更改</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</body>
+</html>
