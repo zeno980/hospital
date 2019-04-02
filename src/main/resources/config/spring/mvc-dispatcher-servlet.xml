@@ -78,12 +78,13 @@
      <mvc:interceptors>
          <mvc:interceptor>
              <!-- 拦截所有 -->
-             <mvc:mapping path="/*"/>
+             <mvc:mapping path="/user/**"/>
+             <mvc:mapping path="/doctor/**"/>
              <!-- 白名单 -->
-             <mvc:exclude-mapping path="/login.do"/>
-             <mvc:exclude-mapping path="/login"/>
+             <mvc:exclude-mapping path="/user/login.do"/>
+             <mvc:exclude-mapping path="/user/login"/>
              <!-- 拦截器 -->
-             <bean class="com.zakary.controller.LoginInterceptor" />
+             <bean class="com.zakary.interceptor.LoginInterceptor" />
          </mvc:interceptor>
      </mvc:interceptors>
     </beans>

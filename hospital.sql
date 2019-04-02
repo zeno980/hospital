@@ -18,10 +18,10 @@ SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for doctor
+-- Table structure for doctorDao
 -- ----------------------------
-DROP TABLE IF EXISTS `doctor`;
-CREATE TABLE `doctor`  (
+DROP TABLE IF EXISTS `doctorDao`;
+CREATE TABLE `doctorDao`  (
   `doctorId` int(11) NOT NULL,
   `doctorName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `doctorDepartment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
@@ -34,17 +34,17 @@ CREATE TABLE `doctor`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of doctor
+-- Records of doctorDao
 -- ----------------------------
-INSERT INTO `doctor` VALUES (1, 'root', 'root', 'root', '男', 0, '', '123456');
-INSERT INTO `doctor` VALUES (2, 'd2', 'tooth', 'Attending doctor', '男', 1, '100', '123456');
-INSERT INTO `doctor` VALUES (3, 'd3', 'tooth', 'Attending doctor', '男', 1, NULL, '123456');
-INSERT INTO `doctor` VALUES (4, 'd4', 'tooth', 'Attending doctor', '男', 1, NULL, '123456');
-INSERT INTO `doctor` VALUES (5, 'zakary', 'fff', 'ggg', '男', 1, '123456', '12345678');
-INSERT INTO `doctor` VALUES (6, 'test', 'test', 'test', '女', 1, '1357', '12345');
-INSERT INTO `doctor` VALUES (7, 'szx', 'szx', 'szx', '男', 1, '123456789', '123456789');
-INSERT INTO `doctor` VALUES (8, 'qe', 'qe', 'qe', '男', 1, '123', '13345');
-INSERT INTO `doctor` VALUES (9, 'dsf', 'fsd', 'sf', '女', 1, '123324', '123456');
+INSERT INTO `doctorDao` VALUES (1, 'root', 'root', 'root', '男', 0, '', '123456');
+INSERT INTO `doctorDao` VALUES (2, 'd2', 'tooth', 'Attending doctorDao', '男', 1, '100', '123456');
+INSERT INTO `doctorDao` VALUES (3, 'd3', 'tooth', 'Attending doctorDao', '男', 1, NULL, '123456');
+INSERT INTO `doctorDao` VALUES (4, 'd4', 'tooth', 'Attending doctorDao', '男', 1, NULL, '123456');
+INSERT INTO `doctorDao` VALUES (5, 'zakary', 'fff', 'ggg', '男', 1, '123456', '12345678');
+INSERT INTO `doctorDao` VALUES (6, 'test', 'test', 'test', '女', 1, '1357', '12345');
+INSERT INTO `doctorDao` VALUES (7, 'szx', 'szx', 'szx', '男', 1, '123456789', '123456789');
+INSERT INTO `doctorDao` VALUES (8, 'qe', 'qe', 'qe', '男', 1, '123', '13345');
+INSERT INTO `doctorDao` VALUES (9, 'dsf', 'fsd', 'sf', '女', 1, '123324', '123456');
 
 -- ----------------------------
 -- Table structure for drug

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zakary.mapper.PatientMapper" >
-  <resultMap id="BaseResultMap" type="com.zakary.dao.Patient" >
+  <resultMap id="BaseResultMap" type="com.zakary.dao.PatientDao" >
     <id column="patientId" property="patientid" jdbcType="INTEGER" />
     <result column="patientName" property="patientname" jdbcType="VARCHAR" />
     <result column="patientGender" property="patientgender" jdbcType="CHAR" />
@@ -22,7 +22,7 @@
     delete from patient
     where patientId = #{patientid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zakary.dao.Patient" >
+  <insert id="insert" parameterType="com.zakary.dao.PatientDao" >
     insert into patient (patientId, patientName, patientGender, 
       patientAge, patientTel, type
       )
@@ -30,7 +30,7 @@
       #{patientage,jdbcType=INTEGER}, #{patienttel,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.zakary.dao.Patient" >
+  <insert id="insertSelective" parameterType="com.zakary.dao.PatientDao" >
     insert into patient
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="patientid != null" >
@@ -73,7 +73,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zakary.dao.Patient" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.zakary.dao.PatientDao" >
     update patient
     <set >
       <if test="patientname != null" >
@@ -94,7 +94,7 @@
     </set>
     where patientId = #{patientid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zakary.dao.Patient" >
+  <update id="updateByPrimaryKey" parameterType="com.zakary.dao.PatientDao" >
     update patient
     set patientName = #{patientname,jdbcType=VARCHAR},
       patientGender = #{patientgender,jdbcType=CHAR},
