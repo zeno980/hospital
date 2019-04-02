@@ -2,71 +2,71 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zakary.mapper.PatientMapper" >
   <resultMap id="BaseResultMap" type="com.zakary.dao.PatientDao" >
-    <id column="patientId" property="patientid" jdbcType="INTEGER" />
-    <result column="patientName" property="patientname" jdbcType="VARCHAR" />
-    <result column="patientGender" property="patientgender" jdbcType="CHAR" />
-    <result column="patientAge" property="patientage" jdbcType="INTEGER" />
-    <result column="patientTel" property="patienttel" jdbcType="INTEGER" />
+    <id column="patient_id" property="patient_id" jdbcType="INTEGER" />
+    <result column="patient_name" property="patient_name" jdbcType="VARCHAR" />
+    <result column="patient_gender" property="patient_gender" jdbcType="CHAR" />
+    <result column="patient_age" property="patient_age" jdbcType="INTEGER" />
+    <result column="patient_tel" property="patient_tel" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    patientId, patientName, patientGender, patientAge, patientTel, type
+    patient_id, patien_tname, patient_gender, patient_age, patient_tel, type
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from patient
-    where patientId = #{patientid,jdbcType=INTEGER}
+    where patient_id = #{patient_id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from patient
-    where patientId = #{patientid,jdbcType=INTEGER}
+    where patient_id = #{patient_id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zakary.dao.PatientDao" >
-    insert into patient (patientId, patientName, patientGender, 
-      patientAge, patientTel, type
+    insert into patient (patient_id, patient_name, patient_gender,
+      patient_age, patient_tel, type
       )
-    values (#{patientid,jdbcType=INTEGER}, #{patientname,jdbcType=VARCHAR}, #{patientgender,jdbcType=CHAR}, 
-      #{patientage,jdbcType=INTEGER}, #{patienttel,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}
+    values (#{patient_id,jdbcType=INTEGER}, #{patient_name,jdbcType=VARCHAR}, #{patient_gender,jdbcType=CHAR},
+      #{patient_age,jdbcType=INTEGER}, #{patient_tel,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zakary.dao.PatientDao" >
     insert into patient
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="patientid != null" >
-        patientId,
+      <if test="patient_id != null" >
+        patient_id,
       </if>
-      <if test="patientname != null" >
-        patientName,
+      <if test="patient_name != null" >
+        patient_name,
       </if>
-      <if test="patientgender != null" >
-        patientGender,
+      <if test="patient_gender != null" >
+        patient_gender,
       </if>
-      <if test="patientage != null" >
-        patientAge,
+      <if test="patient_age != null" >
+        patient_age,
       </if>
-      <if test="patienttel != null" >
-        patientTel,
+      <if test="patient_tel != null" >
+        patient_tel,
       </if>
       <if test="type != null" >
         type,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="patientid != null" >
-        #{patientid,jdbcType=INTEGER},
+      <if test="patient_id != null" >
+        #{patient_id,jdbcType=INTEGER},
       </if>
-      <if test="patientname != null" >
-        #{patientname,jdbcType=VARCHAR},
+      <if test="patient_name != null" >
+        #{patient_name,jdbcType=VARCHAR},
       </if>
-      <if test="patientgender != null" >
-        #{patientgender,jdbcType=CHAR},
+      <if test="patient_gender != null" >
+        #{patient_gender,jdbcType=CHAR},
       </if>
-      <if test="patientage != null" >
-        #{patientage,jdbcType=INTEGER},
+      <if test="patient_age != null" >
+        #{patient_age,jdbcType=INTEGER},
       </if>
-      <if test="patienttel != null" >
-        #{patienttel,jdbcType=INTEGER},
+      <if test="patient_tel != null" >
+        #{patient_tel,jdbcType=INTEGER},
       </if>
       <if test="type != null" >
         #{type,jdbcType=VARCHAR},
@@ -76,31 +76,31 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.zakary.dao.PatientDao" >
     update patient
     <set >
-      <if test="patientname != null" >
-        patientName = #{patientname,jdbcType=VARCHAR},
+      <if test="patient_name != null" >
+        patient_name = #{patient_name,jdbcType=VARCHAR},
       </if>
-      <if test="patientgender != null" >
-        patientGender = #{patientgender,jdbcType=CHAR},
+      <if test="patient_gender != null" >
+        patient_gender = #{patient_gender,jdbcType=CHAR},
       </if>
-      <if test="patientage != null" >
-        patientAge = #{patientage,jdbcType=INTEGER},
+      <if test="patient_age != null" >
+        patient_age = #{patient_age,jdbcType=INTEGER},
       </if>
-      <if test="patienttel != null" >
-        patientTel = #{patienttel,jdbcType=INTEGER},
+      <if test="patient_tel != null" >
+        patient_tel = #{patient_tel,jdbcType=INTEGER},
       </if>
       <if test="type != null" >
         type = #{type,jdbcType=VARCHAR},
       </if>
     </set>
-    where patientId = #{patientid,jdbcType=INTEGER}
+    where patient_id = #{patient_id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zakary.dao.PatientDao" >
     update patient
-    set patientName = #{patientname,jdbcType=VARCHAR},
-      patientGender = #{patientgender,jdbcType=CHAR},
-      patientAge = #{patientage,jdbcType=INTEGER},
-      patientTel = #{patienttel,jdbcType=INTEGER},
+    set patient_name = #{patient_name,jdbcType=VARCHAR},
+      patient_gender = #{patient_gender,jdbcType=CHAR},
+      patient_age = #{patient_age,jdbcType=INTEGER},
+      patient_tel = #{patient_tel,jdbcType=INTEGER},
       type = #{type,jdbcType=VARCHAR}
-    where patientId = #{patientid,jdbcType=INTEGER}
+    where patient_id = #{patient_id,jdbcType=INTEGER}
   </update>
 </mapper>
