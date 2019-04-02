@@ -33,20 +33,20 @@
      <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
            destroy-method="close">
          <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-
-         <property name="url" value="jdbc:mysql://127.0.0.1:3306/hospital?serverTimezone=GMT%2B8&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true" />
-         <property name="username" value="hospital_user" />
-         <property name="password" value="szx19818" />
-         <!-- 初始化连接大小 -->
+         <property name="url" value="jdbc:mysql://47.101.149.36:3306/hospital?serverTimezone=GMT%2B8&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true" />
+         <property name="username" value="root" />
+         <property name="password" value="123698745" />
          <property name="initialSize" value="10"/>
-         <!-- 连接池最大数量 -->
          <property name="maxActive" value="100"/>
-         <!-- 连接池最大空闲 -->
-         <!-- 连接池最小空闲 -->
          <property name="maxIdle" value="50"/>
          <property name="minIdle" value="20"/>
-         <!-- 获取连接最大等待时间 -->
-         <property name="maxWait" value="10000"/>
+         <property name="maxWait" value="60000"/>
+         <property name="timeBetweenEvictionRunsMillis" value="60000" />
+         <property name="minEvictableIdleTimeMillis" value="300000" />
+         <property name="validationQuery" value="select 1 from dual" />
+         <property name="testWhileIdle" value="true" />
+         <property name="testOnBorrow" value="false" />
+         <property name="testOnReturn" value="false" />
      </bean>
 
 
