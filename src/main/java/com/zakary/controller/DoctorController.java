@@ -43,20 +43,20 @@ public class DoctorController {
         jsonResultDao.setCount(pageDao.getDoctor_id()==null?doctorService.getDoctorsCounts():doctors.size());
         return jsonResultDao;
     }
-    @RequestMapping("/DeleteDoctor")
+    @RequestMapping("/deleteDoctor.do")
     @ResponseBody
     public JsonResultDao rootDeleteDoctor(@RequestBody DoctorDao doctorDao){
         return new JsonResultDao(doctorService.deleteDoctor(doctorDao));
     }
-    @RequestMapping("/InsertDoctor")
+    @RequestMapping("/insertDoctor.do")
     @ResponseBody
     public JsonResultDao rootInsertDoctor(@RequestBody DoctorDao doctorDao){
         return new JsonResultDao(doctorService.insertDoctor(doctorDao));
     }
 
-    @RequestMapping("/UpdateDoctor")
+    @RequestMapping("/updateDoctor.do")
     @ResponseBody
-    public JsonResultDao rootUpdateDoctor(@RequestBody DoctorDao doctorDao){
+    public JsonResultDao UpdateDoctor(@RequestBody DoctorDao doctorDao){
         return new JsonResultDao(doctorService.updateInformation(doctorDao));
     }
 }

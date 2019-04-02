@@ -22,34 +22,17 @@
 
   <update id="updateDoctorById" parameterType="com.zakary.dao.DoctorDao">
     update doctor
-    <set>
-      <if test="doctor_name != null">
+    set
         doctor_name = #{doctor_name},
-      </if>
-      <if test="doctor_department != null">
         doctor_department = #{doctor_department},
-      </if>
-      <if test="doctor_position != null">
         doctor_position = #{doctor_position},
-      </if>
-      <if test="doctor_gender != null">
         doctor_gender = #{doctor_gender},
-      </if>
-      <if test="type != null">
-        type = #{type},
-      </if>
-      <if test="doctor_tel != null">
-        doctor_tel = #{doctor_tel},
-      </if>
-      <if test="password != null">
-        password = #{password},
-      </if>
-    </set>
+        doctor_tel = #{doctor_tel}
     where doctor_id = #{doctor_id}
   </update>
 
   <select id="selectAllDoctors" resultType="com.zakary.dao.DoctorDao" parameterType="com.zakary.dao.PageDao">
-    select doctor_id,doctor_name,doctor_department,doctor_position,doctor_gender,type,doctor_tel,password
+    select doctor_id,doctor_name,doctor_department,doctor_position,doctor_gender,type,doctor_tel
     from doctor
     <if test="doctor_id !=null and doctor_id != 0">
       where doctor_id=#{doctor_id}
