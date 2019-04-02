@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/hospital/css/bootstrap.min.css">
     <script src="/hospital/js/jquery-3.3.1.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/hospital/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/hospital/layui/css/layui.css">
     <script src="/hospital/layui/layui.all.js"></script>
     <script src="/hospital/js/doctor.js"></script>
@@ -93,54 +93,54 @@
                     <h4 class="modal-title" id="myModalLabel">修改信息</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="layui-form" action="">
+                    <form class="layui-form" action="" lay-filter="updateForm">
                         <div class="layui-form-item">
                             <label class="layui-form-label">ID</label>
                             <div class="layui-input-block">
-                                <input type="text" id="doctorid" required  lay-verify="required" disabled  autocomplete="off" class="layui-input">
+                                <input type="text" name="doctor_id" required   autocomplete="off" class="layui-input layui-disabled">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">姓名</label>
                             <div class="layui-input-block">
-                                <input type="text" id="doctorname" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                                <input type="text" name="doctor_name" required lay-verify="required"  autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">部门</label>
                             <div class="layui-input-block">
-                                <input type="text" id="doctordepartment" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                                <input type="text" name="doctor_department" required  lay-verify="required"  autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">职位</label>
                             <div class="layui-input-block">
-                                <input type="text" id="doctorposition" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                                <input type="text" name="doctor_position" required  lay-verify="required"  autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">性别</label>
                             <div class="layui-input-block">
-                                <input type="text" id="doctorgender" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                                <input type="radio" name="doctor_gender" value="男" title="男">
+                                <input type="radio" name="doctor_gender" value="女" title="女">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">电话</label>
                             <div class="layui-input-block">
-                                <input type="number" id="doctortel" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                                    <input type="number" name="doctor_tel" phone  lay-verify="phone"  autocomplete="off" class="layui-input">
                             </div>
                         </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">密码</label>
+                        <div class="layui-form-item" hidden>
                             <div class="layui-input-block">
-                                <input type="password" id="password" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                                <div class="layui-btn"  type="button" lay-submit id="hideSubmit" lay-filter="doSubmit"/>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">提交更改</button>
+                    <button type="button" class="layui-btn" data-dismiss="modal">关闭</button>
+                    <button type="button" class="layui-btn layui-btn-normal" onclick="updateDoctor()">提交更改</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->

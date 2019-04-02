@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/hospital/js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="/hospital/layui/css/layui.css">
+    <script src="/hospital/layui/layui.all.js"></script>
+    <script src="/hospital/js/md5.js"></script>
+    <script src="/hospital/js/resign.js"></script>
+</head>
+<body>
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-md4">
+            &nbsp;
+        </div>
+        <div class="layui-col-md4" style="margin-top: 10%">
+            <fieldset class="layui-elem-field">
+                <legend>注册</legend>
+                <div class="layui-field-box">
+                    <form class="layui-form" action="" style="margin-left: -15%;margin-top: 5%">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">姓名</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="doctor_name" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item" >
+                            <label class="layui-form-label">密码</label>
+                            <div class="layui-input-block">
+                                <input type="password" name="password" required lay-verify="required"  autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item" >
+                            <label class="layui-form-label">电话</label>
+                            <div class="layui-input-block">
+                                <input type="number" name="password" phone  lay-verify="phone"  autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">部门</label>
+                            <div class="layui-input-block">
+                                <select name="doctor_department" lay-verify="required">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">职位</label>
+                            <div class="layui-input-block">
+                                <select name="doctor_position" lay-verify="required">
+                                    <option value=""></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">性别</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="doctor_gender" value="男" title="男" checked>
+                                <input type="radio" name="doctor_gender" value="女" title="女">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn layui-btn-normal layui-btn-fluid" type="button" lay-submit>提交审核</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </fieldset>
+        </div>
+        <div class="layui-col-md4">
+            &nbsp;
+        </div>
+    </div>
+</div>
+</body>
+</html>

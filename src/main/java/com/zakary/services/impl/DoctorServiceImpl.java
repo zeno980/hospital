@@ -24,6 +24,8 @@ public class DoctorServiceImpl implements DoctorService {
         if(doctorDao.getDoctor_id()==null||doctorDao.getPassword()==null)
             throw new BusinessException("必要参数为空");
         DoctorDao result = doctorMapper.selectDoctorById(doctorDao);
+        if(result==null)
+            throw new BusinessException("用户不存在");
         if("doctor".equals(doctorDao.getPage())&& result.getType()!=0){
             logger.info("用户id:"+doctorDao.getDoctor_id());
             throw new BusinessException("没有权限访问此页面");
@@ -38,19 +40,19 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorMapper.selectAllDoctors(pageDao);
     }
     public boolean insertDoctor(DoctorDao doctorDao){
-        if((doctorDao.getDoctor_id()==null)
-                ||(doctorDao.getDoctor_name()==null)
-                ||(doctorDao.getDoctor_department()==null)
-                ||(doctorDao.getDoctor_position()==null)
-                ||(doctorDao.getDoctor_gender()==null)
-                ||(doctorDao.getDoctor_tel()==null)
-                ||(doctorDao.getPassword()==null)) {
+        if(doctorDao.getDoctor_name()==null
+                ||doctorDao.getDoctor_department()==null
+                ||doctorDao.getDoctor_position()==null
+                ||doctorDao.getDoctor_gender()==null
+                ||doctorDao.getDoctor_tel()==null
+                ||doctorDao.getPassword()==null) {
             throw new BusinessException("必要参数为空");
         }
-        DoctorDao realUser = doctorMapper.selectDoctorById(doctorDao);
-        if(realUser!=null){
-            throw new BusinessException("用户已存在");
-        }
+//        DoctorDao realUser = doctorMapper.selectDoctorById(doctorDao);
+//        if(realUser!=null){
+//            throw new BusinessException("用户已存在");
+//        }
+        doctorMapper.insertDoctor(doctorDao);
         return true;
     }
 
@@ -61,8 +63,7 @@ public class DoctorServiceImpl implements DoctorService {
                 ||(doctorDao.getDoctor_department()==null)
                 ||(doctorDao.getDoctor_position()==null)
                 ||(doctorDao.getDoctor_gender()==null)
-                ||(doctorDao.getDoctor_tel()==null)
-                ||(doctorDao.getPassword()==null)) {
+                ||(doctorDao.getDoctor_tel()==null)) {
             throw new BusinessException("必要参数为空");
         }
         return doctorMapper.updateDoctorById(doctorDao);

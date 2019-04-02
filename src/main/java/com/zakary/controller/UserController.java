@@ -22,6 +22,10 @@ public class UserController {
     public String loginPage(){
         return "login";
     }
+    @RequestMapping("/resign")
+    public String resignPage(){
+        return "resign";
+    }
 
     @RequestMapping("/login.do")
     @ResponseBody

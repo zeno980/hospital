@@ -12,10 +12,16 @@ public class MapperTest extends BaseTest {
     private DoctorService doctorService;
     @Test
     public void test1(){
-        DoctorDao doctorDao = new DoctorDao();
-        doctorDao.setDoctor_id(1);
-        doctorDao.setPassword("e10adc3949ba59abbe56e057f20f883e");
-        boolean b = doctorService.login(doctorDao);
-        System.out.println(b);
+        for(int i=1;i<=100000;i++){
+            DoctorDao doctorDao = new DoctorDao();
+            doctorDao.setPassword("e10adc3949ba59abbe56e057f20f883e");
+            doctorDao.setDoctor_department("department"+i);
+            doctorDao.setDoctor_gender("男");
+            doctorDao.setType(1);
+            doctorDao.setDoctor_tel("13113111311");
+            doctorDao.setDoctor_name("doctor"+i);
+            doctorDao.setDoctor_position("position"+i);
+            doctorService.insertDoctor(doctorDao);
+        }
     }
 }
