@@ -1,10 +1,22 @@
 package com.zakary.dao;
 
-public class TableDatas {  //用于渲染前台table，不可复用
+public class JsonResultDao {
     private int code;
     private String msg;
     private int count;
     private Object data;
+
+    public JsonResultDao(){};
+
+    public JsonResultDao(Object data){
+        this.data = data;
+        this.code = 0;
+    };
+    public JsonResultDao(Object data,int code,String msg){
+        this.data = data;
+        this.code = code;
+        this.msg = msg;
+    };
 
     public int getCode() {
         return code;
@@ -37,4 +49,5 @@ public class TableDatas {  //用于渲染前台table，不可复用
     public void setData(Object data) {
         this.data = data;
     }
+
 }

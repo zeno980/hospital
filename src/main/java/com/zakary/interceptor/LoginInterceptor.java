@@ -1,4 +1,4 @@
-package com.zakary.controller;
+package com.zakary.interceptor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,12 +30,12 @@ public class LoginInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         //String uri = request.getRequestURI(); // 获取登录的uri，这个是不进行拦截的
         //if(session.getAttribute("LOGIN_USER")!=null || uri.indexOf("system/login")!=-1) {// 说明登录成功 或者 执行登录功能
-        if(session.getAttribute("doctorId")!=null) {
+        if(session.getAttribute("doctor_id")!=null) {
             // 登录成功不拦截
             return true;
         }else {
             // 拦截后进入登录页面
-            response.sendRedirect("/hospital/login");
+            response.sendRedirect("/hospital/user/login");
             return false;
         }
     }

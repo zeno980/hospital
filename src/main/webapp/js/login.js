@@ -14,17 +14,16 @@ function login() {
     };
     var index = layer.load(2);
     $.ajax({
-        url:'/hospital/login.do',
+        url:'/hospital/user/login.do',
         type:'post',
         contentType:"application/json",
         datatype:"json",
-        data : JSON.stringify({"doctorid":doctorId,"password":pwd,"page":status})
+        data : JSON.stringify({"doctor_id":doctorId,"password":pwd,"page":status})
     }).done(function (data) {
-        if(data.success==true){
+        if(data.code==0){
             layer.close(index)
             layer.msg("登录成功，正在跳转...",{time: 1000},function () {
-                console.log(data)
-                window.location.href='/hospital/'+data.data;
+                window.location.href='/hospital/doctor/'+data.data;
             })
         }else{
             layer.close(index)

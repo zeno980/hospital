@@ -1,17 +1,17 @@
 package com.zakary.mapper;
 
-import com.zakary.dao.Patient;
+import com.zakary.dao.PatientDao;
 
 public interface PatientMapper {
     int deleteByPrimaryKey(Integer patientid);
 
-    int insert(Patient record);
+    int insert(PatientDao record);
 
-    int insertSelective(Patient record);
+    int insertSelective(PatientDao record);
 
-    Patient selectByPrimaryKey(Integer patientid);
+    PatientDao selectByPrimaryKey(Integer patientid);
 
-    int updateByPrimaryKeySelective(Patient record);
+    int updateByPrimaryKeySelective(PatientDao record);
 
-    int updateByPrimaryKey(Patient record);
+    int updateByPrimaryKey(PatientDao record);
 }
