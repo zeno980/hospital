@@ -31,4 +31,10 @@ public class UserController {
         session.setAttribute("doctor_id", doctorDao.getDoctor_id());
         return new JsonResultDao(doctorDao.getPage());
     }
+
+    @RequestMapping("/register")
+    @ResponseBody
+    public JsonResultDao register(@RequestBody DoctorDao doctorDao,HttpServletRequest request){
+        return new JsonResultDao(doctorService.insertDoctor(doctorDao));
+    }
 }
