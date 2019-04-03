@@ -1,6 +1,8 @@
 package com.zakary.mapper;
 
+import com.zakary.dao.PageDao;
 import com.zakary.dao.PatientDao;
+import com.zakary.dao.TreatmentDao;
 import com.zakary.dao.utils.DoctorPatients;
 
 import java.util.List;
@@ -18,7 +20,7 @@ public interface PatientMapper {
 
     int updateByPrimaryKey(PatientDao record);
 
-    List<DoctorPatients> selectAllPatientByDoctorId(int id);
+    List<DoctorPatients> selectAllPatientsByDoctorId(PageDao pageDao);
 
     int getAllPatientsCounts();
 
@@ -26,5 +28,5 @@ public interface PatientMapper {
 
     int getCountByIdInTreatment(int patient_id);
 
-    void insertPatientTreatmnet();
+    void insertPatientTreatmnet(TreatmentDao treatmentDao);
 }

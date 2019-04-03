@@ -31,7 +31,7 @@ public class PatientController {
         return jsonResultDao;
     }
 
-    //第二个功能，查看患者的基本信息
+    //第二个功能，查看患者的基本信息,搜索患者
     @RequestMapping("/doctor_patients")
     @ResponseBody
     public JsonResultDao getPatients(HttpServletRequest request){
@@ -39,11 +39,14 @@ public class PatientController {
         int limit=Integer.parseInt(request.getParameter("limit"));
         JsonResultDao jsonResultDao=new JsonResultDao();
         String id=request.getParameter("id");
+        String patient_id=request.getParameter("patient_id");
         PageDao pageDao = new PageDao();
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
+        if(patient_id!=null||!patient_id.trim().equals(""))
+            pageDao.setPatient_id(Integer.parseInt(patient_id));
 
-        List<DoctorPatients> patients=patientService.getAllPatientByDoctorId(id);
+        List<DoctorPatients> patients=patientService.getAllPatientByDoctorId(pageDao,id);
         jsonResultDao.setCode(0);
         jsonResultDao.setMsg("success");
         jsonResultDao.setData(patients);

@@ -104,10 +104,14 @@
     where patient_id = #{patient_id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectAllPatientsByDoctorId" resultType="com.zakary.dao.utils.DoctorPatients" parameterType="java.lang.Integer">
+  <select id="selectAllPatientsByDoctorId" resultType="com.zakary.dao.utils.DoctorPatients" parameterType="com.zakary.dao.PageDao">
       select patient.patient_id,patient_name,patient_gender,patient_age,treatment_name,treatment_time,treatment_fee
       from patient,treatment
-      where treatment.doctor_id=#{id,jdbcType=INTEGER} and patient.patient_id=treatment.patient_id
+      where treatment.doctor_id=#{doctor_id,jdbcType=INTEGER} and patient.patient_id=treatment.patient_id
+      <if test="patient_id !=null and patient_id != 0">
+        and patient.patient_id=#{patient_id,jdbcType=INTEGER}
+      </if>
+      limit #{page},#{limit}
   </select>
 
   <select id="getCountById" resultType="java.lang.Integer" parameterType="java.lang.Integer">
@@ -124,7 +128,7 @@
 
   <insert id="insertPatientTreatmnet" parameterType="com.zakary.dao.TreatmentDao">
     insert into treatment(doctor_id, patient_id, treatment_name, treatment_time, treatment_fee)
-    values (#{doctor_id},#{patient_id},#{patient_id},#{patient_id},#{patient_id})
+    values (#{doctor_id,jdbcType=INTEGER},#{patient_id,jdbcType=INTEGER},#{treatment_name,jdbcType=VARCHAR},#{treatment_time,jdbcType=DATE},#{treatment_fee,jdbcType=DECIMAL})
   </insert>
 
 </mapper>
