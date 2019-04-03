@@ -35,22 +35,22 @@
                         <div class="layui-form-item" >
                             <label class="layui-form-label">电话</label>
                             <div class="layui-input-block">
-                                <input type="number" name="password" phone  lay-verify="phone"  autocomplete="off" class="layui-input">
+                                <input type="number" name="doctor_tel" phone  lay-verify="phone"  autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">部门</label>
                             <div class="layui-input-block">
-                                <select name="doctor_department" lay-verify="required">
-                                    <option value=""></option>
+                                <select name="doctor_department" lay-verify="required" lay-filter="department" id="department_cursor">
+
                                 </select>
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">职位</label>
                             <div class="layui-input-block">
-                                <select name="doctor_position" lay-verify="required">
-                                    <option value=""></option>
+                                <select name="doctor_position" lay-verify="required" id="position_cursor">
+
                                 </select>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn layui-btn-normal layui-btn-fluid" type="button" lay-submit>提交审核</button>
+                                <button class="layui-btn layui-btn-normal layui-btn-fluid" type="button" lay-submit lay-filter="submitForm">提交审核</button>
                             </div>
                         </div>
                     </form>

@@ -82,6 +82,8 @@
              <mvc:mapping path="/doctor/**"/>
              <!-- 白名单 -->
              <mvc:exclude-mapping path="/user/login.do"/>
+             <mvc:exclude-mapping path="/user/getPosition.do"/>
+             <mvc:exclude-mapping path="/user/getDepartment.do"/>
              <mvc:exclude-mapping path="/user/login"/>
              <mvc:exclude-mapping path="/user/resign"/>
              <!-- 拦截器 -->
