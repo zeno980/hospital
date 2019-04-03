@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zakary.mapper.DepartmentMapper">
+  <insert id="insertDepartment" parameterType="com.zakary.dao.DepartmentDao">
+      insert into base_department (department_name,active,create_date) values (#{department_name},'Y',NOW())
+  </insert>
+  <insert id="insertPosition" parameterType="com.zakary.dao.PositionDao">
+      insert into base_position (position_name,department_id,department_name,active,create_date)
+      select #{position_name},#{department_id},#{department_name},'Y',NOW() from dual
+      where exists (select department_id from base_department where department_id=#{department_id})
+  </insert>
+  <select id="selectDepartments" resultType="com.zakary.dao.DepartmentDao">
+      select department_id,department_name,active,create_date from base_department
+      where active='Y'
+  </select>
+  <select id="selectPositions" resultType="com.zakary.dao.PositionDao" parameterType="com.zakary.dao.DepartmentDao">
+      select position_id,position_name,department_id,department_name,active,create_date from base_position
+      where active='Y' and department_id=#{department_id}
+  </select>
+  <select id="selectDepartmentByName" parameterType="com.zakary.dao.DepartmentDao" resultType="com.zakary.dao.DepartmentDao">
+    select department_name from base_department where department_name=#{department_name}
+  </select>
+    <select id="selectPositionByName" parameterType="com.zakary.dao.PositionDao" resultType="com.zakary.dao.PositionDao">
+    select position_name from base_position where position_name=#{position_name} and department_id=#{department_id}
+  </select>
+  <update id="updateDepartment" parameterType="com.zakary.dao.PositionDao"></update>
+  <update id="updatePosition"></update>
+</mapper>
