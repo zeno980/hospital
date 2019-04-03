@@ -1,7 +1,9 @@
 package com.zakary.controller;
 
+import com.zakary.dao.DepartmentDao;
 import com.zakary.dao.DoctorDao;
 import com.zakary.dao.JsonResultDao;
+import com.zakary.services.DepartmentService;
 import com.zakary.services.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,8 @@ public class UserController {
 
     @Autowired  //这个别忘了
     private DoctorService doctorService;
+    @Autowired
+    private DepartmentService departmentService;
     //这部分是页面映射
     @RequestMapping("/login")
     public String loginPage(){
@@ -36,10 +40,14 @@ public class UserController {
         return new JsonResultDao(doctorDao.getPage());
     }
 
-    @RequestMapping("/register")
+    @RequestMapping("/getDepartment.do")
     @ResponseBody
-    public JsonResultDao register(@RequestBody DoctorDao doctorDao,HttpServletRequest request){
-        doctorService.insertDoctor(doctorDao);
-        return new JsonResultDao("success");
+    public JsonResultDao getDepartment(){
+        return new JsonResultDao(departmentService.getDepartments());
+    }
+    @RequestMapping("/getPosition.do")
+    @ResponseBody
+    public JsonResultDao getPosition(@RequestBody DepartmentDao doctorDao){
+        return new JsonResultDao(departmentService.getPositions(doctorDao));
     }
 }
