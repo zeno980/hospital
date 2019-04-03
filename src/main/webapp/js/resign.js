@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    var layer = layui.layer;
+    var index1 = layer.load(2);
     $.ajax({
         url:'/hospital/user/getDepartment.do',
         type:'post',
@@ -7,6 +9,7 @@ $(document).ready(function () {
     }).done(function (data) {
         console.log(data.data)
         if(data.code==0){
+            layer.close(index1)
             var html = "<option value=''></option>";
             for(var i=0;i<data.data.length;i++){
                 html += "<option value='"+data.data[i].department_id+"'>"+data.data[i].department_name+"</option>"
@@ -30,14 +33,35 @@ $(document).ready(function () {
                         }
                         $('#position_cursor').append(html)
                         form.render("select")
+                    }else{
+                        layer.close(index1)
+                        layer.msg(data.msg,{time: 1000})
                     }
                 })
             })
             form.on('submit(submitForm)',function(data){
+                var index = layer.load(2);
                 var json = data.field;
+                json['password'] = hex_md5(json['password']);
                 console.log(json)
-                json['password'] = "88888888";
-                console.log(json)
+                $.ajax({
+                    url:'/hospital/user/insertDoctor.do',
+                    type:'post',
+                    contentType:"application/json",
+                    datatype:"json",
+                    data:JSON.stringify(json)
+                }).done(function (data) {
+                    if(data.code==0){
+                        layer.close(index);
+                        layer.msg("提交成功",{time: 1000},function () {
+                            console.log(data)
+                            window.location.href='/hospital/user/login';
+                        })
+                    }else{
+                        layer.close(index);
+                        layer.msg(data.msg,{time: 1000})
+                    }
+                })
             })
             form.render();
         }

@@ -33,26 +33,20 @@ public class DoctorController {
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
         if(id!=null&&!id.trim().equals("")){
-            pageDao.setDoctor_id(Integer.parseInt(id));
+            pageDao.setCert_code(Integer.parseInt(id));
         }
         List<DoctorDao> doctors = doctorService.getDoctorAll(pageDao);
         JsonResultDao jsonResultDao = new JsonResultDao();
         jsonResultDao.setCode(0);
         jsonResultDao.setMsg("success");
         jsonResultDao.setData(doctors);
-        jsonResultDao.setCount(pageDao.getDoctor_id()==null?doctorService.getDoctorsCounts():doctors.size());
+        jsonResultDao.setCount(pageDao.getCert_code()==null?doctorService.getDoctorsCounts():doctors.size());
         return jsonResultDao;
     }
     @RequestMapping("/deleteDoctor.do")
     @ResponseBody
     public JsonResultDao rootDeleteDoctor(@RequestBody DoctorDao doctorDao){
         doctorService.deleteDoctor(doctorDao);
-        return new JsonResultDao("success");
-    }
-    @RequestMapping("/insertDoctor.do")
-    @ResponseBody
-    public JsonResultDao rootInsertDoctor(@RequestBody DoctorDao doctorDao){
-        doctorService.insertDoctor(doctorDao);
         return new JsonResultDao("success");
     }
 

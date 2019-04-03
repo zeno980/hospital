@@ -69,7 +69,7 @@
         <blockquote class="layui-elem-quote">医生信息管理</blockquote>
         <div style="padding: 1%">
             <div>
-                搜索ID：
+                搜索证件号：
                 <div class="layui-inline">
                     <input class="layui-input" name="id" id="search_id" autocomplete="off">
                 </div>
@@ -94,7 +94,7 @@
                 </div>
                 <div class="modal-body">
                     <form class="layui-form" action="" lay-filter="updateForm">
-                        <div class="layui-form-item">
+                        <div class="layui-form-item" hidden>
                             <label class="layui-form-label">ID</label>
                             <div class="layui-input-block">
                                 <input type="text" name="doctor_id" required   autocomplete="off" class="layui-input layui-disabled">
@@ -104,6 +104,12 @@
                             <label class="layui-form-label">姓名</label>
                             <div class="layui-input-block">
                                 <input type="text" name="doctor_name" required lay-verify="required"  autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">证件号</label>
+                            <div class="layui-input-block">
+                                <input type="number" name="cert_code" required lay-verify="required"  autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">

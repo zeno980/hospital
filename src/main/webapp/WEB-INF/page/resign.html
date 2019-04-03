@@ -26,10 +26,16 @@
                                 <input type="text" name="doctor_name" required  lay-verify="required"  autocomplete="off" class="layui-input">
                             </div>
                         </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">身份证号</label>
+                            <div class="layui-input-block">
+                                <input type="number" name="cert_code" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
                         <div class="layui-form-item" >
                             <label class="layui-form-label">密码</label>
                             <div class="layui-input-block">
-                                <input type="password" name="password" required lay-verify="required"  autocomplete="off" class="layui-input">
+                                <input type="text" name="password" required lay-verify="required"  autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item" >
@@ -42,7 +48,6 @@
                             <label class="layui-form-label">部门</label>
                             <div class="layui-input-block">
                                 <select name="doctor_department" lay-verify="required" lay-filter="department" id="department_cursor">
-
                                 </select>
                             </div>
                         </div>

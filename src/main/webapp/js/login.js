@@ -4,10 +4,10 @@ $(document).ready(function () {
 })
 function login() {
     var layer = layui.layer;
-    var doctorId = $('#account').val();
+    var cert_code = $('#account').val();
     var pwd = hex_md5($('#password').val());
     var status = $('#status').val();
-    if(doctorId == "" || doctorId == null || doctorId == undefined||
+    if(cert_code == "" || cert_code == null || cert_code == undefined||
         pwd == "" || pwd == null || pwd == undefined||
         status == "" || status == null || status == undefined){
         return
@@ -18,11 +18,12 @@ function login() {
         type:'post',
         contentType:"application/json",
         datatype:"json",
-        data : JSON.stringify({"doctor_id":doctorId,"password":pwd,"page":status})
+        data : JSON.stringify({"cert_code":cert_code,"password":pwd,"page":status})
     }).done(function (data) {
         if(data.code==0){
             layer.close(index)
             layer.msg("登录成功，正在跳转...",{time: 1000},function () {
+                console.log(data)
                 window.location.href='/hospital/doctor/'+data.data;
             })
         }else{

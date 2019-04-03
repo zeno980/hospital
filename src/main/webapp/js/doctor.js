@@ -14,8 +14,8 @@ $(document).ready(function () {
         page:true,
         id:'testReload',
         cols: [[ //表头
-            {field: 'doctor_id', title: '编号', width:'10%',  unresize:true},
             {field: 'doctor_name', title: '姓名', width:'10%',unresize:true},
+            {field: 'cert_code', title: '证件号', width:'10%',  unresize:true},
             {field: 'doctor_department', title: '部门', width:'20%',unresize:true},
             {field: 'doctor_position', title: '职位', width:'20%',unresize:true},
             {field: 'doctor_gender', title: '性别', width: '10%',unresize:true},
@@ -33,9 +33,11 @@ $(document).ready(function () {
                 "doctor_department":data.doctor_department,
                 "doctor_gender":data.doctor_gender,
                 "doctor_position":data.doctor_position,
-                "doctor_tel":data.doctor_tel
+                "doctor_tel":data.doctor_tel,
+                "cert_code":data.cert_code
             })
             form.on('submit(doSubmit)',function (data) {
+                console.log(data.field)
                 $('#myModal').modal('hide');
                 var index = layer.load(2);
                 $.ajax({

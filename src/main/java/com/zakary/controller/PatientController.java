@@ -47,7 +47,7 @@ public class PatientController {
         jsonResultDao.setCode(0);
         jsonResultDao.setMsg("success");
         jsonResultDao.setData(patients);
-        jsonResultDao.setCount(pageDao.getDoctor_id()==null?patientService.getPatientsCounts():patients.size());
+        jsonResultDao.setCount(pageDao.getPatient_id()==null?patientService.getPatientsCounts():patients.size());
         return jsonResultDao;
     }
 

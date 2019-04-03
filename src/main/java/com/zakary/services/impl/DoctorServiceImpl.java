@@ -21,14 +21,17 @@ public class DoctorServiceImpl implements DoctorService {
     private DoctorMapper doctorMapper;
     @Override
     public void login(DoctorDao doctorDao) {
-        if(doctorDao.getDoctor_id()==null||doctorDao.getPassword()==null)
+        if(doctorDao.getCert_code()==null||doctorDao.getPassword()==null)
             throw new BusinessException("必要参数为空");
-        DoctorDao result = doctorMapper.selectDoctorById(doctorDao);
+        DoctorDao result = doctorMapper.selectDoctorByCode(doctorDao);
         if(result==null)
             throw new BusinessException("用户不存在");
         if("doctor".equals(doctorDao.getPage())&& result.getType()!=0){
-            logger.info("用户id:"+doctorDao.getDoctor_id());
+            logger.info("用户:"+doctorDao.getCert_code());
             throw new BusinessException("没有权限访问此页面");
+        }
+        if(result.getActive().equals("N")){
+            throw new BusinessException("账号未审核通过");
         }
         if(!doctorDao.equals(result)){
             throw new BusinessException("账号或密码错误");
@@ -43,25 +46,35 @@ public class DoctorServiceImpl implements DoctorService {
                 ||doctorDao.getDoctor_position()==null
                 ||doctorDao.getDoctor_gender()==null
                 ||doctorDao.getDoctor_tel()==null
-                ||doctorDao.getPassword()==null) {
+                ||doctorDao.getPassword()==null
+                ||doctorDao.getCert_code()==null) {
             throw new BusinessException("必要参数为空");
         }
-//        DoctorDao realUser = doctorMapper.selectDoctorById(doctorDao);
-//        if(realUser!=null){
-//            throw new BusinessException("用户已存在");
-//        }
+        DoctorDao realUser = doctorMapper.selectDoctorByCode(doctorDao);
+        if(realUser!=null){
+            throw new BusinessException("用户已存在");
+        }
         doctorMapper.insertDoctor(doctorDao);
     }
 
     @Override
     public void updateInformation(DoctorDao doctorDao) {
 
-        if((doctorDao.getDoctor_name()==null)
-                ||(doctorDao.getDoctor_department()==null)
-                ||(doctorDao.getDoctor_position()==null)
-                ||(doctorDao.getDoctor_gender()==null)
-                ||(doctorDao.getDoctor_tel()==null)) {
+        if(doctorDao.getDoctor_name()==null
+                ||doctorDao.getDoctor_department()==null
+                ||doctorDao.getDoctor_position()==null
+                ||doctorDao.getDoctor_gender()==null
+                ||doctorDao.getDoctor_tel()==null
+                ||doctorDao.getDoctor_id()==null) {
             throw new BusinessException("必要参数为空");
+        }
+        DoctorDao result = doctorMapper.selectDoctorById(doctorDao); //根据id查询
+        if(!result.getCert_code().equals(doctorDao.getCert_code())){ //尝试修改身份证号码
+            logger.info("修改身份证号码(旧号码:"+result.getCert_code()+">>>>>新号码:"+doctorDao.getCert_code()+")");
+            DoctorDao doctor_code = doctorMapper.selectDoctorByCode(doctorDao);//根据新身份证号码查询
+            if(doctor_code!=null){
+                throw new BusinessException("此证件号已存在");
+            }
         }
         doctorMapper.updateDoctorById(doctorDao);
     }

@@ -2,8 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zakary.mapper.DoctorMapper">
 
+  <select id="selectDoctorByCode" parameterType="com.zakary.dao.DoctorDao" resultType="com.zakary.dao.DoctorDao" >
+    select doctor_id,doctor_name,doctor_department,doctor_position,doctor_gender,type,doctor_tel,password,cert_code,active,create_date
+    from doctor
+    where cert_code = #{cert_code}
+  </select>
   <select id="selectDoctorById" parameterType="com.zakary.dao.DoctorDao" resultType="com.zakary.dao.DoctorDao" >
-    select doctor_id,doctor_name,doctor_department,doctor_position,doctor_gender,type,doctor_tel,password,cert_code
+    select doctor_id,doctor_name,doctor_department,doctor_position,doctor_gender,type,doctor_tel,password,cert_code,active,create_date
     from doctor
     where doctor_id = #{doctor_id}
   </select>
@@ -13,11 +18,11 @@
   </delete>
   <insert id="insertDoctor" parameterType="com.zakary.dao.DoctorDao">
     insert into doctor (doctor_name, doctor_department,
-      doctor_position, doctor_gender, type,
-      doctor_tel, password,cert_code)
+      doctor_position, doctor_gender,
+      doctor_tel, password,cert_code,type,active,create_date)
     values (#{doctor_name}, #{doctor_department},
-      #{doctor_position}, #{doctor_gender}, #{type},
-      #{doctor_tel}, #{password},#{cert_code})
+      #{doctor_position}, #{doctor_gender},
+      #{doctor_tel}, #{password},#{cert_code},'1','N',NOW())
   </insert>
 
   <update id="updateDoctorById" parameterType="com.zakary.dao.DoctorDao">
@@ -28,15 +33,15 @@
         doctor_position = #{doctor_position},
         doctor_gender = #{doctor_gender},
         doctor_tel = #{doctor_tel},
-        cert_code = #{cert_code},
+        cert_code = #{cert_code}
     where doctor_id = #{doctor_id}
   </update>
 
   <select id="selectAllDoctors" resultType="com.zakary.dao.DoctorDao" parameterType="com.zakary.dao.PageDao">
     select doctor_id,doctor_name,doctor_department,doctor_position,doctor_gender,type,doctor_tel,cert_code
     from doctor
-    <if test="doctor_id !=null and doctor_id != 0">
-      where doctor_id=#{doctor_id}
+    <if test="cert_code !=null and cert_code != 0">
+      where cert_code=#{cert_code}
     </if>
     limit #{page},#{limit}
   </select>

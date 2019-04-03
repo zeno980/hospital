@@ -1,5 +1,6 @@
 package com.zakary.dao;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class DoctorDao {
@@ -21,6 +22,24 @@ public class DoctorDao {
 
     private String page;
     private String cert_code;
+    private String active;
+    private Date create_date;
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
+
+    public Date getCreate_date() {
+        return create_date;
+    }
+
+    public void setCreate_date(Date create_date) {
+        this.create_date = create_date;
+    }
 
     public String getCert_code() {
         return cert_code;
@@ -107,13 +126,12 @@ public class DoctorDao {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DoctorDao doctorDao = (DoctorDao) o;
-        return Objects.equals(doctor_id, doctorDao.doctor_id) &&
-                Objects.equals(password, doctorDao.password) &&
+        return Objects.equals(password, doctorDao.password) &&
                 Objects.equals(cert_code, doctorDao.cert_code);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(doctor_id, password, cert_code);
+        return Objects.hash(password, cert_code);
     }
 }

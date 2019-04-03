@@ -36,7 +36,7 @@ public class UserController {
     public JsonResultDao login(@RequestBody DoctorDao doctorDao, HttpServletRequest request){
         doctorService.login(doctorDao);
         HttpSession session = request.getSession();
-        session.setAttribute("doctor_id", doctorDao.getDoctor_id());
+        session.setAttribute("cert_code", doctorDao.getCert_code());
         return new JsonResultDao(doctorDao.getPage());
     }
 
@@ -49,5 +49,11 @@ public class UserController {
     @ResponseBody
     public JsonResultDao getPosition(@RequestBody DepartmentDao doctorDao){
         return new JsonResultDao(departmentService.getPositions(doctorDao));
+    }
+    @RequestMapping("/insertDoctor.do")
+    @ResponseBody
+    public JsonResultDao rootInsertDoctor(@RequestBody DoctorDao doctorDao){
+        doctorService.insertDoctor(doctorDao);
+        return new JsonResultDao("success");
     }
 }

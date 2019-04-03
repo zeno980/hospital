@@ -30,7 +30,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         //String uri = request.getRequestURI(); // 获取登录的uri，这个是不进行拦截的
         //if(session.getAttribute("LOGIN_USER")!=null || uri.indexOf("system/login")!=-1) {// 说明登录成功 或者 执行登录功能
-        if(session.getAttribute("doctor_id")!=null) {
+        if(session.getAttribute("cert_code")!=null) {
             // 登录成功不拦截
             return true;
         }else {
