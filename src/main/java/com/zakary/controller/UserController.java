@@ -39,6 +39,7 @@ public class UserController {
     @RequestMapping("/register")
     @ResponseBody
     public JsonResultDao register(@RequestBody DoctorDao doctorDao,HttpServletRequest request){
-        return new JsonResultDao(doctorService.insertDoctor(doctorDao));
+        doctorService.insertDoctor(doctorDao);
+        return new JsonResultDao("success");
     }
 }

@@ -20,7 +20,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Autowired
     private DoctorMapper doctorMapper;
     @Override
-    public boolean login(DoctorDao doctorDao) {
+    public void login(DoctorDao doctorDao) {
         if(doctorDao.getDoctor_id()==null||doctorDao.getPassword()==null)
             throw new BusinessException("必要参数为空");
         DoctorDao result = doctorMapper.selectDoctorById(doctorDao);
@@ -30,16 +30,14 @@ public class DoctorServiceImpl implements DoctorService {
             logger.info("用户id:"+doctorDao.getDoctor_id());
             throw new BusinessException("没有权限访问此页面");
         }
-        if(doctorDao.equals(result)){
-            return true;
-        }else{
+        if(!doctorDao.equals(result)){
             throw new BusinessException("账号或密码错误");
         }
     }
     public List<DoctorDao> getDoctorAll(PageDao pageDao){
         return doctorMapper.selectAllDoctors(pageDao);
     }
-    public boolean insertDoctor(DoctorDao doctorDao){
+    public void insertDoctor(DoctorDao doctorDao){
         if(doctorDao.getDoctor_name()==null
                 ||doctorDao.getDoctor_department()==null
                 ||doctorDao.getDoctor_position()==null
@@ -53,11 +51,10 @@ public class DoctorServiceImpl implements DoctorService {
 //            throw new BusinessException("用户已存在");
 //        }
         doctorMapper.insertDoctor(doctorDao);
-        return true;
     }
 
     @Override
-    public int updateInformation(DoctorDao doctorDao) {
+    public void updateInformation(DoctorDao doctorDao) {
 
         if((doctorDao.getDoctor_name()==null)
                 ||(doctorDao.getDoctor_department()==null)
@@ -66,16 +63,16 @@ public class DoctorServiceImpl implements DoctorService {
                 ||(doctorDao.getDoctor_tel()==null)) {
             throw new BusinessException("必要参数为空");
         }
-        return doctorMapper.updateDoctorById(doctorDao);
+        doctorMapper.updateDoctorById(doctorDao);
     }
 
     @Override
-    public int deleteDoctor(DoctorDao doctorDao) {
+    public void deleteDoctor(DoctorDao doctorDao) {
         if(doctorDao.getDoctor_id() ==null)
             throw new BusinessException("必要参数为空");
         if(doctorDao.getDoctor_id()==1)
             throw new BusinessException("此用户无法删除");
-        return doctorMapper.deleteDoctorById(doctorDao);
+        doctorMapper.deleteDoctorById(doctorDao);
     }
 
     @Override

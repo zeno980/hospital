@@ -20,6 +20,15 @@ public class DoctorDao {
     private String password;
 
     private String page;
+    private String cert_code;
+
+    public String getCert_code() {
+        return cert_code;
+    }
+
+    public void setCert_code(String cert_code) {
+        this.cert_code = cert_code;
+    }
 
     public Integer getDoctor_id() {
         return doctor_id;
@@ -99,11 +108,12 @@ public class DoctorDao {
         if (o == null || getClass() != o.getClass()) return false;
         DoctorDao doctorDao = (DoctorDao) o;
         return Objects.equals(doctor_id, doctorDao.doctor_id) &&
-                Objects.equals(password, doctorDao.password);
+                Objects.equals(password, doctorDao.password) &&
+                Objects.equals(cert_code, doctorDao.cert_code);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(doctor_id, password);
+        return Objects.hash(doctor_id, password, cert_code);
     }
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.zakary.mapper.DoctorMapper">
 
   <select id="selectDoctorById" parameterType="com.zakary.dao.DoctorDao" resultType="com.zakary.dao.DoctorDao" >
-    select doctor_id,doctor_name,doctor_department,doctor_position,doctor_gender,type,doctor_tel,password
+    select doctor_id,doctor_name,doctor_department,doctor_position,doctor_gender,type,doctor_tel,password,cert_code
     from doctor
     where doctor_id = #{doctor_id}
   </select>
@@ -14,10 +14,10 @@
   <insert id="insertDoctor" parameterType="com.zakary.dao.DoctorDao">
     insert into doctor (doctor_name, doctor_department,
       doctor_position, doctor_gender, type,
-      doctor_tel, password)
+      doctor_tel, password,cert_code)
     values (#{doctor_name}, #{doctor_department},
       #{doctor_position}, #{doctor_gender}, #{type},
-      #{doctor_tel}, #{password})
+      #{doctor_tel}, #{password},#{cert_code})
   </insert>
 
   <update id="updateDoctorById" parameterType="com.zakary.dao.DoctorDao">
@@ -27,12 +27,13 @@
         doctor_department = #{doctor_department},
         doctor_position = #{doctor_position},
         doctor_gender = #{doctor_gender},
-        doctor_tel = #{doctor_tel}
+        doctor_tel = #{doctor_tel},
+        cert_code = #{cert_code},
     where doctor_id = #{doctor_id}
   </update>
 
   <select id="selectAllDoctors" resultType="com.zakary.dao.DoctorDao" parameterType="com.zakary.dao.PageDao">
-    select doctor_id,doctor_name,doctor_department,doctor_position,doctor_gender,type,doctor_tel
+    select doctor_id,doctor_name,doctor_department,doctor_position,doctor_gender,type,doctor_tel,cert_code
     from doctor
     <if test="doctor_id !=null and doctor_id != 0">
       where doctor_id=#{doctor_id}

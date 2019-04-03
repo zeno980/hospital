@@ -46,17 +46,20 @@ public class DoctorController {
     @RequestMapping("/deleteDoctor.do")
     @ResponseBody
     public JsonResultDao rootDeleteDoctor(@RequestBody DoctorDao doctorDao){
-        return new JsonResultDao(doctorService.deleteDoctor(doctorDao));
+        doctorService.deleteDoctor(doctorDao);
+        return new JsonResultDao("success");
     }
     @RequestMapping("/insertDoctor.do")
     @ResponseBody
     public JsonResultDao rootInsertDoctor(@RequestBody DoctorDao doctorDao){
-        return new JsonResultDao(doctorService.insertDoctor(doctorDao));
+        doctorService.insertDoctor(doctorDao);
+        return new JsonResultDao("success");
     }
 
     @RequestMapping("/updateDoctor.do")
     @ResponseBody
     public JsonResultDao UpdateDoctor(@RequestBody DoctorDao doctorDao){
-        return new JsonResultDao(doctorService.updateInformation(doctorDao));
+        doctorService.updateInformation(doctorDao);
+        return new JsonResultDao("success");
     }
 }
