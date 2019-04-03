@@ -41,14 +41,14 @@
                     <a class="" href="javascript:;">信息管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">医生信息管理</a></dd>
-                        <dd><a href="javascript:;">功能2</a></dd>
+                        <dd><a href="javascript:;">医生注册审核</a></dd>
                         <dd><a href="javascript:;">功能3</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">功能区2</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">功能4</a></dd>
+                        <dd><a href="javascript:;">功能4<span class="layui-badge">9</span></a></dd>
                         <dd><a href="javascript:;">功能5</a></dd>
                         <dd><a href="javascript:;">功能6</a></dd>
                     </dl>
@@ -66,18 +66,32 @@
     </div>
 
     <div class="layui-body">
-        <blockquote class="layui-elem-quote">医生信息管理</blockquote>
-        <div style="padding: 1%">
-            <div>
-                搜索证件号：
-                <div class="layui-inline">
-                    <input class="layui-input" name="id" id="search_id" autocomplete="off">
+        <div id="doctor_info" hidden>
+            <blockquote class="layui-elem-quote">医生信息管理</blockquote>
+            <div style="padding: 1%">
+                <div>
+                    搜索证件号：
+                    <div class="layui-inline">
+                        <input class="layui-input" name="id" id="search_id" autocomplete="off">
+                    </div>
+                    <button class="layui-btn" onclick="search()">搜索</button>
                 </div>
-                <button class="layui-btn" onclick="search()">搜索</button>
+                <table id="doctor_cursor" lay-filter="doctor_table"></table>
             </div>
-            <table id="doctor_cursor" lay-filter="doctor_table"></table>
         </div>
-
+        <div id="doctor_v" hidden>
+            <blockquote class="layui-elem-quote">医生注册审核</blockquote>
+            <div style="padding: 1%">
+                <div>
+                    搜索证件号：
+                    <div class="layui-inline">
+                        <input class="layui-input" name="id" id="search_id_v" autocomplete="off">
+                    </div>
+                    <button class="layui-btn" onclick="search()">搜索</button>
+                </div>
+                <!--<table id="doctor_cursor_v" lay-filter="doctor_table"></table>-->
+            </div>
+        </div>
     </div>
 
     <div class="layui-footer">

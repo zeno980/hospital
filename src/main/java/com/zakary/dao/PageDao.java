@@ -5,6 +5,15 @@ public class PageDao {  //分页查询需要
     private int limit;
     private Integer cert_code;
     private Integer patient_id;
+    private Integer doctor_id;
+
+    public Integer getDoctor_id() {
+        return doctor_id;
+    }
+
+    public void setDoctor_id(Integer doctor_id) {
+        this.doctor_id = doctor_id;
+    }
 
     public Integer getCert_code() {
         return cert_code;

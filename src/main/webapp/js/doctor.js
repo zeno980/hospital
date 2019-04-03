@@ -1,10 +1,21 @@
 var tableIns;
 $(document).ready(function () {
+    hideAll();
+    $('#doctor_info').show()
     var element = layui.element;
     var layer = layui.layer;
     element.init();
     element.on('nav(nav_left)',function (elem) {
-        // console.log(elem.context.innerText)
+        switch (elem.context.innerText) {
+            case '医生信息管理':
+                hideAll();
+                $('#doctor_info').show()
+                break;
+            case '医生注册审核':
+                hideAll();
+                $('#doctor_v').show()
+                break;
+        }
     })
     var table = layui.table;
     tableIns = table.render({
@@ -92,4 +103,8 @@ function search() {
 }
 function updateDoctor() {
     $('#hideSubmit').click();
+}
+function hideAll() {
+    $('#doctor_info').hide();
+    $('#doctor_v').hide();
 }

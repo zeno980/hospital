@@ -39,13 +39,13 @@
 
   <select id="selectAllDoctors" resultType="com.zakary.dao.DoctorDao" parameterType="com.zakary.dao.PageDao">
     select doctor_id,doctor_name,doctor_department,doctor_position,doctor_gender,type,doctor_tel,cert_code
-    from doctor
+    from doctor where active='Y'
     <if test="cert_code !=null and cert_code != 0">
-      where cert_code=#{cert_code}
+      and cert_code=#{cert_code}
     </if>
     limit #{page},#{limit}
   </select>
   <select id="getAllDoctorsCounts" resultType="java.lang.Integer">
-    select count(doctor_id) from doctor;
+    select count(doctor_id) from doctor where active='Y';
   </select>
 </mapper>
