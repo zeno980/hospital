@@ -5,6 +5,7 @@
     <title>Title</title>
     <link rel="stylesheet" href="/hospital/css/bootstrap.min.css">
     <script src="/hospital/js/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="/hospital/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/hospital/layui/css/layui.css">
     <script src="/hospital/layui/layui.all.js"></script>
@@ -65,8 +66,8 @@
         </div>
     </div>
 
-    <div class="layui-body">
-        <div id="doctor_info" hidden>
+    <div class="layui-body" id="main_body">
+        <div id="doctor_info" v-if="activeDoctors">
             <blockquote class="layui-elem-quote">医生信息管理</blockquote>
             <div style="padding: 1%">
                 <div>
@@ -79,7 +80,7 @@
                 <table id="doctor_cursor" lay-filter="doctor_table"></table>
             </div>
         </div>
-        <div id="doctor_v" hidden>
+        <div id="doctor_v" v-if="inactiveDoctors">
             <blockquote class="layui-elem-quote">医生注册审核</blockquote>
             <div style="padding: 1%">
                 <div>
@@ -89,7 +90,7 @@
                     </div>
                     <button class="layui-btn" onclick="search()">搜索</button>
                 </div>
-                <!--<table id="doctor_cursor_v" lay-filter="doctor_table"></table>-->
+                <table id="doctor_cursor_v" lay-filter="doctor_table_v"></table>
             </div>
         </div>
     </div>

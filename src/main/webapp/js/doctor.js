@@ -1,30 +1,36 @@
-var tableIns;
+var tableIns_active;
 $(document).ready(function () {
-    hideAll();
     $('#doctor_info').show()
     var element = layui.element;
-    var layer = layui.layer;
     element.init();
     element.on('nav(nav_left)',function (elem) {
         switch (elem.context.innerText) {
             case '医生信息管理':
-                hideAll();
-                $('#doctor_info').show()
+
                 break;
             case '医生注册审核':
-                hideAll();
-                $('#doctor_v').show()
+
                 break;
         }
     })
+    showActiveDoctors();
+})
+function search() {
+    tableIns_active.reload({where: {doctor_id: $('#search_id').val(),}, page: {curr: 1}})
+    $('#search_id').val('');
+}
+function updateDoctor() {
+    $('#hideSubmit').click();
+}
+function showActiveDoctors() {
     var table = layui.table;
-    tableIns = table.render({
+    tableIns_active = table.render({
         elem: '#doctor_cursor',
         url: '/hospital/doctor/getDoctors.do', //数据接口
         skin: 'row ', //行边框风格
         page:true,
         id:'testReload',
-        cols: [[ //表头
+        cols: [[
             {field: 'doctor_name', title: '姓名', width:'10%',unresize:true},
             {field: 'cert_code', title: '证件号', width:'10%',  unresize:true},
             {field: 'doctor_department', title: '部门', width:'20%',unresize:true},
@@ -61,7 +67,7 @@ $(document).ready(function () {
                     if(data.code==0){
                         layer.close(index);
                         layer.msg("修改成功",{time: 1000},function () {
-                            tableIns.reload({where: {doctor_id: '',}});
+                            tableIns_active.reload({where: {doctor_id: '',}});
                         })
                     }else{
                         layer.close(index);
@@ -85,7 +91,7 @@ $(document).ready(function () {
                     if(data.code==0){
                         layer.close(v);
                         layer.msg("删除成功",{time: 1000},function () {
-                            tableIns.reload({where: {doctor_id: '',}});
+                            tableIns_active.reload({where: {doctor_id: '',}});
                             $('#search_id').val('');
                         })
                     }else{
@@ -96,15 +102,7 @@ $(document).ready(function () {
             });
         }
     });
-})
-function search() {
-    tableIns.reload({where: {doctor_id: $('#search_id').val(),}, page: {curr: 1}})
-    $('#search_id').val('');
 }
-function updateDoctor() {
-    $('#hideSubmit').click();
-}
-function hideAll() {
-    $('#doctor_info').hide();
-    $('#doctor_v').hide();
+function hideAll(){
+    
 }

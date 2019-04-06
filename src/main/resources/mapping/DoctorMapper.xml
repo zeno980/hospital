@@ -39,7 +39,7 @@
 
   <select id="selectAllDoctors" resultType="com.zakary.dao.DoctorDao" parameterType="com.zakary.dao.PageDao">
     select doctor_id,doctor_name,doctor_department,doctor_position,doctor_gender,type,doctor_tel,cert_code
-    from doctor where active='Y'
+    from doctor where active=#{active}
     <if test="cert_code !=null and cert_code != 0">
       and cert_code=#{cert_code}
     </if>
