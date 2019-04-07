@@ -3,7 +3,9 @@ package com.zakary.dao;
 public class PrescriptionDao {
     private Integer prescription_id;
     private Integer doctor_id;
+    private String doctor_cert_code;
     private Integer patient_id;
+    private String patient_cert_code;
     private Integer drug_id;
     private Integer drug_num;
 
@@ -46,5 +48,21 @@ public class PrescriptionDao {
 
     public void setDrug_num(Integer drug_num) {
         this.drug_num = drug_num;
+    }
+
+    public String getDoctor_cert_code() {
+        return doctor_cert_code;
+    }
+
+    public void setDoctor_cert_code(String doctor_cert_code) {
+        this.doctor_cert_code = doctor_cert_code;
+    }
+
+    public String getPatient_cert_code() {
+        return patient_cert_code;
+    }
+
+    public void setPatient_cert_code(String patient_cert_code) {
+        this.patient_cert_code = patient_cert_code;
     }
 }

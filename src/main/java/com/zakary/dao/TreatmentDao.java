@@ -3,28 +3,13 @@ package com.zakary.dao;
 import java.util.Date;
 
 public class TreatmentDao {
-    private Integer doctor_id;
-    private Integer patient_id;
+
+    private String doctor_cert_code;
+    private String patient_cert_code;
     private String treatment_name;
     private Date treatment_time;
     private Double treatment_fee;
 
-
-    public Integer getDoctor_id() {
-        return doctor_id;
-    }
-
-    public void setDoctor_id(Integer doctor_id) {
-        this.doctor_id = doctor_id;
-    }
-
-    public Integer getPatient_id() {
-        return patient_id;
-    }
-
-    public void setPatient_id(Integer patient_id) {
-        this.patient_id = patient_id;
-    }
 
     public String getTreatment_name() {
         return treatment_name;
@@ -49,4 +34,29 @@ public class TreatmentDao {
     public void setTreatment_fee(Double treatment_fee) {
         this.treatment_fee = treatment_fee;
     }
+
+    public String getDoctor_cert_code() {
+        return doctor_cert_code;
+    }
+
+    public void setDoctor_cert_code(String doctor_cert_code) {
+        this.doctor_cert_code = doctor_cert_code;
+    }
+
+    public String getPatient_cert_code() {
+        return patient_cert_code;
+    }
+
+    public void setPatient_cert_code(String patient_cert_code) {
+        this.patient_cert_code = patient_cert_code;
+    }
+
+    /*public Integer getCert_code() {
+        return cert_code;
+    }
+
+    public void setCert_code(Integer cert_code) {
+        this.cert_code = cert_code;
+    }*/
+
 }

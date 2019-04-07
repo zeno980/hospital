@@ -3,6 +3,8 @@ package com.zakary.dao;
 public class PatientDao {
     private Integer patient_id;
 
+    private String cert_code;
+
     private String patient_name;
 
     private String patient_gender;
@@ -59,5 +61,13 @@ public class PatientDao {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getCert_code() {
+        return cert_code;
+    }
+
+    public void setCert_code(String cert_code) {
+        this.cert_code = cert_code;
     }
 }

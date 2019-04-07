@@ -104,31 +104,58 @@
     where patient_id = #{patient_id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectAllPatientsByDoctorId" resultType="com.zakary.dao.utils.DoctorPatients" parameterType="com.zakary.dao.PageDao">
-      select patient.patient_id,patient_name,patient_gender,patient_age,treatment_name,treatment_time,treatment_fee
+  <select id="selectAllPatientsByDoctorCert" resultType="com.zakary.dao.utils.DoctorPatients" parameterType="com.zakary.dao.PageDao">
+      select treatment.patient_cert_code,patient_name,patient_gender,patient_age,treatment_name,treatment_time,treatment_fee
       from patient,treatment
-      where treatment.doctor_id=#{doctor_id,jdbcType=INTEGER} and patient.patient_id=treatment.patient_id
-      <if test="patient_id !=null and patient_id != 0">
-        and patient.patient_id=#{patient_id,jdbcType=INTEGER}
+      where treatment.doctor_cert_code=#{doctor_cert_code,jdbcType=VARCHAR} and patient.cert_code=treatment.patient_cert_code
+      <if test="patient_cert_code !=null">
+        and patient.cert_code=#{patient_cert_code,jdbcType=INTEGER}
       </if>
       limit #{page},#{limit}
   </select>
 
-  <select id="getCountById" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+  <select id="getCountByCert" resultType="java.lang.Integer" parameterType="java.lang.String">
     select count(*)
     from patient
-    where patient_id=#{patient_id,jdbcType=INTEGER}
+    where cert_code=#{cert_code,jdbcType=VARCHAR}
   </select>
 
-  <select id="getCountByIdInTreatment" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+  <select id="getCountByCertInTreatment" resultType="java.lang.Integer" parameterType="java.lang.String">
     select count(*)
     from treatment
-    where patient_id=#{patient_id,jdbcType=INTEGER}
+    where patient_cert_code=#{patient_cert_code,jdbcType=VARCHAR}
   </select>
 
   <insert id="insertPatientTreatmnet" parameterType="com.zakary.dao.TreatmentDao">
-    insert into treatment(doctor_id, patient_id, treatment_name, treatment_time, treatment_fee)
-    values (#{doctor_id,jdbcType=INTEGER},#{patient_id,jdbcType=INTEGER},#{treatment_name,jdbcType=VARCHAR},#{treatment_time,jdbcType=DATE},#{treatment_fee,jdbcType=DECIMAL})
+    insert into treatment(doctor_cert_code, patient_cert_code, treatment_name, treatment_time, treatment_fee)
+    values (#{doctor_cert_code,jdbcType=VARCHAR},#{patient_cert_code,jdbcType=VARCHAR},#{treatment_name,jdbcType=VARCHAR},#{treatment_time,jdbcType=DATE},#{treatment_fee,jdbcType=DECIMAL})
   </insert>
 
+  <select id="isEmptyBySickbed" parameterType="java.lang.Integer" resultType="java.lang.String">
+    select sickbed_state
+    from sickbed
+    where sickbed_id=#{sickbed_id,jdbcType=INTEGER} and sickroom_id=#{sickroom_id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectPatientInSickbedByCert" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*)
+    from sickbed
+    where patient_cert_code=#{patient_cert_code,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="updateSickbed" parameterType="com.zakary.dao.SickbedDao">
+    update sickbed
+    set sickbed_state=#{sickbed_state,jdbcType=VARCHAR},
+        patient_cert_code=#{patient_cert_code,jdbcType=VARCHAR}
+    where sickroom_id=#{sickroom_id,jdbcType=INTEGER} and sickbed_id=#{sickbed_id,jdbcType=INTEGER}
+  </insert>
+
+  <select id="selectPatientsSickbedInfo" parameterType="com.zakary.dao.PageDao" resultType="com.zakary.dao.utils.PatientSickbed">
+    select patient.patient_name,sickbed.patient_cert_code,doctor.doctor_name,sickbed.sickroom_id,sickbed.sickbed_id,sickroom.sickroom_fee
+    from sickroom,sickbed,patient,doctor,treatment
+    where sickbed.patient_cert_code=patient.cert_code and patient.cert_code=treatment.patient_cert_code and sickbed.sickroom_id=sickroom.sickroom_id and treatment.doctor_cert_code=doctor.cert_code
+    <if test="patient_cert_code!=null and patient_cert_code!=0">
+      and patient.cert_code=#{patient_cert_code}
+    </if>
+  </select>
 </mapper>

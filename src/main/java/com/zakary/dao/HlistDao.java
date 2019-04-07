@@ -5,11 +5,12 @@ import java.util.Date;
 public class HlistDao {
     private Integer hlist_id;
     private Integer doctor_id;
+    private String doctor_cert_code;
     private Integer patient_id;
+    private String patient_cert_code;
     private Integer sickroom_id;
     private Integer sickbed_id;
-    private Date inh_time;
-    private Date outh_time;
+    private Date treatment_time;
     private String treatment_name;
     private double hlist_fee;
 
@@ -54,22 +55,6 @@ public class HlistDao {
         this.sickbed_id = sickbed_id;
     }
 
-    public Date getInh_time() {
-        return inh_time;
-    }
-
-    public void setInh_time(Date inh_time) {
-        this.inh_time = inh_time;
-    }
-
-    public Date getOuth_time() {
-        return outh_time;
-    }
-
-    public void setOuth_time(Date outh_time) {
-        this.outh_time = outh_time;
-    }
-
     public String getTreatment_name() {
         return treatment_name;
     }
@@ -84,5 +69,29 @@ public class HlistDao {
 
     public void setHlist_fee(double hlist_fee) {
         this.hlist_fee = hlist_fee;
+    }
+
+    public String getDoctor_cert_code() {
+        return doctor_cert_code;
+    }
+
+    public void setDoctor_cert_code(String doctor_cert_code) {
+        this.doctor_cert_code = doctor_cert_code;
+    }
+
+    public String getPatient_cert_code() {
+        return patient_cert_code;
+    }
+
+    public void setPatient_cert_code(String patient_cert_code) {
+        this.patient_cert_code = patient_cert_code;
+    }
+
+    public Date getTreatment_time() {
+        return treatment_time;
+    }
+
+    public void setTreatment_time(Date treatment_time) {
+        this.treatment_time = treatment_time;
     }
 }

@@ -68,8 +68,8 @@ public class MapperTest extends BaseTest {
         PageDao pageDao = new PageDao();
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
-        pageDao.setPatient_id(1);
-        List<DoctorPatients> patients=patientService.getAllPatientByDoctorId(pageDao,id);
+        pageDao.setPatient_cert_code("1");
+        List<DoctorPatients> patients=patientService.getAllPatientByDoctorCert(pageDao,id);
 
     }
     @Test
@@ -77,11 +77,30 @@ public class MapperTest extends BaseTest {
         Date date=new Date(2000,1,1);
         System.out.println(date);
         TreatmentDao treatmentDao=new TreatmentDao();
-        treatmentDao.setDoctor_id(2);
-        treatmentDao.setPatient_id(5);
+        treatmentDao.setDoctor_cert_code("2");
+        treatmentDao.setPatient_cert_code("6");
         treatmentDao.setTreatment_name("fff");
         treatmentDao.setTreatment_time(date);
         treatmentDao.setTreatment_fee(500.0);
         patientService.insertPatient(treatmentDao);
+    }
+    @Test
+    public void test8(){
+        SickbedDao sickbedDao=new SickbedDao();
+        sickbedDao.setPatient_cert_code("5");
+        sickbedDao.setSickroom_id(2);
+        sickbedDao.setSickbed_id(2);
+        patientService.arrangeSickbed(sickbedDao);
+    }
+    @Test
+    public void test9(){
+        int pageNum=1;
+        int limit=10;
+
+        PageDao pageDao = new PageDao();
+        pageDao.setPage((pageNum-1)*limit);
+        pageDao.setLimit(limit);
+
+        patientService.getPatientsSickbedInfo(pageDao);
     }
 }

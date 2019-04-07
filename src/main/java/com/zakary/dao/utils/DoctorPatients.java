@@ -3,7 +3,8 @@ package com.zakary.dao.utils;
 import java.util.Date;
 
 public class DoctorPatients {
-    private Integer patient_id;
+    //private Integer patient_id;
+    private String patient_cert_code;
     private String patient_name;
     private String patient_gender;
     private Integer patient_age;
@@ -11,13 +12,13 @@ public class DoctorPatients {
     private Date treatment_time;
     private Double treatment_fee;
 
-    public Integer getPatient_id() {
+    /*public Integer getPatient_id() {
         return patient_id;
     }
 
     public void setPatient_id(Integer patient_id) {
         this.patient_id = patient_id;
-    }
+    }*/
 
     public String getPatient_name() {
         return patient_name;
@@ -65,5 +66,14 @@ public class DoctorPatients {
 
     public void setTreatment_fee(Double treatment_fee) {
         this.treatment_fee = treatment_fee;
+    }
+
+
+    public String getPatient_cert_code() {
+        return patient_cert_code;
+    }
+
+    public void setPatient_cert_code(String patient_cert_code) {
+        this.patient_cert_code = patient_cert_code;
     }
 }

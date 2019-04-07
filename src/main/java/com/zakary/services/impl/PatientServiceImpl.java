@@ -2,8 +2,10 @@ package com.zakary.services.impl;
 
 import com.zakary.dao.PageDao;
 import com.zakary.dao.PatientDao;
+import com.zakary.dao.SickbedDao;
 import com.zakary.dao.TreatmentDao;
 import com.zakary.dao.utils.DoctorPatients;
+import com.zakary.dao.utils.PatientSickbed;
 import com.zakary.exp.BusinessException;
 import com.zakary.mapper.DoctorMapper;
 import com.zakary.mapper.PatientMapper;
@@ -22,6 +24,8 @@ public class PatientServiceImpl implements PatientService {
     private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private PatientMapper patientMapper;
+    @Autowired
+    private PatientService patientService;
 
     @Override
     public int getPatientsCounts() {
@@ -29,28 +33,70 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<DoctorPatients> getAllPatientByDoctorId(PageDao pageDao,String id) {
-        if(id==null||id==""||id=="1")
+    public List<DoctorPatients> getAllPatientByDoctorCert(PageDao pageDao,String doctor_cert_code) {
+        if(doctor_cert_code==null||doctor_cert_code==""||doctor_cert_code=="1")
             throw new BusinessException("id不存在");
-        int doctor_id=Integer.parseInt(id);
-        System.out.println("医生ID: "+doctor_id);
-        pageDao.setDoctor_id(doctor_id);
-        return patientMapper.selectAllPatientsByDoctorId(pageDao);
+        //int doctor_id=Integer.parseInt(doctor_cert_code);
+        System.out.println("医生ID: "+doctor_cert_code);
+        pageDao.setDoctor_cert_code(doctor_cert_code);
+        return patientMapper.selectAllPatientsByDoctorCert(pageDao);
     }
 
     @Override
-    public void insertPatient(@RequestBody TreatmentDao treatmentDao) {//此处需要在前端自动将此医生的id赋值
-        if((treatmentDao.getDoctor_id()==null)
-            ||(treatmentDao.getPatient_id()==null)
+    public void insertPatient(@RequestBody TreatmentDao treatmentDao) {//此处需要在前端自动将此医生的赋值
+        if(/*(treatmentDao.getDoctor_id()==null)*/
+           /* (treatmentDao.getPatient_id()==null)*/
+            (treatmentDao.getDoctor_cert_code()==null)
+            ||(treatmentDao.getPatient_cert_code()==null)
             ||(treatmentDao.getTreatment_name()==null)
             ||(treatmentDao.getTreatment_time()==null)
             ||(treatmentDao.getTreatment_fee()==null))
             throw new BusinessException("必要参数为空");
-        else if(patientMapper.getCountById(treatmentDao.getPatient_id())==0)
+        else if(patientMapper.getCountByCert(treatmentDao.getPatient_cert_code())==0)
             throw new BusinessException("此患者不存在");
-        else if(patientMapper.getCountByIdInTreatment(treatmentDao.getPatient_id())!=0)
+        else if(patientMapper.getCountByCertInTreatment(treatmentDao.getPatient_cert_code())!=0)
             throw new BusinessException("此患者已存在在治疗名单中");
         else
             patientMapper.insertPatientTreatmnet(treatmentDao);
+    }
+
+    @Override
+    public String isEmpty(int sickroom_id, int sickbed_id) {
+        System.out.println("room:"+sickroom_id+"  bed:"+sickbed_id);
+        return patientMapper.isEmptyBySickbed(sickroom_id,sickbed_id);
+    }
+
+    @Override
+    public void arrangeSickbed(SickbedDao sickbedDao){
+        if((sickbedDao.getPatient_cert_code()==null)
+                ||(sickbedDao.getSickroom_id()==null)
+                ||(sickbedDao.getSickbed_id()==null))
+            throw new BusinessException("必要参数为空");
+        else {
+            System.out.println("room:"+sickbedDao.getSickroom_id()+"  bed:"+sickbedDao.getSickbed_id());
+            if (!patientService.isEmpty(sickbedDao.getSickroom_id(), sickbedDao.getSickbed_id()).equals("empty")) {
+                //System.out.println(patientService.isEmpty(sickbedDao.getSickroom_id(), sickbedDao.getSickbed_id()));
+                throw new BusinessException("该病床已分配");
+            }
+            else {
+                if (patientService.isInSickbed(sickbedDao.getPatient_cert_code()) != 0)
+                    throw new BusinessException("该病人已存在");
+                else {
+                    sickbedDao.setSickbed_state("full");
+                    patientMapper.updateSickbed(sickbedDao);
+                }
+            }
+        }
+//       patientMapper.insertSickbed(sickbedDao);
+    }
+
+    @Override
+    public int isInSickbed(String patient_cert_code){
+        return patientMapper.selectPatientInSickbedByCert(patient_cert_code);
+    }
+
+    @Override
+    public List<PatientSickbed> getPatientsSickbedInfo(PageDao pageDao) {
+        return patientMapper.selectPatientsSickbedInfo(pageDao);
     }
 }

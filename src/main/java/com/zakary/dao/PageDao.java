@@ -5,7 +5,9 @@ public class PageDao {  //分页查询需要
     private int limit;
     private Integer cert_code;
     private Integer patient_id;
+    private String patient_cert_code;
     private Integer doctor_id;
+    private String doctor_cert_code;
 
     public Integer getDoctor_id() {
         return doctor_id;
@@ -45,5 +47,21 @@ public class PageDao {  //分页查询需要
 
     public void setPatient_id(Integer patient_id) {
         this.patient_id = patient_id;
+    }
+
+    public String getPatient_cert_code() {
+        return patient_cert_code;
+    }
+
+    public void setPatient_cert_code(String patient_cert_code) {
+        this.patient_cert_code = patient_cert_code;
+    }
+
+    public String getDoctor_cert_code() {
+        return doctor_cert_code;
+    }
+
+    public void setDoctor_cert_code(String doctor_cert_code) {
+        this.doctor_cert_code = doctor_cert_code;
     }
 }
