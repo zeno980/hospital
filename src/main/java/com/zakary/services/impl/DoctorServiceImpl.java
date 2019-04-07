@@ -92,5 +92,6 @@ public class DoctorServiceImpl implements DoctorService {
     public int getDoctorsCounts() {
         return doctorMapper.getAllDoctorsCounts();
     }
+
 }
 

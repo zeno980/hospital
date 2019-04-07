@@ -28,12 +28,18 @@ public class DoctorController {
     public JsonResultDao getDoctors(HttpServletRequest request){
         int pageNum = Integer.parseInt(request.getParameter("page"));
         int limit = Integer.parseInt(request.getParameter("limit"));
+        String inactive = request.getParameter("inactive");
         String id = request.getParameter("doctor_id");
         PageDao pageDao = new PageDao();
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
         if(id!=null&&!id.trim().equals("")){
             pageDao.setCert_code(Integer.parseInt(id));
+        }
+        if(inactive != null && !inactive.trim().equals("")){
+            pageDao.setActive("N");
+        }else{
+            pageDao.setActive("Y");
         }
         List<DoctorDao> doctors = doctorService.getDoctorAll(pageDao);
         JsonResultDao jsonResultDao = new JsonResultDao();
@@ -56,4 +62,5 @@ public class DoctorController {
         doctorService.updateInformation(doctorDao);
         return new JsonResultDao("success");
     }
+
 }
