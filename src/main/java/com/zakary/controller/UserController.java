@@ -31,6 +31,12 @@ public class UserController {
         return "resign";
     }
 
+    /**
+     * 登录，此方法设置session
+     * @param doctorDao
+     * @param request
+     * @return
+     */
     @RequestMapping("/login.do")
     @ResponseBody
     public JsonResultDao login(@RequestBody DoctorDao doctorDao, HttpServletRequest request){
@@ -40,16 +46,32 @@ public class UserController {
         return new JsonResultDao(doctorDao.getPage());
     }
 
+    /**
+     * 获取基础部门
+     * @return
+     */
     @RequestMapping("/getDepartment.do")
     @ResponseBody
     public JsonResultDao getDepartment(){
         return new JsonResultDao(departmentService.getDepartments());
     }
+
+    /**
+     * 获取基础职位
+     * @param doctorDao
+     * @return
+     */
     @RequestMapping("/getPosition.do")
     @ResponseBody
     public JsonResultDao getPosition(@RequestBody DepartmentDao doctorDao){
         return new JsonResultDao(departmentService.getPositions(doctorDao));
     }
+
+    /**
+     * 插入用户
+     * @param doctorDao
+     * @return
+     */
     @RequestMapping("/insertDoctor.do")
     @ResponseBody
     public JsonResultDao rootInsertDoctor(@RequestBody DoctorDao doctorDao){

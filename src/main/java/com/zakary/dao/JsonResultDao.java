@@ -1,5 +1,10 @@
 package com.zakary.dao;
 
+/**
+ * 默认成功只需要调用构造方法传入data即可
+ * 前端表格渲染接口要求返回必须参数code(成功状态 0，失败 1),count(数据总数，用于分页渲染)，msg(成功或失败信息)
+ * 不是前端表格接口不需要返回count
+ */
 public class JsonResultDao {
     private int code;
     private String msg;

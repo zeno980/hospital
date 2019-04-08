@@ -23,6 +23,12 @@ public class DoctorController {
     @RequestMapping("/doctor")
     public String doctor(){ return "doctor";}
 
+    /**
+     * 获取用户列表，根据入参中的inactive判断是否返回未审核用户
+     * 根据doctor_id判断是否返回多个
+     * @param request
+     * @return
+     */
     @RequestMapping("/getDoctors.do")
     @ResponseBody
     public JsonResultDao getDoctors(HttpServletRequest request){
@@ -49,6 +55,12 @@ public class DoctorController {
         jsonResultDao.setCount(pageDao.getCert_code()==null?doctorService.getDoctorsCounts(pageDao.getActive()):doctors.size());
         return jsonResultDao;
     }
+
+    /**
+     * 删除用户
+     * @param doctorDao
+     * @return
+     */
     @RequestMapping("/deleteDoctor.do")
     @ResponseBody
     public JsonResultDao rootDeleteDoctor(@RequestBody DoctorDao doctorDao){
@@ -56,12 +68,22 @@ public class DoctorController {
         return new JsonResultDao("success");
     }
 
+    /**
+     * 修改用户信息
+     * @param doctorDao
+     * @return
+     */
     @RequestMapping("/updateDoctor.do")
     @ResponseBody
     public JsonResultDao UpdateDoctor(@RequestBody DoctorDao doctorDao){
         doctorService.updateInformation(doctorDao);
         return new JsonResultDao("success");
     }
+
+    /**
+     * 获取未审核用户数量
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/getInactiveDoctorCounts.do")
     public JsonResultDao getInactiveDoctorCounts(){
