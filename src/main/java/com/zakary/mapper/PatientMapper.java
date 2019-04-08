@@ -41,4 +41,6 @@ public interface PatientMapper {
     int selectPatientInSickbedByCert(String patient_cert_code);
 
     List<PatientSickbed> selectPatientsSickbedInfo(PageDao pageDao);
+
+    int selectCountInSickroom();
 }
