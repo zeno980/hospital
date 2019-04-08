@@ -20,7 +20,7 @@ public class JsonResultDao {
         this.code = 0;
     };
     public JsonResultDao(Object data,int code,String msg){
-        this.data = JSONObject.toJSON(data);;
+        this.data = JSONObject.toJSON(data);
         this.code = code;
         this.msg = msg;
     };
