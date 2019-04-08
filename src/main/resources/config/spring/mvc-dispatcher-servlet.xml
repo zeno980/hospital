@@ -80,6 +80,7 @@
              <!-- 拦截所有 -->
              <mvc:mapping path="/user/**"/>
              <mvc:mapping path="/doctor/**"/>
+             <mvc:mapping path="/patient/**"/>
              <!-- 白名单 -->
              <mvc:exclude-mapping path="/user/login.do"/>
              <mvc:exclude-mapping path="/user/getPosition.do"/>
