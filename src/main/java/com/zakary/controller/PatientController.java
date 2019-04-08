@@ -4,6 +4,7 @@ package com.zakary.controller;
 import com.zakary.dao.*;
 import com.zakary.dao.utils.DoctorPatients;
 import com.zakary.dao.utils.PatientSickbed;
+import com.zakary.exp.BusinessException;
 import com.zakary.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,10 +37,7 @@ public class PatientController {
         String cert_code = (String)session.getAttribute("cert_code");
         treatmentDao.setDoctor_cert_code(cert_code);
         patientService.insertPatient(treatmentDao);
-        JsonResultDao jsonResultDao=new JsonResultDao();
-        jsonResultDao.setCode(0);
-        jsonResultDao.setMsg("success");
-        return jsonResultDao;
+        return new JsonResultDao("success");
     }
 
     //第二个功能，查看此医生治疗的所有患者的基本信息,搜索患者
@@ -49,22 +47,26 @@ public class PatientController {
     public JsonResultDao getPatients(HttpServletRequest request){
         int pageNum=Integer.parseInt(request.getParameter("page"));
         int limit=Integer.parseInt(request.getParameter("limit"));
-        JsonResultDao jsonResultDao=new JsonResultDao();
-        HttpSession session = request.getSession();
-        String cert_code = (String)session.getAttribute("cert_code");
-        //String doctor_cert_code=cert_code;
         String patient_cert_code=request.getParameter("patient_cert_code");
+        HttpSession session = request.getSession();
         PageDao pageDao = new PageDao();
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
-        if(patient_cert_code!=null&&!patient_cert_code.trim().equals(""))
+        String doctor_cert_code = (String)session.getAttribute("cert_code");
+        JsonResultDao jsonResultDao=new JsonResultDao();
+        if(doctor_cert_code!=null&&!doctor_cert_code.trim().equals("")){
+            pageDao.setDoctor_cert_code(doctor_cert_code);
+        }else{
+            throw new BusinessException("获取id失败");
+        }
+        if(patient_cert_code!=null&&!patient_cert_code.trim().equals("")){
             pageDao.setPatient_cert_code(patient_cert_code);
-
-        List<DoctorPatients> patients=patientService.getAllPatientByDoctorCert(pageDao,cert_code);
+        }
+        List<DoctorPatients> patients=patientService.getAllPatientByDoctorCert(pageDao);
         jsonResultDao.setCode(0);
-        jsonResultDao.setMsg("success");
         jsonResultDao.setData(patients);
-        jsonResultDao.setCount(pageDao.getPatient_cert_code()==null?patientService.getPatientsCounts():patients.size());
+        jsonResultDao.setMsg("success");
+        jsonResultDao.setCount(patientService.getPatientsCounts(pageDao));
         return jsonResultDao;
     }
 
@@ -108,7 +110,7 @@ public class PatientController {
         jsonResultDao.setCode(0);
         jsonResultDao.setMsg("success");
         jsonResultDao.setData(patientSickbeds);
-        jsonResultDao.setCount(pageDao.getPatient_cert_code()==null?patientService.getPatientsCounts():patientSickbeds.size());
+//        jsonResultDao.setCount(pageDao.getPatient_cert_code()==null?patientService.getPatientsCounts():patientSickbeds.size());
         return jsonResultDao;
     }
 }

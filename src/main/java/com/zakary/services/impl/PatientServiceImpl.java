@@ -28,22 +28,21 @@ public class PatientServiceImpl implements PatientService {
     private PatientService patientService;
 
     @Override
-    public int getPatientsCounts() {
-        return patientMapper.getAllPatientsCounts();
+    public int getPatientsCounts(PageDao pageDao) {
+        return patientMapper.getAllPatientsCounts(pageDao);
     }
 
     @Override
-    public List<DoctorPatients> getAllPatientByDoctorCert(PageDao pageDao,String doctor_cert_code) {
-        if(doctor_cert_code==null||doctor_cert_code==""||doctor_cert_code=="1")
+    public List<DoctorPatients> getAllPatientByDoctorCert(PageDao pageDao) {
+        if("1".equals(pageDao.getDoctor_cert_code()))
             throw new BusinessException("id不存在");
         //int doctor_id=Integer.parseInt(doctor_cert_code);
-        System.out.println("医生ID: "+doctor_cert_code);
-        pageDao.setDoctor_cert_code(doctor_cert_code);
+        logger.info("医生ID: "+pageDao.getDoctor_cert_code());
         return patientMapper.selectAllPatientsByDoctorCert(pageDao);
     }
 
     @Override
-    public void insertPatient(@RequestBody TreatmentDao treatmentDao) {//此处需要在前端自动将此医生的赋值
+    public void insertPatient(TreatmentDao treatmentDao) {//此处需要在前端自动将此医生的赋值
         if(/*(treatmentDao.getDoctor_id()==null)*/
            /* (treatmentDao.getPatient_id()==null)*/
             (treatmentDao.getDoctor_cert_code()==null)

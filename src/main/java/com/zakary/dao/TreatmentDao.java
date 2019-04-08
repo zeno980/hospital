@@ -1,5 +1,7 @@
 package com.zakary.dao;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class TreatmentDao {
@@ -7,6 +9,7 @@ public class TreatmentDao {
     private String doctor_cert_code;
     private String patient_cert_code;
     private String treatment_name;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date treatment_time;
     private Double treatment_fee;
 

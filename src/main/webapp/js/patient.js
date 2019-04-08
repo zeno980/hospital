@@ -1,6 +1,34 @@
 var tableIns;
+var form;
+var layer;
 $(document).ready(function () {
     var element = layui.element;
+    var laydate = layui.laydate;
+    laydate.render({elem: '#time',type: 'datetime'})
+    layer = layui.layer;
+    form  = layui.form;
+    form.on('submit(doSubmit)',function (data) {
+        $('#myModal').modal('hide');
+        var index = layer.load(2);
+        $.ajax({
+            url:'/hospital/patient/doctor_addpatient',
+            type:'post',
+            contentType:"application/json",
+            datatype:"json",
+            data : JSON.stringify(data.field)
+        }).done(function (data) {
+            if(data.code==0){
+                layer.close(index);
+                layer.msg("添加成功",{time: 1000},function () {
+                    tableIns.reload({where: {patient_cert_code: '',}, page: {curr: 1}})
+                })
+            }else{
+                layer.close(index);
+                layer.msg(data.msg,{time:1000})
+            }
+        })
+    })
+    form.render();
     element.init();
     showPatients();
 })
@@ -36,4 +64,15 @@ function showPatients() {
     //         deleteUser(data)
     //     }
     // })
+}
+function search() {
+    tableIns.reload({where: {patient_cert_code: $('#search_id').val(),}, page: {curr: 1}})
+    $('#search_id').val('');
+}
+function insert() {
+    form.val("insertForm",{"patient_cert_code":"","treatment_time":"","treatment_name":"","treatment_fee":""})
+    $('#myModal').modal('show');
+}
+function insertPatient() {
+    $('#hideSubmit').click()
 }
