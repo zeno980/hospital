@@ -53,12 +53,12 @@ public class PatientController {
         HttpSession session = request.getSession();
         String cert_code = (String)session.getAttribute("cert_code");
         //String doctor_cert_code=cert_code;
-        //String patient_cert_code=request.getParameter("patient_cert_code");
+        String patient_cert_code=request.getParameter("patient_cert_code");
         PageDao pageDao = new PageDao();
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
-        //if(pageDao.getPatient_cert_code()!=null||!pageDao.getPatient_cert_code().trim().equals(""))
-        //    pageDao.setPatient_cert_code(pageDao.patient_cert_code);
+        if(pageDao.getPatient_cert_code()!=null||!pageDao.getPatient_cert_code().trim().equals(""))
+            pageDao.setPatient_cert_code(patient_cert_code);
 
         List<DoctorPatients> patients=patientService.getAllPatientByDoctorCert(pageDao,cert_code);
         jsonResultDao.setCode(0);
