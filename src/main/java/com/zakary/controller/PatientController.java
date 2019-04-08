@@ -57,7 +57,7 @@ public class PatientController {
         PageDao pageDao = new PageDao();
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
-        if(patient_cert_code!=null||!patient_cert_code.trim().equals(""))
+        if(patient_cert_code!=null&&!patient_cert_code.trim().equals(""))
             pageDao.setPatient_cert_code(patient_cert_code);
 
         List<DoctorPatients> patients=patientService.getAllPatientByDoctorCert(pageDao,cert_code);
@@ -102,7 +102,7 @@ public class PatientController {
         PageDao pageDao = new PageDao();
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
-        if(patient_cert_code!=null||!patient_cert_code.trim().equals(""))//查询患者的病床信息
+        if(patient_cert_code!=null&&!patient_cert_code.trim().equals(""))//查询患者的病床信息
             pageDao.setPatient_cert_code(patient_cert_code);
         List<PatientSickbed> patientSickbeds=patientService.getPatientsSickbedInfo(pageDao);
         jsonResultDao.setCode(0);
