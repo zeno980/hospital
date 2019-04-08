@@ -13,8 +13,8 @@ public interface PatientService {
     List<DoctorPatients> getAllPatientByDoctorCert(PageDao pageDao);
     int getPatientsCounts(PageDao pageDao);
     void insertPatient(TreatmentDao treatmentDao);
-    String isEmpty(int sickroom_id,int sickbed_id);
+//    String isEmpty(int sickroom_id,int sickbed_id);
     void arrangeSickbed(SickbedDao sickbedDao);
-    int isInSickbed(String patient_cert_code);
+//    int isInSickbed(String patient_cert_code);
     List<PatientSickbed> getPatientsSickbedInfo(PageDao pageDao);
 }

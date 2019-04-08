@@ -8,7 +8,6 @@ import com.zakary.exp.BusinessException;
 import com.zakary.services.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,9 +29,10 @@ public class PatientController {
 
     //第一个功能，添加病人在treatment表里，病人必须在patient表里存在
     //json传patient_cert_code,treatment_time,treatment_name,treatment_fee
-    @PostMapping("/doctor_addpatient")
+    @RequestMapping("/doctor_addpatient")
     @ResponseBody
     public JsonResultDao addPatient(HttpServletRequest request,@RequestBody TreatmentDao treatmentDao){
+        System.out.println(treatmentDao);
         HttpSession session = request.getSession();
         String cert_code = (String)session.getAttribute("cert_code");
         treatmentDao.setDoctor_cert_code(cert_code);

@@ -133,7 +133,7 @@
 
   <insert id="insertPatientTreatmnet" parameterType="com.zakary.dao.TreatmentDao">
     insert into treatment(doctor_cert_code, patient_cert_code, treatment_name, treatment_time, treatment_fee)
-    values (#{doctor_cert_code,jdbcType=VARCHAR},#{patient_cert_code,jdbcType=VARCHAR},#{treatment_name,jdbcType=VARCHAR},#{treatment_time,jdbcType=DATE},#{treatment_fee,jdbcType=DECIMAL})
+    values (#{doctor_cert_code,jdbcType=VARCHAR},#{patient_cert_code,jdbcType=VARCHAR},#{treatment_name,jdbcType=VARCHAR},#{treatment_time},#{treatment_fee,jdbcType=DECIMAL})
   </insert>
 
   <select id="isEmptyBySickbed" parameterType="java.lang.Integer" resultType="java.lang.String">

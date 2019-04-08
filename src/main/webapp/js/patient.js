@@ -4,10 +4,11 @@ var layer;
 $(document).ready(function () {
     var element = layui.element;
     var laydate = layui.laydate;
-    laydate.render({elem: '#time',type: 'datetime'})
+    laydate.render({elem: '#time'})
     layer = layui.layer;
     form  = layui.form;
     form.on('submit(doSubmit)',function (data) {
+        console.log(data.field)
         $('#myModal').modal('hide');
         var index = layer.load(2);
         $.ajax({

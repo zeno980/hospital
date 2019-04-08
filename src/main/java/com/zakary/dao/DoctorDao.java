@@ -1,5 +1,7 @@
 package com.zakary.dao;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -25,7 +27,7 @@ public class DoctorDao {
     private String page;
     private String cert_code;
     private String active;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JSONField(format = "yyyy-MM-dd")
     private Date create_date;
 
     public String getActive() {
