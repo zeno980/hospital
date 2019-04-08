@@ -158,4 +158,9 @@
       and patient.cert_code=#{patient_cert_code}
     </if>
   </select>
+
+  <select id="selectCountInSickroom" resultType="java.lang.Integer">
+    select count(*)
+    from sickroom
+  </select>
 </mapper>

@@ -99,4 +99,9 @@ public class PatientServiceImpl implements PatientService {
     public List<PatientSickbed> getPatientsSickbedInfo(PageDao pageDao) {
         return patientMapper.selectPatientsSickbedInfo(pageDao);
     }
+
+    @Override
+    public int selectSickroomCount(){
+        return patientMapper.selectCountInSickroom();
+    }
 }

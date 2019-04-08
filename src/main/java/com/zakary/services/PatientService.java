@@ -17,4 +17,5 @@ public interface PatientService {
     void arrangeSickbed(SickbedDao sickbedDao);
     int isInSickbed(String patient_cert_code);
     List<PatientSickbed> getPatientsSickbedInfo(PageDao pageDao);
+    int selectSickroomCount();
 }
