@@ -19,7 +19,6 @@ public class DoctorServiceImpl implements DoctorService {
     private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private DoctorMapper doctorMapper;
-    @Override
     public void login(DoctorDao doctorDao) {
         if(doctorDao.getCert_code()==null||doctorDao.getPassword()==null)
             throw new BusinessException("必要参数为空");
@@ -57,7 +56,6 @@ public class DoctorServiceImpl implements DoctorService {
         doctorMapper.insertDoctor(doctorDao);
     }
 
-    @Override
     public void updateInformation(DoctorDao doctorDao) {
 
         if(doctorDao.getDoctor_name()==null
@@ -85,7 +83,6 @@ public class DoctorServiceImpl implements DoctorService {
         doctorMapper.updateDoctorById(doctorDao);
     }
 
-    @Override
     public void deleteDoctor(DoctorDao doctorDao) {
         if(doctorDao.getDoctor_id() ==null)
             throw new BusinessException("必要参数为空");
@@ -94,7 +91,6 @@ public class DoctorServiceImpl implements DoctorService {
         doctorMapper.deleteDoctorById(doctorDao);
     }
 
-    @Override
     public int getDoctorsCounts(String active) {
         return doctorMapper.getAllDoctorsCounts(active);
     }

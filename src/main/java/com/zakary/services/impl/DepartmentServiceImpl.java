@@ -13,7 +13,6 @@ import java.util.List;
 public class DepartmentServiceImpl implements DepartmentService {
     @Autowired
     private DepartmentMapper departmentMapper;
-    @Override
     public void insertDepartment(DepartmentDao departmentDao) {
         if(departmentDao.getDepartment_name()==null){
             throw new BusinessException("必要参数为空");
@@ -24,7 +23,6 @@ public class DepartmentServiceImpl implements DepartmentService {
         departmentMapper.insertDepartment(departmentDao);
     }
 
-    @Override
     public void insertPosition(PositionDao positionDao) {
         if(positionDao.getDepartment_id()==null||
                 positionDao.getPosition_name()==null||
@@ -39,12 +37,10 @@ public class DepartmentServiceImpl implements DepartmentService {
         }
     }
 
-    @Override
     public List<DepartmentDao> getDepartments() {
         return departmentMapper.selectDepartments();
     }
 
-    @Override
     public List<PositionDao> getPositions(DepartmentDao departmentDao) {
         if(departmentDao.getDepartment_id()==null){
             throw new BusinessException("必要参数为空");

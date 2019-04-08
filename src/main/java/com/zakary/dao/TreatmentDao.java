@@ -1,5 +1,9 @@
 package com.zakary.dao;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class TreatmentDao {
@@ -7,6 +11,7 @@ public class TreatmentDao {
     private String doctor_cert_code;
     private String patient_cert_code;
     private String treatment_name;
+    @JSONField(format = "yyyy-MM-dd")
     private Date treatment_time;
     private Double treatment_fee;
 

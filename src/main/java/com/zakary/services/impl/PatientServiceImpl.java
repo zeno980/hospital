@@ -24,26 +24,21 @@ public class PatientServiceImpl implements PatientService {
     private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private PatientMapper patientMapper;
-    @Autowired
-    private PatientService patientService;
 
-    @Override
-    public int getPatientsCounts() {
-        return patientMapper.getAllPatientsCounts();
+
+    public int getPatientsCounts(PageDao pageDao) {
+        return patientMapper.getAllPatientsCounts(pageDao);
     }
 
-    @Override
-    public List<DoctorPatients> getAllPatientByDoctorCert(PageDao pageDao,String doctor_cert_code) {
-        if(doctor_cert_code==null||doctor_cert_code==""||doctor_cert_code=="1")
+    public List<DoctorPatients> getAllPatientByDoctorCert(PageDao pageDao) {
+        if("1".equals(pageDao.getDoctor_cert_code()))
             throw new BusinessException("id不存在");
         //int doctor_id=Integer.parseInt(doctor_cert_code);
-        System.out.println("医生ID: "+doctor_cert_code);
-        pageDao.setDoctor_cert_code(doctor_cert_code);
+        logger.info("医生ID: "+pageDao.getDoctor_cert_code());
         return patientMapper.selectAllPatientsByDoctorCert(pageDao);
     }
 
-    @Override
-    public void insertPatient(@RequestBody TreatmentDao treatmentDao) {//此处需要在前端自动将此医生的赋值
+    public void insertPatient(TreatmentDao treatmentDao) {//此处需要在前端自动将此医生的赋值
         if(/*(treatmentDao.getDoctor_id()==null)*/
            /* (treatmentDao.getPatient_id()==null)*/
             (treatmentDao.getDoctor_cert_code()==null)
@@ -60,13 +55,11 @@ public class PatientServiceImpl implements PatientService {
             patientMapper.insertPatientTreatmnet(treatmentDao);
     }
 
-    @Override
-    public String isEmpty(int sickroom_id, int sickbed_id) {
+    private String isEmpty(int sickroom_id, int sickbed_id) {
         System.out.println("room:"+sickroom_id+"  bed:"+sickbed_id);
         return patientMapper.isEmptyBySickbed(sickroom_id,sickbed_id);
     }
 
-    @Override
     public void arrangeSickbed(SickbedDao sickbedDao){
         if((sickbedDao.getPatient_cert_code()==null)
                 ||(sickbedDao.getSickroom_id()==null)
@@ -74,12 +67,12 @@ public class PatientServiceImpl implements PatientService {
             throw new BusinessException("必要参数为空");
         else {
             System.out.println("room:"+sickbedDao.getSickroom_id()+"  bed:"+sickbedDao.getSickbed_id());
-            if (!patientService.isEmpty(sickbedDao.getSickroom_id(), sickbedDao.getSickbed_id()).equals("empty")) {
+            if (!isEmpty(sickbedDao.getSickroom_id(), sickbedDao.getSickbed_id()).equals("empty")) {
                 //System.out.println(patientService.isEmpty(sickbedDao.getSickroom_id(), sickbedDao.getSickbed_id()));
                 throw new BusinessException("该病床已分配");
             }
             else {
-                if (patientService.isInSickbed(sickbedDao.getPatient_cert_code()) != 0)
+                if (isInSickbed(sickbedDao.getPatient_cert_code()) != 0)
                     throw new BusinessException("该病人已存在");
                 else {
                     sickbedDao.setSickbed_state("full");
@@ -90,12 +83,10 @@ public class PatientServiceImpl implements PatientService {
 //       patientMapper.insertSickbed(sickbedDao);
     }
 
-    @Override
-    public int isInSickbed(String patient_cert_code){
+    private int isInSickbed(String patient_cert_code){
         return patientMapper.selectPatientInSickbedByCert(patient_cert_code);
     }
 
-    @Override
     public List<PatientSickbed> getPatientsSickbedInfo(PageDao pageDao) {
         return patientMapper.selectPatientsSickbedInfo(pageDao);
     }

@@ -26,7 +26,7 @@ public interface PatientMapper {
 
     List<DoctorPatients> selectAllPatientsByDoctorCert(PageDao pageDao);
 
-    int getAllPatientsCounts();
+    int getAllPatientsCounts(PageDao pageDao);
 
     int getCountByCert(String cert_code);
 

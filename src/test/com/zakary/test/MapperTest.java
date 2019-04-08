@@ -69,20 +69,20 @@ public class MapperTest extends BaseTest {
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
 //        pageDao.setPatient_cert_code("1");
-        List<DoctorPatients> patients=patientService.getAllPatientByDoctorCert(pageDao,id);
-        System.out.println(patients);
+//        List<DoctorPatients> patients=patientService.getAllPatientByDoctorCert(pageDao,id);
+//        System.out.println(patients);
     }
     @Test
     public void test7(){
-        Date date=new Date(2000,1,1);
-        System.out.println(date);
-        TreatmentDao treatmentDao=new TreatmentDao();
-        treatmentDao.setDoctor_cert_code("2");
-        treatmentDao.setPatient_cert_code("6");
-        treatmentDao.setTreatment_name("fff");
-        treatmentDao.setTreatment_time(date);
-        treatmentDao.setTreatment_fee(500.0);
-        patientService.insertPatient(treatmentDao);
+//        Date date=new Date(2000,1,1);
+//        System.out.println(date);
+//        TreatmentDao treatmentDao=new TreatmentDao();
+//        treatmentDao.setDoctor_cert_code("2");
+//        treatmentDao.setPatient_cert_code("6");
+//        treatmentDao.setTreatment_name("fff");
+//        treatmentDao.setTreatment_time(date);
+//        treatmentDao.setTreatment_fee(500.0);
+//        patientService.insertPatient(treatmentDao);
     }
     @Test
     public void test8(){

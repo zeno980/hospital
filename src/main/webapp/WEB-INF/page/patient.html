@@ -75,6 +75,7 @@
                         <input class="layui-input" name="id" id="search_id" autocomplete="off">
                     </div>
                     <button class="layui-btn" onclick="search()">搜索</button>
+                    <button class="layui-btn layui-btn-normal" onclick="insert()">新增</button>
                 </div>
                 <table id="patient" lay-filter="patient_table"></table>
             </div>
@@ -104,58 +105,32 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">修改信息</h4>
+                <h4 class="modal-title" id="myModalLabel">新增患者</h4>
             </div>
             <div class="modal-body">
-                <form class="layui-form" action="" lay-filter="updateForm">
-                    <div class="layui-form-item" hidden>
-                        <label class="layui-form-label">ID</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="doctor_id" required   autocomplete="off" class="layui-input layui-disabled">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">姓名</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="doctor_name" required lay-verify="required"  autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
+                <form class="layui-form" action="" lay-filter="insertForm">
                     <div class="layui-form-item">
                         <label class="layui-form-label">证件号</label>
                         <div class="layui-input-block">
-                            <input type="number" name="cert_code" required lay-verify="required"  autocomplete="off" class="layui-input">
+                            <input type="number" name="patient_cert_code" required lay-verify="required"  autocomplete="off" class="layui-input" placeholder="请输入患者身份证号码">
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">部门</label>
+                        <label class="layui-form-label">手术</label>
                         <div class="layui-input-block">
-                            <input type="text" name="doctor_department" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                            <input type="text" name="treatment_name" required lay-verify="required"  autocomplete="off" class="layui-input" placeholder="请输入手术名称">
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">职位</label>
+                        <label class="layui-form-label">时间</label>
                         <div class="layui-input-block">
-                            <input type="text" name="doctor_position" required  lay-verify="required"  autocomplete="off" class="layui-input">
+                            <input type="text" name="treatment_time" required  lay-verify="required" class="layui-input" id="time" placeholder="请选择手术时间">
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-form-label">性别</label>
+                        <label class="layui-form-label">金额</label>
                         <div class="layui-input-block">
-                            <input type="radio" name="doctor_gender" value="男" title="男">
-                            <input type="radio" name="doctor_gender" value="女" title="女">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">状态</label>
-                        <div class="layui-input-block">
-                            <input type="radio" name="active" value="Y" title="正常" lay-filter="active_change">
-                            <input type="radio" name="active" value="N" title="未审核" lay-filter="active_change">
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">电话</label>
-                        <div class="layui-input-block">
-                            <input type="number" name="doctor_tel" phone  lay-verify="phone"  autocomplete="off" class="layui-input">
+                            <input type="text" name="treatment_fee" required  lay-verify="required"  autocomplete="off" class="layui-input" placeholder="请输入手术费用">
                         </div>
                     </div>
                     <div class="layui-form-item" hidden>
@@ -167,7 +142,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="layui-btn" data-dismiss="modal">关闭</button>
-                <button type="button" class="layui-btn layui-btn-normal" onclick="updateDoctor()">提交更改</button>
+                <button type="button" class="layui-btn layui-btn-normal" onclick="insertPatient()">提交更改</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
