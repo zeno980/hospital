@@ -24,7 +24,7 @@ function login() {
             layer.close(index)
             layer.msg("登录成功，正在跳转...",{time: 1000},function () {
                 console.log(data)
-                window.location.href='/hospital/doctor/'+data.data;
+                window.location.href='/hospital/'+data.data;
             })
         }else{
             layer.close(index)

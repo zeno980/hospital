@@ -22,6 +22,11 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
 
+    @RequestMapping("/patient")
+    public String patient(){
+        return "patient";
+    }
+
     //第一个功能，添加病人在treatment表里，病人必须在patient表里存在
     //json传patient_cert_code,treatment_time,treatment_name,treatment_fee
     @PostMapping("/doctor_addpatient")

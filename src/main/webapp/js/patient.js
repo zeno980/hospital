@@ -1,18 +1,22 @@
 var tableIns;
+$(document).ready(function () {
+    showPatients();
+})
 function showPatients() {
     var table = layui.table;
     tableIns = table.render({
         elem: '#patient',
-        url: '/hospital/doctor/doctor_patients', //数据接口
+        url: '/hospital/patient/doctor_patients', //数据接口
         skin: 'row ', //行边框风格
         page: true,
-        where : {inactive:true},
         cols: [[
-            {field: 'doctor_name', title: '姓名', width: '10%', unresize: true},
-            {field: 'cert_code', title: '证件号', width: '10%', unresize: true},
-            {field: 'doctor_gender', title: '性别', width: '10%', unresize: true},
-            {field: 'doctor_gender', title: '年龄', width: '10%', unresize: true},
-            {field: 'doctor_tel', title: '电话', width: '10%', unresize: true}
+            {field: 'patient_name', title: '姓名', width: '10%', unresize: true},
+            {field: 'patient_cert_code', title: '证件号', width: '20%', unresize: true},
+            {field: 'patient_gender', title: '性别', width: '10%', unresize: true},
+            {field: 'patient_age', title: '年龄', width: '10%', unresize: true},
+            {field: 'treatment_name', title: '手术', width: '20%', unresize: true},
+            {field: 'treatment_time', title: '手术时间', width: '20%', unresize: true},
+            {field: 'treatment_fee', title: '手术费用', width: '10%', unresize: true}
             // {
             //     field: 'action',
             //     title: '操作',

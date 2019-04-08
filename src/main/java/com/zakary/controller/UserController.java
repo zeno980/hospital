@@ -43,6 +43,11 @@ public class UserController {
         doctorService.login(doctorDao);
         HttpSession session = request.getSession();
         session.setAttribute("cert_code", doctorDao.getCert_code());
+        if(doctorDao.getPage().equals("doctor")){
+            doctorDao.setPage("doctor/doctor");
+        }else if(doctorDao.getPage().equals("patient")){
+            doctorDao.setPage("patient/patient");
+        }
         return new JsonResultDao(doctorDao.getPage());
     }
 
