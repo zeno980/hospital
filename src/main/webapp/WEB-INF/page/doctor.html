@@ -5,7 +5,6 @@
     <title>Title</title>
     <link rel="stylesheet" href="/hospital/css/bootstrap.min.css">
     <script src="/hospital/js/jquery-3.3.1.min.js"></script>
-    <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="/hospital/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/hospital/layui/css/layui.css">
     <script src="/hospital/layui/layui.all.js"></script>
@@ -49,7 +48,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">功能区2</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">功能4<span class="layui-badge">9</span></a></dd>
+                        <dd><a href="javascript:;">功能4</a></dd>
                         <dd><a href="javascript:;">功能5</a></dd>
                         <dd><a href="javascript:;">功能6</a></dd>
                     </dl>
@@ -67,7 +66,7 @@
     </div>
 
     <div class="layui-body" id="main_body">
-        <div id="doctor_info" v-if="activeDoctors">
+        <div id="doctor_info" hidden>
             <blockquote class="layui-elem-quote">医生信息管理</blockquote>
             <div style="padding: 1%">
                 <div>
@@ -80,7 +79,7 @@
                 <table id="doctor_cursor" lay-filter="doctor_table"></table>
             </div>
         </div>
-        <div id="doctor_v" v-if="inactiveDoctors">
+        <div id="doctor_v" hidden>
             <blockquote class="layui-elem-quote">医生注册审核</blockquote>
             <div style="padding: 1%">
                 <div>
@@ -88,7 +87,7 @@
                     <div class="layui-inline">
                         <input class="layui-input" name="id" id="search_id_v" autocomplete="off">
                     </div>
-                    <button class="layui-btn" onclick="search()">搜索</button>
+                    <button class="layui-btn" onclick="searchInactive()">搜索</button>
                 </div>
                 <table id="doctor_cursor_v" lay-filter="doctor_table_v"></table>
             </div>
@@ -144,6 +143,13 @@
                             <div class="layui-input-block">
                                 <input type="radio" name="doctor_gender" value="男" title="男">
                                 <input type="radio" name="doctor_gender" value="女" title="女">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">状态</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="active" value="Y" title="正常" lay-filter="active_change">
+                                <input type="radio" name="active" value="N" title="未审核" lay-filter="active_change">
                             </div>
                         </div>
                         <div class="layui-form-item">

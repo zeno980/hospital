@@ -10,5 +10,5 @@ public interface DoctorService {
     void insertDoctor(DoctorDao doctorDao);
     void updateInformation(DoctorDao doctorDao);
     void deleteDoctor(DoctorDao doctorDao);
-    int getDoctorsCounts();
+    int getDoctorsCounts(String active);
 }

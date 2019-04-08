@@ -1,5 +1,7 @@
 package com.zakary.dao;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -23,6 +25,7 @@ public class DoctorDao {
     private String page;
     private String cert_code;
     private String active;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date create_date;
 
     public String getActive() {

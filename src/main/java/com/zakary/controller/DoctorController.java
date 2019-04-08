@@ -46,7 +46,7 @@ public class DoctorController {
         jsonResultDao.setCode(0);
         jsonResultDao.setMsg("success");
         jsonResultDao.setData(doctors);
-        jsonResultDao.setCount(pageDao.getCert_code()==null?doctorService.getDoctorsCounts():doctors.size());
+        jsonResultDao.setCount(pageDao.getCert_code()==null?doctorService.getDoctorsCounts(pageDao.getActive()):doctors.size());
         return jsonResultDao;
     }
     @RequestMapping("/deleteDoctor.do")
@@ -62,5 +62,9 @@ public class DoctorController {
         doctorService.updateInformation(doctorDao);
         return new JsonResultDao("success");
     }
-
+    @ResponseBody
+    @RequestMapping("/getInactiveDoctorCounts.do")
+    public JsonResultDao getInactiveDoctorCounts(){
+        return new JsonResultDao(doctorService.getDoctorsCounts("N"));
+    }
 }
