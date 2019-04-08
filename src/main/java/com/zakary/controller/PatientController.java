@@ -45,7 +45,7 @@ public class PatientController {
     //第二个功能，查看此医生治疗的所有患者的基本信息,搜索患者
     @RequestMapping("/doctor_patients")
     @ResponseBody
-    //json中含有doctor_cert_code，patient_cert_code
+    //json中含有cert_code（医生身份证），patient_cert_code
     public JsonResultDao getPatients(HttpServletRequest request){
         int pageNum=Integer.parseInt(request.getParameter("page"));
         int limit=Integer.parseInt(request.getParameter("limit"));
