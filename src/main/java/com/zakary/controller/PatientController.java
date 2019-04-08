@@ -57,6 +57,7 @@ public class PatientController {
         PageDao pageDao = new PageDao();
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
+        pageDao.setPatient_cert_code(patient_cert_code);
         if(pageDao.getPatient_cert_code()!=null||!pageDao.getPatient_cert_code().trim().equals(""))
             pageDao.setPatient_cert_code(patient_cert_code);
 
