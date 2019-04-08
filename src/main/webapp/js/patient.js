@@ -1,5 +1,7 @@
 var tableIns;
 $(document).ready(function () {
+    var element = layui.element;
+    element.init();
     showPatients();
 })
 function showPatients() {
