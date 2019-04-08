@@ -1,5 +1,7 @@
 package com.zakary.dao.utils;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class DoctorPatients {
@@ -9,6 +11,7 @@ public class DoctorPatients {
     private String patient_gender;
     private Integer patient_age;
     private String treatment_name;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date treatment_time;
     private Double treatment_fee;
 
@@ -75,5 +78,18 @@ public class DoctorPatients {
 
     public void setPatient_cert_code(String patient_cert_code) {
         this.patient_cert_code = patient_cert_code;
+    }
+
+    @Override
+    public String toString() {
+        return "DoctorPatients{" +
+                "patient_cert_code='" + patient_cert_code + '\'' +
+                ", patient_name='" + patient_name + '\'' +
+                ", patient_gender='" + patient_gender + '\'' +
+                ", patient_age=" + patient_age +
+                ", treatment_name='" + treatment_name + '\'' +
+                ", treatment_time=" + treatment_time +
+                ", treatment_fee=" + treatment_fee +
+                '}';
     }
 }

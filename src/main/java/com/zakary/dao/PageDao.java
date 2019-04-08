@@ -8,6 +8,15 @@ public class PageDao {  //分页查询需要
     private String patient_cert_code;
     private Integer doctor_id;
     private String doctor_cert_code;
+    private String active;
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
 
     public Integer getDoctor_id() {
         return doctor_id;

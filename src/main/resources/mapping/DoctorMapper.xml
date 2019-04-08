@@ -33,19 +33,22 @@
         doctor_position = #{doctor_position},
         doctor_gender = #{doctor_gender},
         doctor_tel = #{doctor_tel},
-        cert_code = #{cert_code}
+        cert_code = #{cert_code},
+    <if test="active != null and active!=''">
+      active = #{active}
+    </if>
     where doctor_id = #{doctor_id}
   </update>
 
   <select id="selectAllDoctors" resultType="com.zakary.dao.DoctorDao" parameterType="com.zakary.dao.PageDao">
-    select doctor_id,doctor_name,doctor_department,doctor_position,doctor_gender,type,doctor_tel,cert_code
-    from doctor where active='Y'
+    select doctor_id,doctor_name,doctor_department,doctor_position,doctor_gender,type,doctor_tel,cert_code,active,create_date
+    from doctor where active=#{active}
     <if test="cert_code !=null and cert_code != 0">
       and cert_code=#{cert_code}
     </if>
     limit #{page},#{limit}
   </select>
-  <select id="getAllDoctorsCounts" resultType="java.lang.Integer">
-    select count(doctor_id) from doctor where active='Y';
+  <select id="getAllDoctorsCounts" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(doctor_id) from doctor where active=#{active};
   </select>
 </mapper>

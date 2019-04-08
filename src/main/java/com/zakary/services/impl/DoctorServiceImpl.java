@@ -76,6 +76,12 @@ public class DoctorServiceImpl implements DoctorService {
                 throw new BusinessException("此证件号已存在");
             }
         }
+        if("N".equals(doctorDao.getActive())){
+            logger.info("修改用户"+doctorDao.getDoctor_name()+"为未审核状态");
+            if(result.getType()==0){
+                throw new BusinessException("无法修改此用户的状态");
+            }
+        }
         doctorMapper.updateDoctorById(doctorDao);
     }
 
@@ -89,8 +95,9 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public int getDoctorsCounts() {
-        return doctorMapper.getAllDoctorsCounts();
+    public int getDoctorsCounts(String active) {
+        return doctorMapper.getAllDoctorsCounts(active);
     }
+
 }
 

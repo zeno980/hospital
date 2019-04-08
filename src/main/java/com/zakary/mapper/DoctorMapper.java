@@ -12,5 +12,5 @@ public interface DoctorMapper {
     int insertDoctor(DoctorDao doctorDao);
     int updateDoctorById(DoctorDao doctorDao);
     List<DoctorDao> selectAllDoctors(PageDao pageDao);
-    int getAllDoctorsCounts();
+    int getAllDoctorsCounts(String active);
 }
