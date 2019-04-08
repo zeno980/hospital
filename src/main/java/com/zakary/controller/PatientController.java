@@ -46,7 +46,7 @@ public class PatientController {
     @RequestMapping("/doctor_patients")
     @ResponseBody
     //json中含有doctor_cert_code，patient_cert_code
-    public JsonResultDao getPatients(HttpServletRequest request,@RequestBody PageDao pageDao){
+    public JsonResultDao getPatients(HttpServletRequest request){
         int pageNum=Integer.parseInt(request.getParameter("page"));
         int limit=Integer.parseInt(request.getParameter("limit"));
         JsonResultDao jsonResultDao=new JsonResultDao();
@@ -54,7 +54,7 @@ public class PatientController {
         String cert_code = (String)session.getAttribute("cert_code");
         //String doctor_cert_code=cert_code;
         //String patient_cert_code=request.getParameter("patient_cert_code");
-        //PageDao pageDao = new PageDao();
+        PageDao pageDao = new PageDao();
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
         //if(pageDao.getPatient_cert_code()!=null||!pageDao.getPatient_cert_code().trim().equals(""))
@@ -94,16 +94,16 @@ public class PatientController {
     @RequestMapping("/GetAllSickbedInfo")
     @ResponseBody
     //json中：如果传入空值则查询所有信息，传入patient_cert_code不为空，则查询当前的病人病床信息
-    public JsonResultDao getAllSickbedInfo(HttpServletRequest request,@RequestBody PageDao pageDao){
+    public JsonResultDao getAllSickbedInfo(HttpServletRequest request){
         int pageNum=Integer.parseInt(request.getParameter("page"));
         int limit=Integer.parseInt(request.getParameter("limit"));
         JsonResultDao jsonResultDao=new JsonResultDao();
-        //String patient_cert_code=request.getParameter("patient_cert_code");
-        //PageDao pageDao = new PageDao();
+        String patient_cert_code=request.getParameter("patient_cert_code");
+        PageDao pageDao = new PageDao();
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
-        //if(patient_cert_code!=null||!patient_cert_code.trim().equals(""))//查询患者的病床信息
-        //    pageDao.setPatient_cert_code(patient_cert_code);
+        if(patient_cert_code!=null||!patient_cert_code.trim().equals(""))//查询患者的病床信息
+            pageDao.setPatient_cert_code(patient_cert_code);
         List<PatientSickbed> patientSickbeds=patientService.getPatientsSickbedInfo(pageDao);
         jsonResultDao.setCode(0);
         jsonResultDao.setMsg("success");
