@@ -49,8 +49,8 @@ public class DoctorController {
         }
         List<DoctorDao> doctors = doctorService.getDoctorAll(pageDao);
         JsonResultDao jsonResultDao = new JsonResultDao();
-        jsonResultDao.setCode(0);
         jsonResultDao.setMsg("success");
+        jsonResultDao.setCode(0);
         jsonResultDao.setData(doctors);
         jsonResultDao.setCount(pageDao.getCert_code()==null?doctorService.getDoctorsCounts(pageDao.getActive()):doctors.size());
         return jsonResultDao;
