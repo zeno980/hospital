@@ -12,6 +12,7 @@ import com.zakary.services.PatientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 @Service
+@Transactional
 public class PatientServiceImpl implements PatientService {
 
     //private Logger logger = LoggerFactory.getLogger(getClass());

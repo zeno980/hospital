@@ -6,6 +6,8 @@ import com.zakary.dao.utils.DoctorPatients;
 import com.zakary.dao.utils.PatientSickbed;
 import com.zakary.exp.BusinessException;
 import com.zakary.services.PatientService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,14 +19,13 @@ import javax.servlet.http.HttpSession;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/patient")
 public class PatientController {
     @Autowired
     private PatientService patientService;
-
+    private Logger logger = LoggerFactory.getLogger(getClass());
     @RequestMapping("/patient")
     public String patient(){
         return "patient";
@@ -136,6 +137,7 @@ public class PatientController {
         //获得医生cert-code
         HttpSession session = request.getSession();
         String doctor_cert_code = (String)session.getAttribute("cert_code");
+        logger.info(doctor_cert_code);
         patientService.makePrescribtion(prescriptionAttributeDaos,doctor_cert_code);
         return  new JsonResultDao();
     }
@@ -175,13 +177,12 @@ public class PatientController {
         List<Map<String,Object>> infos= patientService.getAllPrescriptionAttribute(prescriptionAttributeDao);
         double alldrugprice=0;
         for(int i=0;i<infos.size();i++) {
-            Logger logger=Logger.getLogger("getAllPrescriptionAttribute");
+
             logger.info("DRUG :"+infos.get(i));
             double price=Double.parseDouble(infos.get(i).get("drug_price").toString());
             int num=Integer.parseInt(infos.get(i).get("drug_num").toString());
             alldrugprice+=price*num;
         }
-        Logger logger=Logger.getLogger("drug_price");
         logger.info("总价 ："+alldrugprice);
         JsonResultDao jsonResultDao=new JsonResultDao();
         jsonResultDao.setData(alldrugprice);
@@ -193,7 +194,6 @@ public class PatientController {
     //json传入patient_cert_code
     public JsonResultDao setHlist(HttpServletRequest request,@RequestBody HlistDao hlistDao){
         //JsonResultDao jsonResultDao=new JsonResultDao();
-        Logger logger=Logger.getLogger("getHlist");
         HttpSession session=request.getSession();
         String doctor_cert_code=(String)session.getAttribute("cert_code");
         hlistDao.setDoctor_cert_code(doctor_cert_code);

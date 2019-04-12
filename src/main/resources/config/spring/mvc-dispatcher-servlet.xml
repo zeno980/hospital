@@ -19,6 +19,7 @@
 
         <!-- 开启注解 -->
         <mvc:annotation-driven/>
+        <tx:annotation-driven transaction-manager="transactionManager" />
 
         <!-- 静态资源(js、mage等)的访问 -->
         <mvc:default-servlet-handler/>

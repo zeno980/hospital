@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
-@Transactional
+
 public interface PatientService {
     List<DoctorPatients> getAllPatientByDoctorCert(PageDao pageDao);
     int getPatientsCounts(PageDao pageDao);
