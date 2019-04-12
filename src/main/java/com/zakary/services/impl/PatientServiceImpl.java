@@ -236,11 +236,16 @@ public class PatientServiceImpl implements PatientService {
         //while(iter.hasNext()){
         //    patientService.insertPrescriptionAttribute(iter.next());
         //}
-        for( int i = 0 ; i <  prescriptionAttributeDaos.size() ; i++) {
-            System.out.println( prescriptionAttributeDaos.get(i));
-            prescriptionAttributeDao.setDoctor_cert_code(doctor_cert_code);
-            prescriptionAttributeDaos.get(i).setPrescription_id(prescription_id);
-            insertPrescriptionAttribute(prescriptionAttributeDaos.get(i));
-        }
+//        for( int i = 0 ; i <  prescriptionAttributeDaos.size() ; i++) {
+//            System.out.println( prescriptionAttributeDaos.get(i));
+//            prescriptionAttributeDao.setDoctor_cert_code(doctor_cert_code);
+//            prescriptionAttributeDaos.get(i).setPrescription_id(prescription_id);
+//            insertPrescriptionAttribute(prescriptionAttributeDaos.get(i));
+//        }
+        prescriptionAttributeDaos.forEach((value)->{
+            value.setDoctor_cert_code(doctor_cert_code);
+            value.setPrescription_id(prescription_id);
+            insertPrescriptionAttribute(value);
+        });
     }
 }
