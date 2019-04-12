@@ -32,9 +32,11 @@ public class PatientController {
 
     @RequestMapping("/getSickroomCount")
     //获取病房的总数
+    //不需要json传数据
+    @ResponseBody
     public JsonResultDao getSickroomCount(){
         JsonResultDao jsonResultDao=new JsonResultDao();
-        jsonResultDao.setCode(patientService.selectSickroomCount());
+        jsonResultDao.setData(patientService.selectSickroomCount());
         return jsonResultDao;
     }
     //第一个功能，添加病人在treatment表里，病人必须在patient表里存在
