@@ -3,10 +3,11 @@ package com.zakary.services;
 import com.zakary.dao.*;
 import com.zakary.dao.utils.DoctorPatients;
 import com.zakary.dao.utils.PatientSickbed;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
-
+@Transactional
 public interface PatientService {
     List<DoctorPatients> getAllPatientByDoctorCert(PageDao pageDao);
     int getPatientsCounts(PageDao pageDao);
@@ -22,4 +23,5 @@ public interface PatientService {
     List<Map<String,Object>> getAllPrescriptionAttribute(PrescriptionAttributeDao prescriptionAttributeDao);
     void setHlistByCert(HlistDao hlistDao);
     HlistDao getHlistByCert(String patient_cert_dao);
+    void makePrescribtion(List<PrescriptionAttributeDao> prescriptionAttributeDaos,String doctor_cert_code);
 }

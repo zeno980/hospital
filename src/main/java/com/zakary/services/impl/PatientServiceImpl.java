@@ -219,4 +219,26 @@ public class PatientServiceImpl implements PatientService {
         else
             return patientMapper.selectHlistInfoByCert(patient_cert_code);
     }
+
+    @Override
+    public void makePrescribtion(List<PrescriptionAttributeDao> prescriptionAttributeDaos,String doctor_cert_code) {
+        PrescriptionDao prescriptionDao=new PrescriptionDao();
+        PrescriptionAttributeDao prescriptionAttributeDao = prescriptionAttributeDaos.get(0);
+        prescriptionDao.setDoctor_cert_code(doctor_cert_code);
+        prescriptionDao.setPatient_cert_code(prescriptionAttributeDao.getPatient_cert_code());
+        //插入病历单在prescriptiondao表中
+        insertPrescription(prescriptionDao);
+        int prescription_id=getPrescriptionId(prescriptionDao);
+        //插入prescriptionAttribute
+        //Iterator<PrescriptionAttributeDao> iter = prescriptionAttributeDaos.iterator();
+        //while(iter.hasNext()){
+        //    patientService.insertPrescriptionAttribute(iter.next());
+        //}
+        for( int i = 0 ; i <  prescriptionAttributeDaos.size() ; i++) {
+            System.out.println( prescriptionAttributeDaos.get(i));
+            prescriptionAttributeDao.setDoctor_cert_code(doctor_cert_code);
+            prescriptionAttributeDaos.get(i).setPrescription_id(prescription_id);
+            insertPrescriptionAttribute(prescriptionAttributeDaos.get(i));
+        }
+    }
 }

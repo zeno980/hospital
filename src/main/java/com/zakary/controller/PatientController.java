@@ -31,6 +31,7 @@ public class PatientController {
     }
 
     @RequestMapping("/getSickroomCount")
+
     //获取病房的总数
     //不需要json传数据
     @ResponseBody
@@ -122,7 +123,7 @@ public class PatientController {
         jsonResultDao.setCode(0);
         jsonResultDao.setMsg("success");
         jsonResultDao.setData(patientSickbeds);
-//        jsonResultDao.setCount(pageDao.getPatient_cert_code()==null?patientService.getPatientsCounts():patientSickbeds.size());
+        jsonResultDao.setCount(pageDao.getPatient_cert_code()==null?patientService.getPatientsCounts(pageDao):patientSickbeds.size());
         return jsonResultDao;
     }
 
@@ -135,24 +136,7 @@ public class PatientController {
         //获得医生cert-code
         HttpSession session = request.getSession();
         String doctor_cert_code = (String)session.getAttribute("cert_code");
-        PrescriptionDao prescriptionDao=new PrescriptionDao();
-        PrescriptionAttributeDao prescriptionAttributeDao = prescriptionAttributeDaos.get(0);
-        prescriptionDao.setDoctor_cert_code(doctor_cert_code);
-        prescriptionDao.setPatient_cert_code(prescriptionAttributeDao.getPatient_cert_code());
-        //插入病历单在prescriptiondao表中
-        patientService.insertPrescription(prescriptionDao);
-        int prescription_id=patientService.getPrescriptionId(prescriptionDao);
-        //插入prescriptionAttribute
-        //Iterator<PrescriptionAttributeDao> iter = prescriptionAttributeDaos.iterator();
-        //while(iter.hasNext()){
-        //    patientService.insertPrescriptionAttribute(iter.next());
-        //}
-        for( int i = 0 ; i <  prescriptionAttributeDaos.size() ; i++) {
-            System.out.println( prescriptionAttributeDaos.get(i));
-            prescriptionAttributeDao.setDoctor_cert_code(doctor_cert_code);
-            prescriptionAttributeDaos.get(i).setPrescription_id(prescription_id);
-            patientService.insertPrescriptionAttribute(prescriptionAttributeDaos.get(i));
-        }
+        patientService.makePrescribtion(prescriptionAttributeDaos,doctor_cert_code);
         return  new JsonResultDao();
     }
 
