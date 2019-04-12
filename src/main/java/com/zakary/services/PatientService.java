@@ -1,13 +1,11 @@
 package com.zakary.services;
 
-import com.zakary.dao.PageDao;
-import com.zakary.dao.PatientDao;
-import com.zakary.dao.SickbedDao;
-import com.zakary.dao.TreatmentDao;
+import com.zakary.dao.*;
 import com.zakary.dao.utils.DoctorPatients;
 import com.zakary.dao.utils.PatientSickbed;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PatientService {
     List<DoctorPatients> getAllPatientByDoctorCert(PageDao pageDao);
@@ -18,4 +16,10 @@ public interface PatientService {
 //    int isInSickbed(String patient_cert_code);
     List<PatientSickbed> getPatientsSickbedInfo(PageDao pageDao);
     int selectSickroomCount();
+    int insertPrescription(PrescriptionDao prescriptionDao);
+    int getPrescriptionId(PrescriptionDao prescriptionDao);
+    void insertPrescriptionAttribute(PrescriptionAttributeDao prescriptionAttributeDao);
+    List<Map<String,Object>> getAllPrescriptionAttribute(PrescriptionAttributeDao prescriptionAttributeDao);
+    void setHlistByCert(HlistDao hlistDao);
+    HlistDao getHlistByCert(String patient_cert_dao);
 }

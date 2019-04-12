@@ -1,24 +1,31 @@
 package com.zakary.test;
 
+import com.alibaba.druid.support.logging.Log;
+import com.alibaba.druid.support.logging.LogFactory;
 import com.zakary.dao.*;
 import com.zakary.dao.utils.DoctorPatients;
 import com.zakary.services.DepartmentService;
 import com.zakary.services.DoctorService;
 import com.zakary.services.PatientService;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.logging.Logger;
+
+import static com.mysql.cj.conf.PropertyKey.logger;
 
 public class MapperTest extends BaseTest {
     @Autowired
     private DepartmentService departmentService;
-    @Autowired
-    private DoctorService doctorService;
+//    @Autowired
+//    private DoctorService doctorService;
     @Autowired
     private PatientService patientService;
     @Test
@@ -57,7 +64,7 @@ public class MapperTest extends BaseTest {
             doctorDao.setDoctor_department("doctorDepartment"+i);
             doctorDao.setPassword("e10adc3949ba59abbe56e057f20f883e");
             doctorDao.setDoctor_gender("男");
-            doctorService.insertDoctor(doctorDao);
+//            doctorService.insertDoctor(doctorDao);
         }
     }
     @Test
@@ -102,5 +109,53 @@ public class MapperTest extends BaseTest {
         pageDao.setLimit(limit);
 
         patientService.getPatientsSickbedInfo(pageDao);
+    }
+
+    @Test
+    public void test10(){
+        //PrescriptionDao prescriptionDao=new PrescriptionDao();
+        PrescriptionAttributeDao prescriptionAttributeDao=new PrescriptionAttributeDao();
+        prescriptionAttributeDao.setDoctor_cert_code("2");
+        prescriptionAttributeDao.setPatient_cert_code("1");
+        prescriptionAttributeDao.setDrug_num(5);
+        prescriptionAttributeDao.setDrug_name("drug1");
+        prescriptionAttributeDao.setPrescription_id(1);
+        System.out.println(prescriptionAttributeDao.getDrug_name());
+        patientService.insertPrescriptionAttribute(prescriptionAttributeDao);
+    }
+
+    @Test
+    public void test11(){
+        Logger logger = Logger.getLogger("");
+        PrescriptionAttributeDao prescriptionAttributeDao=new PrescriptionAttributeDao();
+        prescriptionAttributeDao.setPrescription_id(1);
+        prescriptionAttributeDao.setDoctor_cert_code("2");
+        prescriptionAttributeDao.setPatient_cert_code("1");
+        List<Map<String,Object>> infos= patientService.getAllPrescriptionAttribute(prescriptionAttributeDao);
+        double alldrugprice=0;
+        for(int i=0;i<infos.size();i++) {
+            //Logger logger=Logger.getLogger("getAllPrescriptionAttribute");
+            logger.info("DRUG :"+infos.get(i));
+            double price=Double.parseDouble(infos.get(i).get("drug_price").toString());
+            int num=Integer.parseInt(infos.get(i).get("drug_num").toString());
+            alldrugprice+=price*num;
+            //alldrugprice+=infos.get(i).get(drug_price)*infos.get(i).get(drug_num);
+        }
+        //Logger logger=Logger.getLogger("drug_price");
+        logger.info("总价 ："+alldrugprice);
+    }
+    @Test
+    public void test12(){
+        Logger logger = Logger.getLogger("");
+        HlistDao hlistDao=new HlistDao();
+        hlistDao.setDoctor_cert_code("2");
+        hlistDao.setPatient_cert_code("1");
+        patientService.setHlistByCert(hlistDao);
+    }
+    @Test
+    public void test13(){
+        Logger logger = Logger.getLogger("");
+        HlistDao hlistDao= patientService.getHlistByCert("1");
+        logger.info(hlistDao.toString());
     }
 }

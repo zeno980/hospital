@@ -4,15 +4,16 @@
   <resultMap id="BaseResultMap" type="com.zakary.dao.PatientDao" >
     <id column="patient_id" property="patient_id" jdbcType="INTEGER" />
     <result column="patient_name" property="patient_name" jdbcType="VARCHAR" />
-    <result column="patient_gender" property="patient_gender" jdbcType="CHAR" />
+    <result column="patient_gender" property="patient_gender" jdbcType="VARCHAR" />
     <result column="patient_age" property="patient_age" jdbcType="INTEGER" />
     <result column="patient_tel" property="patient_tel" jdbcType="INTEGER" />
+    <result column="doctor_cert_code" property="doctor_cert_code" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     patient_id, patien_tname, patient_gender, patient_age, patient_tel, type
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey"  parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from patient
@@ -30,6 +31,13 @@
       #{patient_age,jdbcType=INTEGER}, #{patient_tel,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}
       )
   </insert>
+
+  <select id="selectPatientByCert" parameterType="java.lang.String" resultType="com.zakary.dao.PatientDao">
+    select patient_id, cert_code, patient_name, patient_gender, patient_age, patient_tel, type
+    from patient
+    where cert_code=#{cert_code}
+  </select>
+
   <insert id="insertSelective" parameterType="com.zakary.dao.PatientDao" >
     insert into patient
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -136,6 +144,12 @@
     values (#{doctor_cert_code,jdbcType=VARCHAR},#{patient_cert_code,jdbcType=VARCHAR},#{treatment_name,jdbcType=VARCHAR},#{treatment_time},#{treatment_fee,jdbcType=DECIMAL})
   </insert>
 
+  <select id="selectTreatmentByCert" parameterType="java.lang.String" resultType="com.zakary.dao.TreatmentDao">
+    select doctor_cert_code, patient_cert_code, treatment_name, treatment_time, treatment_fee
+    from treatment
+    where patient_cert_code=#{patient_cert_code}
+  </select>
+
   <select id="isEmptyBySickbed" parameterType="java.lang.Integer" resultType="java.lang.String">
     select sickbed_state
     from sickbed
@@ -148,12 +162,12 @@
     where patient_cert_code=#{patient_cert_code,jdbcType=VARCHAR}
   </select>
 
-  <insert id="updateSickbed" parameterType="com.zakary.dao.SickbedDao">
+  <update id="updateSickbed" parameterType="com.zakary.dao.SickbedDao">
     update sickbed
     set sickbed_state=#{sickbed_state,jdbcType=VARCHAR},
         patient_cert_code=#{patient_cert_code,jdbcType=VARCHAR}
     where sickroom_id=#{sickroom_id,jdbcType=INTEGER} and sickbed_id=#{sickbed_id,jdbcType=INTEGER}
-  </insert>
+  </update>
 
   <select id="selectPatientsSickbedInfo" parameterType="com.zakary.dao.PageDao" resultType="com.zakary.dao.utils.PatientSickbed">
     select patient.patient_name,sickbed.patient_cert_code,doctor.doctor_name,sickbed.sickroom_id,sickbed.sickbed_id,sickroom.sickroom_fee
@@ -164,8 +178,65 @@
     </if>
   </select>
 
-  <select id="selectCountInSickroom" resultType="java.lang.Integer">
-    select count(*)
+  <select id="selectSickbedbyCert" parameterType="java.lang.String" resultType="com.zakary.dao.SickbedDao">
+    select sickroom_id, sickbed_id, patient_cert_code, sickbed_state
+    from sickbed
+    where patient_cert_code=#{patient_cert_code}
+  </select>
+
+     <select id="selectCountInSickroom" resultType="java.lang.Integer">
+     select count(*)
+      from sickroom
+    </select>
+
+    <insert id="insertPrescriptionDao" parameterType="com.zakary.dao.PrescriptionDao">
+        insert into prescription(doctor_cert_code, patient_cert_code)
+        values (#{doctor_cert_code,jdbcType=VARCHAR},#{patient_cert_code,jdbcType=VARCHAR})
+    </insert>
+
+  <select id="selectPrescriptionId" parameterType="java.lang.Integer">
+    select prescription_id
+    from prescription
+    where patient_cert_code=#{patient_cert_code} and doctor_cert_code=#{doctor_cert_code}
+  </select>
+
+  <insert id="insertPrescriptionAttributeDao" parameterType="com.zakary.dao.PrescriptionAttributeDao">
+    insert into prescription_attribute(prescription_id, drug_name, drug_num, patient_cert_code, doctor_cert_code)
+    values (#{prescription_id},#{drug_name},#{drug_num},#{patient_cert_code},#{doctor_cert_code})
+  </insert>
+
+    <select id="selectPrescriptionIdByCert" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select prescription_id
+        from prescription
+        where doctor_cert_code=#{doctor_cert_code} and patient_cert_code=#{patient_cert_code}
+    </select>
+
+    <select id="selectAllPrescriptionAttribute" parameterType="com.zakary.dao.PrescriptionAttributeDao" resultType="java.util.HashMap">
+        select prescription.patient_cert_code,patient.patient_name,treatment.treatment_name,prescription_attribute.prescription_id,drug.drug_id,prescription_attribute.drug_name,prescription_attribute.drug_num,drug.drug_price
+        from prescription_attribute,prescription,patient,treatment,drug
+        where prescription.prescription_id=prescription_attribute.prescription_id and prescription.patient_cert_code=patient.cert_code and patient.cert_code=treatment.patient_cert_code and drug.drug_name=prescription_attribute.drug_name and prescription_attribute.prescription_id=#{prescription_id} and prescription_attribute.patient_cert_code=#{patient_cert_code} and prescription_attribute.doctor_cert_code=#{doctor_cert_code}
+    </select>
+  
+  <select id="selectSickrommFee" parameterType="java.lang.Integer" resultType="java.lang.Double">
+    select sickroom_fee
     from sickroom
+    where sickroom_id=#{sickroom_id}
+  </select>
+
+  <insert id="insertHlist" parameterType="com.zakary.dao.HlistDao">
+    insert into hlist(doctor_name, doctor_cert_code, patient_name, patient_cert_code, sickroom_id, sickbed_id, treatment_time, treatment_name, prescription_id, drug_all_price, sickroom_fee, treatment_fee, hlist_fee)
+    values (#{doctor_name},#{doctor_cert_code},#{patient_name},#{patient_cert_code},#{sickroom_id},#{sickbed_id},#{treatment_time},#{treatment_name},#{prescription_id},#{drug_all_price},#{sickroom_fee},#{treatment_fee},#{hlist_fee})
+  </insert>
+
+  <select id="hlistCountByCert" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(*)
+    from hlist
+    where patient_cert_code=#{patient_cert_code}
+  </select>
+
+  <select id="selectHlistInfoByCert" parameterType="java.lang.String" resultType="com.zakary.dao.HlistDao">
+    select hlist_id, doctor_name, doctor_cert_code, patient_name, patient_cert_code, sickroom_id, sickbed_id, treatment_time, treatment_name, prescription_id, drug_all_price, sickroom_fee, treatment_fee, hlist_fee
+    from hlist
+    where patient_cert_code=#{patient_cert_code}
   </select>
 </mapper>

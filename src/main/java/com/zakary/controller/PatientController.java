@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/patient")
@@ -118,6 +121,108 @@ public class PatientController {
         jsonResultDao.setMsg("success");
         jsonResultDao.setData(patientSickbeds);
 //        jsonResultDao.setCount(pageDao.getPatient_cert_code()==null?patientService.getPatientsCounts():patientSickbeds.size());
+        return jsonResultDao;
+    }
+
+    //开处方
+    @RequestMapping("/makePrescribtion")
+    @ResponseBody
+    //json中prescriptionDao获得patient——id，prescrptionAttributeDaos获得drug_name,drug_num
+    public JsonResultDao makePrescribtion(HttpServletRequest request,
+                                          @RequestBody List<PrescriptionAttributeDao> prescriptionAttributeDaos){
+        //获得医生cert-code
+        HttpSession session = request.getSession();
+        String doctor_cert_code = (String)session.getAttribute("cert_code");
+        PrescriptionDao prescriptionDao=new PrescriptionDao();
+        PrescriptionAttributeDao prescriptionAttributeDao = prescriptionAttributeDaos.get(0);
+        prescriptionDao.setDoctor_cert_code(doctor_cert_code);
+        prescriptionDao.setPatient_cert_code(prescriptionAttributeDao.getPatient_cert_code());
+        //插入病历单在prescriptiondao表中
+        patientService.insertPrescription(prescriptionDao);
+        int prescription_id=patientService.getPrescriptionId(prescriptionDao);
+        //插入prescriptionAttribute
+        //Iterator<PrescriptionAttributeDao> iter = prescriptionAttributeDaos.iterator();
+        //while(iter.hasNext()){
+        //    patientService.insertPrescriptionAttribute(iter.next());
+        //}
+        for( int i = 0 ; i <  prescriptionAttributeDaos.size() ; i++) {
+            System.out.println( prescriptionAttributeDaos.get(i));
+            prescriptionAttributeDao.setDoctor_cert_code(doctor_cert_code);
+            prescriptionAttributeDaos.get(i).setPrescription_id(prescription_id);
+            patientService.insertPrescriptionAttribute(prescriptionAttributeDaos.get(i));
+        }
+        return  new JsonResultDao();
+    }
+
+    @RequestMapping("/getPrescriptionAttribute")
+    @ResponseBody
+    //json传入patient_cert_code即可
+    //json中存储PrescriptionAttribute的doctor_cet_codes属性和prescription_id属性
+    //获得的map中含有所有信息，只需要提取drognum,drugname
+    //前台计算总价，方法如下
+    public List<Map<String,Object>> getPrescriptionAttribute(HttpServletRequest request, @RequestBody PrescriptionAttributeDao prescriptionAttributeDao){
+        HttpSession session=request.getSession();
+        String doctor_cert_code=(String)session.getAttribute("cert_code");
+        prescriptionAttributeDao.setDoctor_cert_code(doctor_cert_code);
+        List<Map<String,Object>> infos= patientService.getAllPrescriptionAttribute(prescriptionAttributeDao);
+        //double alldrugprice=0;
+        //for(int i=0;i<infos.size();i++) {
+        //    Logger logger=Logger.getLogger("getAllPrescriptionAttribute");
+        //    logger.info("DRUG :"+infos.get(i));
+        //    double price=Double.parseDouble(infos.get(i).get("drug_price").toString());
+        //    int num=Integer.parseInt(infos.get(i).get("drug_num").toString());
+        //    alldrugprice+=price*num;
+        //}
+        //Logger logger=Logger.getLogger("drug_price");
+        //logger.info("总价 ："+alldrugprice);
+        return infos;
+    }
+    //获取某个病人的药品总价
+    @RequestMapping("/getallDrugPrice")
+    @ResponseBody
+    //json传入patient_cert_code即可
+    //json返回为一个double总价
+    public JsonResultDao getallDrugPrice(HttpServletRequest request, @RequestBody PrescriptionAttributeDao prescriptionAttributeDao){
+        HttpSession session=request.getSession();
+        String doctor_cert_code=(String)session.getAttribute("cert_code");
+        prescriptionAttributeDao.setDoctor_cert_code(doctor_cert_code);
+        List<Map<String,Object>> infos= patientService.getAllPrescriptionAttribute(prescriptionAttributeDao);
+        double alldrugprice=0;
+        for(int i=0;i<infos.size();i++) {
+            Logger logger=Logger.getLogger("getAllPrescriptionAttribute");
+            logger.info("DRUG :"+infos.get(i));
+            double price=Double.parseDouble(infos.get(i).get("drug_price").toString());
+            int num=Integer.parseInt(infos.get(i).get("drug_num").toString());
+            alldrugprice+=price*num;
+        }
+        Logger logger=Logger.getLogger("drug_price");
+        logger.info("总价 ："+alldrugprice);
+        JsonResultDao jsonResultDao=new JsonResultDao();
+        jsonResultDao.setData(alldrugprice);
+        return jsonResultDao;
+    }
+    //生成病历单
+    @RequestMapping("/setHlist")
+    @ResponseBody
+    //json传入patient_cert_code
+    public JsonResultDao setHlist(HttpServletRequest request,@RequestBody HlistDao hlistDao){
+        //JsonResultDao jsonResultDao=new JsonResultDao();
+        Logger logger=Logger.getLogger("getHlist");
+        HttpSession session=request.getSession();
+        String doctor_cert_code=(String)session.getAttribute("cert_code");
+        hlistDao.setDoctor_cert_code(doctor_cert_code);
+        logger.info("doctor: "+doctor_cert_code+"  patient: "+hlistDao.getPatient_cert_code());
+        patientService.setHlistByCert(hlistDao);
+        return new JsonResultDao();
+    }
+
+    @RequestMapping("/getHlistInfo")
+    @ResponseBody
+    //查看某位病人的病历单，json中传入patient_cert_code
+    public JsonResultDao getHlistInfo(@RequestBody HlistDao hlistDao){
+        JsonResultDao jsonResultDao=new JsonResultDao();
+        HlistDao hlistDao1=patientService.getHlistByCert(hlistDao.getPatient_cert_code());
+        jsonResultDao.setData(hlistDao1);
         return jsonResultDao;
     }
 }
