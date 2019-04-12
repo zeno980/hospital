@@ -194,7 +194,7 @@
         values (#{doctor_cert_code,jdbcType=VARCHAR},#{patient_cert_code,jdbcType=VARCHAR})
     </insert>
 
-  <select id="selectPrescriptionId" parameterType="java.lang.Integer">
+  <select id="selectPrescriptionId" parameterType="com.zakary.dao.PrescriptionDao" resultType="java.lang.Integer">
     select prescription_id
     from prescription
     where patient_cert_code=#{patient_cert_code} and doctor_cert_code=#{doctor_cert_code}
