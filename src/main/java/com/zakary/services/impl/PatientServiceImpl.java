@@ -126,6 +126,9 @@ public class PatientServiceImpl implements PatientService {
                 ||prescriptionAttributeDao.getDrug_num()==0) {
             throw new BusinessException("必要参数为空");
         }
+        else if(prescriptionAttributeDao.getDrug_num()<0){
+            throw new BusinessException("输入值非法");
+        }
         else {
             System.out.println(prescriptionAttributeDao.getDrug_num());
             patientMapper.insertPrescriptionAttributeDao(prescriptionAttributeDao);
