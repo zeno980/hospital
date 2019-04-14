@@ -229,7 +229,7 @@ public class PatientController {
         jsonResultDao.setData(infos);
         jsonResultDao.setCode(0);
         jsonResultDao.setMsg("success");
-        jsonResultDao.setCount(pageDao.getPatient_cert_code()==null?patientService.getPatientsCounts(pageDao):infos.size());
+        jsonResultDao.setCount(infos.size());
         return jsonResultDao;
     }
 
@@ -250,7 +250,7 @@ public class PatientController {
         jsonResultDao.setData(infos);
         jsonResultDao.setCode(0);
         jsonResultDao.setMsg("success");
-        jsonResultDao.setCount(pageDao.getPatient_cert_code()==null?patientService.getPatientsCounts(pageDao):infos.size());
+        jsonResultDao.setCount(infos.size());
         return jsonResultDao;
     }
 }
