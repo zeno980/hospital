@@ -251,7 +251,7 @@
   </select>
 
   <select id="selectAllPatientNoSickbed" parameterType="com.zakary.dao.PageDao" resultType="java.util.HashMap">
-    select patient.patient_id,patient.cert_code,patient.patient_name,patient.patient_gender,patient.patient_age,patient.patient_tel,patient.create_date
+    select patient_id, cert_code, patient_name, patient_gender, patient_age, patient_tel, type, has_sickbed, create_date
     FROM patient
     where cert_code not in(SELECT sickbed.patient_cert_code
 												from sickbed
