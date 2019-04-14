@@ -241,7 +241,7 @@
   </select>
 
   <select id="selectAllPatientSickbed" parameterType="com.zakary.dao.PageDao" resultType="java.util.HashMap">
-    select patient_id, cert_code, patient_name, patient_gender, patient_age, patient_tel, type, sickroom_id, sickbed_id, patient_cert_code, sickbed_state
+    select patient.patient_id, patient.cert_code, patient.patient_name, patient.patient_gender, patient.patient_age, patient.patient_tel, patient.type, patient.has_sickbed, patient.create_date, sickbed.sickroom_id, sickbed.sickbed_id, sickbed.patient_cert_code, sickbed.sickbed_state, sickbed.create_date
     from patient left join sickbed
     on patient.cert_code=sickbed.patient_cert_code
     <if test="patient_cert_code!=null and patient_cert_code!=0">
@@ -257,4 +257,10 @@
 												from sickbed
 												where sickbed.patient_cert_code IS NOT NULL)
   </select>
+
+  <update id="updatePatientHasSickbed" parameterType="com.zakary.dao.SickbedDao">
+    update patient
+    set has_sickbed='Y'
+    where cert_code=#{patient_cert_code}
+  </update>
 </mapper>

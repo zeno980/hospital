@@ -86,6 +86,7 @@ public class PatientServiceImpl implements PatientService {
                 else {
                     sickbedDao.setSickbed_state("full");
                     patientMapper.updateSickbed(sickbedDao);
+                    patientMapper.updatePatientHasSickbed(sickbedDao);
                 }
             }
         }

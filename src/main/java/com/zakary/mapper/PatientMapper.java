@@ -40,4 +40,5 @@ public interface PatientMapper {
     HlistDao selectHlistInfoByCert(String patient_cert_code);
     List<Map<String,Object>> selectAllPatientSickbed(PageDao pageDao);
     List<Map<String,Object>> selectAllPatientNoSickbed(PageDao pageDao);
+    void updatePatientHasSickbed(SickbedDao sickbedDao);
 }
