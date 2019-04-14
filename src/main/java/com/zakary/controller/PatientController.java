@@ -236,9 +236,13 @@ public class PatientController {
     @RequestMapping("/getPatientsNoSickbed")
     @ResponseBody
     //得到所有没有分配病房的病人信息
-    public JsonResultDao getPatientsNoSickbed(HttpServletRequest request,PageDao pageDao){
+    public JsonResultDao getPatientsNoSickbed(HttpServletRequest request){
+        PageDao pageDao=new PageDao();
         int pageNum=Integer.parseInt(request.getParameter("page"));
         int limit=Integer.parseInt(request.getParameter("limit"));
+        String patient_cert_code=request.getParameter("patient_cert_code");
+        if(patient_cert_code!=null&&!patient_cert_code.trim().equals(""))//查询患者的病床信息
+            pageDao.setPatient_cert_code(patient_cert_code);
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
         JsonResultDao jsonResultDao=new JsonResultDao();

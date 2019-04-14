@@ -256,6 +256,9 @@
     where cert_code not in(SELECT sickbed.patient_cert_code
 												from sickbed
 												where sickbed.patient_cert_code IS NOT NULL)
+    <if test="patient_cert_code!=null and patient_cert_code!=0">
+      and patient.cert_code=#{patient_cert_code}
+    </if>
   </select>
 
   <update id="updatePatientHasSickbed" parameterType="com.zakary.dao.SickbedDao">
