@@ -166,14 +166,7 @@ public class MapperTest extends BaseTest {
         pageDao.setPage(1);
         pageDao.setPatient_cert_code("6");
         List<Map<String,Object>> infos=patientService.getAllPatientSickbed(pageDao);
-        Logger logger=LoggerFactory.getLogger(getClass());
-        for (Map<String, Object> m : infos) {
-            for (String k : m.keySet()) {
-                //logger.info(k+": "+m.get(k));
-                System.out.print(" "+k+": "+m.get(k));
-            }
-            System.out.println();
-        }
+        System.out.println(infos);
     }
 
     @Test

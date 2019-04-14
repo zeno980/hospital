@@ -1,7 +1,10 @@
 var tableIns;
+var tableInsRom;
 var form;
 var layer;
 $(document).ready(function () {
+    layer = layui.layer;
+    form  = layui.form;
     var element = layui.element;
     element.on('nav(nav_left)',function (elem) {
         switch (elem.context.innerText) {
@@ -10,10 +13,10 @@ $(document).ready(function () {
                 showPatients();
                 $('#patient_info').show()
                 break;
-            case '医生注册审核':
+            case '病床管理':
                 hideAll()
-                showInactiveDoctors();
-                $('#doctor_v').show()
+                showSickRom();
+                $('#sick_rom').show()
                 break;
         }
     })
@@ -23,8 +26,6 @@ $(document).ready(function () {
 function showPatients() {
     var laydate = layui.laydate;
     laydate.render({elem: '#time'})
-    layer = layui.layer;
-    form  = layui.form;
     form.on('submit(doSubmit)',function (data) {
         $('#myModal').modal('hide');
         var index = layer.load(2);
@@ -46,27 +47,7 @@ function showPatients() {
             }
         })
     })
-    form.on('submit(sick_doSubmit)',function(data){
-        $('#sick_Modal').modal('hide');
-        var index = layer.load(2);
-        $.ajax({
-            url:'/hospital/patient/ArrangeSickbed',
-            type:'post',
-            contentType:"application/json",
-            datatype:"json",
-            data : JSON.stringify(data.field)
-        }).done(function (data) {
-            if(data.code==0){
-                layer.close(index);
-                layer.msg("分配成功",{time: 1000},function () {
-                    tableIns.reload({where: {patient_cert_code: '',}, page: {curr: 1}})
-                })
-            }else{
-                layer.close(index);
-                layer.msg(data.msg,{time:1000})
-            }
-        })
-    })
+
     form.on('submit(prescription_doSubmit)',function (data) {
         $('#sick_Modal').modal('hide');
         var result = data.field;
@@ -116,35 +97,13 @@ function showPatients() {
                 title: '操作',
                 width: '10%',
                 unresize: true,
-                toolbar: '<div><button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="allot">分配病房</button><button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="make">开药</button></div>'
+                toolbar: '<div><button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="make">开药</button></div>'
             }
         ]]
     });
     table.on('tool(patient_table)',function (obj) {
         var datas = obj.data;
-        $('#sick_roms').empty();
-        form.val("sickForm",{"sickbed_id":""})
-        if(obj.event=='allot'){
-            $.ajax({ //getSickroomCount
-                url:'/hospital/patient/getSickroomCount',
-                type:'post',
-                contentType:"application/json",
-                datatype:"json",
-            }).done(function (data) {
-                if(data.code==0){
-                    var html = '<option value=""></option>';
-                    for(var i = 0;i<data.data;i++){
-                        html += '<option value="'+(i+1)+'">'+(i+1)+'</option>';
-                    }
-                    $('#sick_roms').append(html)
-                    form.render();
-                    form.val("sickForm",{"patient_cert_code":datas.patient_cert_code})
-                    $('#sick_Modal').modal('show');
-                }else{
-                    layer.msg(data.msg)
-                }
-            })
-        }else if(obj.event=='make'){
+        if(obj.event=='make'){
             $("#drug_cursor").empty();
             $("#drug_cursor").append('<div class="layui-form-item" value="1">\n' +
                 '                                <div class="layui-inline">\n' +
@@ -198,6 +157,83 @@ function formadd() {
     $("#drug_cursor").append(html);
     form.render()
 }
+function showSickRom() {
+    form.on('submit(sick_doSubmit)',function(data){
+        $('#sick_Modal').modal('hide');
+        var index = layer.load(2);
+        $.ajax({
+            url:'/hospital/patient/ArrangeSickbed',
+            type:'post',
+            contentType:"application/json",
+            datatype:"json",
+            data : JSON.stringify(data.field)
+        }).done(function (data) {
+            if(data.code==0){
+                layer.close(index);
+                layer.msg("分配成功",{time: 1000},function () {
+                    tableInsRom.reload({where: {patient_cert_code: ''}})
+                })
+            }else{
+                layer.close(index);
+                layer.msg(data.msg,{time:1000})
+            }
+        })
+    })
+    var table = layui.table;
+    tableInsRom = table.render({
+        elem: '#rom_table',
+        url: '/hospital/patient/getAllPatientsSickbedInfo', //数据接口
+        skin: 'row ', //行边框风格
+        page: true,
+        cols: [[
+            {field: 'patient_name', title: '姓名', width: '20%', unresize: true},
+            {field: 'cert_code', title: '证件号', width: '20%', unresize: true},
+            {field: 'patient_gender', title: '性别', width: '20%', unresize: true},
+            {field: 'patient_age', title: '年龄', width: '10%', unresize: true},
+            {field: 'sickroom_id', title: '病房', width: '10%', unresize: true},
+            {field: 'sickbed_id', title: '病床', width: '10%', unresize: true},
+            {
+                field: 'has_sickbed',
+                title: '操作',
+                width: '10%',
+                unresize: true,
+                templet: '#sick_bar'
+            }
+        ]]
+    });
+    table.on('tool(sick_rom_table)',function (obj) {
+        var datas = obj.data;
+        $('#sick_roms').empty();
+        if(obj.event=='allot'){
+            form.val("sickForm",{"sickbed_id":""})
+            $.ajax({ //getSickroomCount
+                url:'/hospital/patient/getSickroomCount',
+                type:'post',
+                contentType:"application/json",
+                datatype:"json",
+            }).done(function (data) {
+                if(data.code==0){
+                    var html = '<option value=""></option>';
+                    for(var i = 0;i<data.data;i++){
+                        html += '<option value="'+(i+1)+'">'+(i+1)+'</option>';
+                    }
+                    $('#sick_roms').append(html)
+                    form.render();
+                    console.log(datas)
+                    form.val("sickForm",{"patient_cert_code":datas.cert_code})
+                    $('#sick_Modal').modal('show');
+                }else{
+                    layer.msg(data.msg)
+                }
+            })
+        }
+    })
+}
+function searchRom () {
+    tableInsRom.reload({where: {patient_cert_code: $('#search_id_rom').val(),}, page: {curr: 1}})
+    $('#search_id_rom').val('');
+}
 function hideAll() {
     $('#patient_info').hide();
+    $('#sick_rom').hide();
 }

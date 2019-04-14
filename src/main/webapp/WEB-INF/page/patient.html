@@ -41,7 +41,7 @@
                     <a class="" href="javascript:;">信息管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;">患者管理</a></dd>
-                        <dd><a href="javascript:;">功能2</a></dd>
+                        <dd><a href="javascript:;">病床管理</a></dd>
                         <dd><a href="javascript:;">功能3</a></dd>
                     </dl>
                 </li>
@@ -80,19 +80,22 @@
                 <table id="patient" lay-filter="patient_table"></table>
             </div>
         </div>
-        <!--<div id="doctor_v" hidden>-->
-            <!--<blockquote class="layui-elem-quote">医生注册审核</blockquote>-->
-            <!--<div style="padding: 1%">-->
-                <!--<div>-->
-                    <!--搜索证件号：-->
-                    <!--<div class="layui-inline">-->
-                        <!--<input class="layui-input" name="id" id="search_id_v" autocomplete="off">-->
-                    <!--</div>-->
-                    <!--<button class="layui-btn" onclick="searchInactive()">搜索</button>-->
-                <!--</div>-->
-                <!--<table id="doctor_cursor_v" lay-filter="doctor_table_v"></table>-->
-            <!--</div>-->
-        <!--</div>-->
+        <div id="sick_rom" hidden>
+            <blockquote class="layui-elem-quote">病床管理</blockquote>
+            <div style="padding: 1%">
+                <div>
+                    搜索证件号：
+                    <div class="layui-inline">
+                        <input class="layui-input" name="id" id="search_id_rom" autocomplete="off">
+                    </div>
+                    <button class="layui-btn" onclick="searchRom()">搜索</button>
+                </div>
+                <table id="rom_table" lay-filter="sick_rom_table"></table>
+                <script type="text/html" id="sick_bar">
+                    <button class="layui-btn layui-btn-sm layui-btn-normal {{ d.has_sickbed=='N'?'':'layui-btn-disabled' }}" lay-event="allot" {{ d.has_sickbed=='N'?'':'disabled' }}>分配病房</button>
+                </script>
+            </div>
+        </div>
     </div>
 
     <div class="layui-footer">
@@ -162,7 +165,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">证件号</label>
                         <div class="layui-input-block">
-                            <input type="number" name="patient_cert_code" required lay-verify="required"  autocomplete="off" class="layui-input layui-disabled" placeholder="请输入患者身份证号码">
+                            <input type="number" name="patient_cert_code" required lay-verify="required"  autocomplete="off" class="layui-input layui-disabled" disabled placeholder="请输入患者身份证号码">
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -213,7 +216,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">证件号</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="patient_cert_code" required  lay-verify="required"  autocomplete="off" class="layui-input layui-disabled">
+                                <input type="text" name="patient_cert_code" required  lay-verify="required"  autocomplete="off" class="layui-input layui-disabled" disabled>
                             </div>
                         </div>
                         <div id="drug_cursor">
@@ -235,5 +238,6 @@
         </div><!-- /.modal -->
     </div>
 </div>
+
 </body>
 </html>
