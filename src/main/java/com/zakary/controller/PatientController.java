@@ -215,22 +215,28 @@ public class PatientController {
     @ResponseBody
     //病房管理，获取所有病人的的病房信息
     //传递页面参数，查询的话，传入patient_cert_code
-    public List<Map<String,Object>> getAllPatientsSickbedInfo(HttpServletRequest request,PageDao pageDao){
+    public JsonResultDao getAllPatientsSickbedInfo(HttpServletRequest request,PageDao pageDao){
         int pageNum=Integer.parseInt(request.getParameter("page"));
         int limit=Integer.parseInt(request.getParameter("limit"));
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
-        return patientService.getAllPatientSickbed(pageDao);
+        JsonResultDao jsonResultDao=new JsonResultDao();
+        List<Map<String,Object>> infos=patientService.getAllPatientSickbed(pageDao);
+        jsonResultDao.setData(infos);
+        return jsonResultDao;
     }
 
     @RequestMapping("/getPatientsNoSickbed")
     @ResponseBody
     //得到所有没有分配病房的病人信息
-    public List<Map<String,Object>> getPatientsNoSickbed(HttpServletRequest request,PageDao pageDao){
+    public JsonResultDao getPatientsNoSickbed(HttpServletRequest request,PageDao pageDao){
         int pageNum=Integer.parseInt(request.getParameter("page"));
         int limit=Integer.parseInt(request.getParameter("limit"));
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
-        return patientService.getAllPatientNoSickbed(pageDao);
+        JsonResultDao jsonResultDao=new JsonResultDao();
+        List<Map<String,Object>> infos=patientService.getAllPatientNoSickbed(pageDao);
+        jsonResultDao.setData(infos);
+        return jsonResultDao;
     }
 }
