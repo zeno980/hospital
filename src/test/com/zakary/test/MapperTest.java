@@ -8,8 +8,8 @@ import com.zakary.services.DepartmentService;
 import com.zakary.services.DoctorService;
 import com.zakary.services.PatientService;
 import org.junit.Test;
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.SimpleDateFormat;
@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 import static com.mysql.cj.conf.PropertyKey.logger;
 
@@ -58,7 +58,7 @@ public class MapperTest extends BaseTest {
             DoctorDao doctorDao = new DoctorDao();
             doctorDao.setDoctor_position("doctorPosition"+i);
             doctorDao.setDoctor_name("doctor"+i);
-            doctorDao.setDoctor_tel("12345678912");
+            doctorDao.setDoctor_tel("12345678912"); 
             doctorDao.setType(0);
             doctorDao.setCert_code(i+"");
             doctorDao.setDoctor_department("doctorDepartment"+i);
@@ -126,7 +126,7 @@ public class MapperTest extends BaseTest {
 
     @Test
     public void test11(){
-        Logger logger = Logger.getLogger("");
+        //Logger logger = Logger.getLogger("");
         PrescriptionAttributeDao prescriptionAttributeDao=new PrescriptionAttributeDao();
         prescriptionAttributeDao.setPrescription_id(1);
         prescriptionAttributeDao.setDoctor_cert_code("2");
@@ -135,18 +135,18 @@ public class MapperTest extends BaseTest {
         double alldrugprice=0;
         for(int i=0;i<infos.size();i++) {
             //Logger logger=Logger.getLogger("getAllPrescriptionAttribute");
-            logger.info("DRUG :"+infos.get(i));
+            //logger.info("DRUG :"+infos.get(i));
             double price=Double.parseDouble(infos.get(i).get("drug_price").toString());
             int num=Integer.parseInt(infos.get(i).get("drug_num").toString());
             alldrugprice+=price*num;
             //alldrugprice+=infos.get(i).get(drug_price)*infos.get(i).get(drug_num);
         }
         //Logger logger=Logger.getLogger("drug_price");
-        logger.info("总价 ："+alldrugprice);
+        //logger.info("总价 ："+alldrugprice);
     }
     @Test
     public void test12(){
-        Logger logger = Logger.getLogger("");
+        //Logger logger = Logger.getLogger("");
         HlistDao hlistDao=new HlistDao();
         hlistDao.setDoctor_cert_code("2");
         hlistDao.setPatient_cert_code("1");
@@ -154,8 +154,40 @@ public class MapperTest extends BaseTest {
     }
     @Test
     public void test13(){
-        Logger logger = Logger.getLogger("");
+        //Logger logger = Logger.getLogger("");
         HlistDao hlistDao= patientService.getHlistByCert("1");
-        logger.info(hlistDao.toString());
+        //logger.info(hlistDao.toString());
+    }
+
+    @Test
+    public void test14(){
+        PageDao pageDao=new PageDao();
+        pageDao.setLimit(10);
+        pageDao.setPage(1);
+        pageDao.setPatient_cert_code("6");
+        List<Map<String,Object>> infos=patientService.getAllPatientSickbed(pageDao);
+        Logger logger=LoggerFactory.getLogger(getClass());
+        for (Map<String, Object> m : infos) {
+            for (String k : m.keySet()) {
+                //logger.info(k+": "+m.get(k));
+                System.out.print(" "+k+": "+m.get(k));
+            }
+            System.out.println();
+        }
+    }
+
+    @Test
+    public void test15(){
+        PageDao pageDao=new PageDao();
+        pageDao.setLimit(10);
+        pageDao.setPage(1);
+        List<Map<String,Object>> infos=patientService.getAllPatientNoSickbed(pageDao);
+        for (Map<String, Object> m : infos) {
+            for (String k : m.keySet()) {
+                //logger.info(k+": "+m.get(k));
+                System.out.print(" "+k+": "+m.get(k));
+            }
+            System.out.println();
+        }
     }
 }

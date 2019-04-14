@@ -248,4 +248,14 @@ public class PatientServiceImpl implements PatientService {
             insertPrescriptionAttribute(value);
         });
     }
+
+    @Override
+    public List<Map<String,Object>> getAllPatientSickbed(PageDao pageDao){
+        return patientMapper.selectAllPatientSickbed(pageDao);
+    }
+
+    @Override
+    public List<Map<String,Object>> getAllPatientNoSickbed(PageDao pageDao){
+        return patientMapper.selectAllPatientNoSickbed(pageDao);
+    }
 }

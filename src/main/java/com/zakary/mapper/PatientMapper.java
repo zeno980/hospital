@@ -38,4 +38,6 @@ public interface PatientMapper {
     Double selectSickrommFee(int sickroom_id);
     int hlistCountByCert(String patient_cert_code);
     HlistDao selectHlistInfoByCert(String patient_cert_code);
+    List<Map<String,Object>> selectAllPatientSickbed(PageDao pageDao);
+    List<Map<String,Object>> selectAllPatientNoSickbed(PageDao pageDao);
 }

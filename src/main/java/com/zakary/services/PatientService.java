@@ -24,4 +24,6 @@ public interface PatientService {
     void setHlistByCert(HlistDao hlistDao);
     HlistDao getHlistByCert(String patient_cert_dao);
     void makePrescribtion(List<PrescriptionAttributeDao> prescriptionAttributeDaos,String doctor_cert_code);
+    List<Map<String,Object>> getAllPatientSickbed(PageDao pageDao);
+    List<Map<String,Object>> getAllPatientNoSickbed(PageDao pageDao);
 }
