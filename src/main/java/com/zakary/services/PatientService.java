@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface PatientService {
-    List<DoctorPatients> getAllPatientByDoctorCert(PageDao pageDao);
+    List<PatientDao> getAllPatientByDoctorCert(PageDao pageDao);
     int getPatientsCounts(PageDao pageDao);
     void insertPatient(TreatmentDao treatmentDao);
 //    String isEmpty(int sickroom_id,int sickbed_id);

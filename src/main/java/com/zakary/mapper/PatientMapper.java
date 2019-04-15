@@ -17,7 +17,7 @@ public interface PatientMapper {
     PatientDao selectByPrimaryKey(Integer patientid);
     int updateByPrimaryKeySelective(PatientDao record);
     int updateByPrimaryKey(PatientDao record);
-    List<DoctorPatients> selectAllPatientsByDoctorCert(PageDao pageDao);
+    List<PatientDao> selectAllPatientsByDoctorCert(PageDao pageDao);
     int getAllPatientsCounts(PageDao pageDao);
     int getCountByCert(String cert_code);
     int getCountByCertInTreatment(String patient_cert_code);

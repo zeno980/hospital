@@ -75,9 +75,9 @@ public class MapperTest extends BaseTest {
         PageDao pageDao = new PageDao();
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
-//        pageDao.setPatient_cert_code("1");
-//        List<DoctorPatients> patients=patientService.getAllPatientByDoctorCert(pageDao,id);
-//        System.out.println(patients);
+        pageDao.setDoctor_cert_code("2");
+        List<PatientDao> patients=patientService.getAllPatientByDoctorCert(pageDao);
+        System.out.println(patients);
     }
     @Test
     public void test7(){

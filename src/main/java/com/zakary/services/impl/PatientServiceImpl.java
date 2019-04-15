@@ -35,11 +35,9 @@ public class PatientServiceImpl implements PatientService {
         return patientMapper.getAllPatientsCounts(pageDao);
     }
 
-    public List<DoctorPatients> getAllPatientByDoctorCert(PageDao pageDao) {
+    public List<PatientDao> getAllPatientByDoctorCert(PageDao pageDao) {
         if("1".equals(pageDao.getDoctor_cert_code()))
             throw new BusinessException("id不存在");
-        //int doctor_id=Integer.parseInt(doctor_cert_code);
-        //logger.info("医生ID: "+pageDao.getDoctor_cert_code());
         return patientMapper.selectAllPatientsByDoctorCert(pageDao);
     }
 

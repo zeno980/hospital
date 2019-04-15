@@ -76,7 +76,7 @@ public class PatientController {
         if(patient_cert_code!=null&&!patient_cert_code.trim().equals("")){
             pageDao.setPatient_cert_code(patient_cert_code);
         }
-        List<DoctorPatients> patients=patientService.getAllPatientByDoctorCert(pageDao);
+        List<PatientDao> patients=patientService.getAllPatientByDoctorCert(pageDao);
         jsonResultDao.setCode(0);
         jsonResultDao.setData(patients);
         jsonResultDao.setMsg("success");

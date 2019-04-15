@@ -1,5 +1,9 @@
 package com.zakary.dao;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
+import java.util.Date;
+
 public class PatientDao {
     private Integer patient_id;
 
@@ -14,6 +18,34 @@ public class PatientDao {
     private Integer patient_tel;
 
     private String type;
+    private String doctor_cert_code;
+    private String has_sickbed;
+    @JSONField(format = "yyyy-MM-dd")
+    private Date create_date;
+
+    public String getDoctor_cert_code() {
+        return doctor_cert_code;
+    }
+
+    public void setDoctor_cert_code(String doctor_cert_code) {
+        this.doctor_cert_code = doctor_cert_code;
+    }
+
+    public String getHas_sickbed() {
+        return has_sickbed;
+    }
+
+    public void setHas_sickbed(String has_sickbed) {
+        this.has_sickbed = has_sickbed;
+    }
+
+    public Date getCreate_date() {
+        return create_date;
+    }
+
+    public void setCreate_date(Date create_date) {
+        this.create_date = create_date;
+    }
 
     public Integer getPatient_id() {
         return patient_id;
@@ -69,5 +101,21 @@ public class PatientDao {
 
     public void setCert_code(String cert_code) {
         this.cert_code = cert_code;
+    }
+
+    @Override
+    public String toString() {
+        return "PatientDao{" +
+                "patient_id=" + patient_id +
+                ", cert_code='" + cert_code + '\'' +
+                ", patient_name='" + patient_name + '\'' +
+                ", patient_gender='" + patient_gender + '\'' +
+                ", patient_age=" + patient_age +
+                ", patient_tel=" + patient_tel +
+                ", type='" + type + '\'' +
+                ", doctor_cert_code='" + doctor_cert_code + '\'' +
+                ", has_sickbed='" + has_sickbed + '\'' +
+                ", create_date=" + create_date +
+                '}';
     }
 }
