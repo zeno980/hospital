@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var layer = layui.layer;
-    var index1 = layer.load(2);
+    var index1 = layer.msg('获取部门信息中',{time: 20*5000,icon: 16})
     $.ajax({
         url:'/hospital/user/getDepartment.do',
         type:'post',
@@ -18,6 +18,7 @@ $(document).ready(function () {
             var form = layui.form;
             form.on('select(department)', function (data) {
                 var id = data.value;
+                if(id=='')return;
                 $.ajax({
                     url:'/hospital/user/getPosition.do',
                     type:'post',

@@ -8,14 +8,20 @@ $(document).ready(function () {
     var element = layui.element;
     element.on('nav(nav_left)',function (elem) {
         switch (elem.context.innerText) {
-            case '患者管理':
+            case '基本信息管理':
                 hideAll();
                 showPatients();
+                $('#floor').html('基本信息管理')
                 $('#patient_info').show()
+                break;
+            case '手术信息管理':
+                hideAll();
+                $('#floor').html('手术信息管理')
                 break;
             case '病床管理':
                 hideAll()
                 showSickRom();
+                $('#floor').html('病床管理')
                 $('#sick_rom').show()
                 break;
         }

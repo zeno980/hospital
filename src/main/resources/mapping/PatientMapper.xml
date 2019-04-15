@@ -115,7 +115,7 @@
   <select id="selectAllPatientsByDoctorCert" resultType="com.zakary.dao.utils.DoctorPatients" parameterType="com.zakary.dao.PageDao">
       select patient_id,treatment.patient_cert_code,patient_name,patient_gender,patient_age,treatment_name,treatment_time,treatment_fee
       from patient,treatment
-      where treatment.doctor_cert_code=#{doctor_cert_code,jdbcType=VARCHAR} and patient.cert_code=treatment.patient_cert_code
+      where treatment.doctor_cert_code=#{doctor_cert_code}
       <if test="patient_cert_code !=null and patient_cert_code !=''">
         and patient.cert_code=#{patient_cert_code,jdbcType=INTEGER}
       </if>
