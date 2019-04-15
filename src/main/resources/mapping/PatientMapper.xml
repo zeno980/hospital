@@ -122,9 +122,9 @@
       limit #{page},#{limit}
   </select>
   <select id="getAllPatientsCounts" resultType="java.lang.Integer" parameterType="com.zakary.dao.PageDao">
-    select count(patient_id) from patient,treatment where treatment.doctor_cert_code=#{doctor_cert_code,jdbcType=VARCHAR} and patient.cert_code=treatment.patient_cert_code
+    select count(patient_id) from patient where doctor_cert_code=#{doctor_cert_code}
     <if test="patient_cert_code !=null and patient_cert_code !=''">
-      and patient.cert_code=#{patient_cert_code,jdbcType=INTEGER}
+      and patient.cert_code=#{patient_cert_code}
     </if>
   </select>
   <select id="getCountByCert" resultType="java.lang.Integer" parameterType="java.lang.String">
