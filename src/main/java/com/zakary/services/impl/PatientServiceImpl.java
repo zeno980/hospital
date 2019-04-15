@@ -165,53 +165,15 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public void setHlistByCert(HlistDao hlistDao){
-        if(hlistDao.getDoctor_cert_code()==null
-            ||hlistDao.getPatient_cert_code()==null
-            ||"".equals(hlistDao.getDoctor_cert_code())
-            ||"".equals(hlistDao.getPatient_cert_code())){
+        if(hlistDao.getPatient_cert_code()==null ||"".equals(hlistDao.getPatient_cert_code())){
             throw new BusinessException("必要参数为空");
         }
-        else if(patientMapper.hlistCountByCert(hlistDao.getPatient_cert_code())!=0){
+        if(patientMapper.hlistCountByCert(hlistDao.getPatient_cert_code())!=0){
             throw new BusinessException("此病人病历单已经生成");
         }
-        else {
-            //获取医生姓名
-            DoctorDao doctorDao=new DoctorDao();
-            doctorDao.setCert_code(hlistDao.getDoctor_cert_code());
-            hlistDao.setDoctor_name(doctotMapper.selectDoctorByCode(doctorDao).getDoctor_name());
-            logger.info("doctor_name:"+hlistDao.getDoctor_cert_code());
-            //获取患者姓名
-            hlistDao.setPatient_name(patientMapper.selectPatientByCert(hlistDao.getPatient_cert_code()).getPatient_name());
-            //获取病房,病床
-            hlistDao.setSickroom_id(patientMapper.selectSickbedbyCert(hlistDao.getPatient_cert_code()).getSickroom_id());
-            hlistDao.setSickbed_id(patientMapper.selectSickbedbyCert(hlistDao.getPatient_cert_code()).getSickbed_id());
-            //获取手术名称和时间,费用
-            hlistDao.setTreatment_time(patientMapper.selectTreatmentByCert(hlistDao.getPatient_cert_code()).getTreatment_time());
-            hlistDao.setTreatment_name(patientMapper.selectTreatmentByCert(hlistDao.getPatient_cert_code()).getTreatment_name());
-            hlistDao.setTreatment_fee(patientMapper.selectTreatmentByCert(hlistDao.getPatient_cert_code()).getTreatment_fee());
-            //获取药品费用
-            PrescriptionAttributeDao prescriptionAttributeDao=new PrescriptionAttributeDao();
-            prescriptionAttributeDao.setDoctor_cert_code(hlistDao.getDoctor_cert_code());
-            prescriptionAttributeDao.setPatient_cert_code(hlistDao.getPatient_cert_code());
-            List<Map<String,Object>> infos=getAllPrescriptionAttribute(prescriptionAttributeDao);
-            double alldrugprice=0;
-            for(int i=0;i<infos.size();i++) {
-                //Logger logger=Logger.getLogger("getAllPrescriptionAttribute");
-                //logger.info("DRUG :"+infos.get(i));
-                double price=Double.parseDouble(infos.get(i).get("drug_price").toString());
-                int num=Integer.parseInt(infos.get(i).get("drug_num").toString());
-                alldrugprice+=price*num;
-            }
-            hlistDao.setDrug_all_price(alldrugprice);
-            //获取处方单
-            hlistDao.setPrescription_id(patientMapper.selectPrescriptionIdByCert(hlistDao.getDoctor_cert_code(),hlistDao.getPatient_cert_code()));
-            //获取sickrommfee
-            hlistDao.setSickroom_fee(patientMapper.selectSickrommFee(patientMapper.selectSickbedbyCert(hlistDao.getPatient_cert_code()).getSickroom_id()));
-            //总费用：
-            hlistDao.setHlist_fee(hlistDao.getSickroom_fee()+hlistDao.getDrug_all_price()+hlistDao.getTreatment_fee());
-            logger.info(hlistDao.toString());
-            patientMapper.insertHlist(hlistDao);
-        }
+        PatientDao patientDao = new PatientDao();
+        patientDao.setCert_code(hlistDao.getPatient_cert_code());
+        patientMapper.insertHlist(hlistDao);
     }
 
     @Override

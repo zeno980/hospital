@@ -184,9 +184,7 @@ public class PatientController {
             alldrugprice+=price*num;
         }
         logger.info("总价 ："+alldrugprice);
-        JsonResultDao jsonResultDao=new JsonResultDao();
-        jsonResultDao.setData(alldrugprice);
-        return jsonResultDao;
+        return new JsonResultDao(alldrugprice);
     }
     //生成病历单
     @RequestMapping("/setHlist")

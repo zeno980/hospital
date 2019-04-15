@@ -148,7 +148,6 @@ public class MapperTest extends BaseTest {
     public void test12(){
         //Logger logger = Logger.getLogger("");
         HlistDao hlistDao=new HlistDao();
-        hlistDao.setDoctor_cert_code("2");
         hlistDao.setPatient_cert_code("1");
         patientService.setHlistByCert(hlistDao);
     }

@@ -266,4 +266,19 @@
     set has_sickbed='Y'
     where cert_code=#{patient_cert_code}
   </update>
+  <insert id="insertHlistInfo" parameterType="com.zakary.dao.PatientDao">
+    insert into hlist (
+    doctor_name,doctor_cert_code,patient_name,patient_cert_code,
+    sickroom_id,sickbed_id,treatment_time,treatment_name,drug_all_price,sickroom_fee,treatment_fee,hlist_fee,create_date)
+    select d.doctor_name,d.cert_code doctor_cert_code,
+    a.patient_name,a.cert_code patient_cert_code,
+    b.sickroom_id,b.sickbed_id,c.treatment_time,c.treatment_name,e.durg_all_price,f.sickroom_fee,c.treatment_fee,
+    (ifnull(c.treatment_fee,0)+ifnull(e.durg_all_price,0)+ifnull(f.sickroom_fee,0)) hlist_fee,NOW()
+    from patient a,sickbed b,treatment c,doctor d,
+    (select sum(a.drug_price*b.drug_num) durg_all_price from drug a,prescription_attribute b where a.drug_id=b.drug_id
+    and b.prescription_id in (select c.prescription_id from prescription c where c.patient_cert_code=#{cert_code})) e,
+    sickroom f where a.cert_code = b.patient_cert_code
+    and a.cert_code = c.patient_cert_code and c.doctor_cert_code = d.cert_code
+    and f.sickroom_id = b.sickroom_id and a.cert_code=#{cert_code}
+  </insert>
 </mapper>
