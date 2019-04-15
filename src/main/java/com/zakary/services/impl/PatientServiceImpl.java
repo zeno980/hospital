@@ -173,7 +173,7 @@ public class PatientServiceImpl implements PatientService {
         }
         PatientDao patientDao = new PatientDao();
         patientDao.setCert_code(hlistDao.getPatient_cert_code());
-        patientMapper.insertHlist(hlistDao);
+        patientMapper.insertHlistInfo(patientDao);
     }
 
     @Override
