@@ -260,7 +260,7 @@ public class PatientServiceImpl implements PatientService {
             &&"".equals(patientDao.getOld_cert_code())){
             throw new BusinessException("必要参数为空");
         }
-        if(patientDao.getCert_code()!=patientDao.getOld_cert_code()){
+        if(patientDao.getCert_code().equals(patientDao.getOld_cert_code())){
             if(patientMapper.getCountInPatientBycert(patientDao.getCert_code())!=0){
                 throw new BusinessException("数据库中已存在此编号");
             }
