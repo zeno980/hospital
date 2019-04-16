@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -266,5 +267,23 @@ public class PatientServiceImpl implements PatientService {
             }
         }
         patientMapper.updatePatientInfoBycert(patientDao);
+    }
+
+    @Override
+    public Map<String,Object> getTreatmentCountByCert(TreatmentDao treatmentDao){
+        if(treatmentDao.getPatient_cert_code()==null
+            &&"".equals(treatmentDao.getPatient_cert_code())){
+            throw new BusinessException("必要参数为空");
+        }
+        String patient_name=patientMapper.getPatientNameByCert(treatmentDao.getPatient_cert_code());
+        List<TreatmentDao> completed=patientMapper.getCompletedTreatment(treatmentDao.getPatient_cert_code());
+        List<TreatmentDao> not_completed=patientMapper.getNotCompletedTreatment(treatmentDao.getPatient_cert_code());
+        Map<String,Object> map=new HashMap<String, Object>();
+        map.put("patient_cert_code",treatmentDao.getPatient_cert_code());
+        map.put("patient_name",patient_name);
+        map.put("completed",completed.size());
+        map.put("not_complete",not_completed.size());
+        map.put("allCount",completed.size()+not_completed.size());
+        return map;
     }
 }

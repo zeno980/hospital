@@ -46,4 +46,7 @@ public interface PatientMapper {
     List<TreatmentDao> selectAllTreatmentByPatientCertCode(TreatmentDao treatmentDao);
     void updatePatientInfoBycert(PatientDao patientDao);
     int getCountInPatientBycert(String cert_code);
+    List<TreatmentDao> getCompletedTreatment(String patient_cert_code);
+    List<TreatmentDao> getNotCompletedTreatment(String patient_cert_code);
+    String getPatientNameByCert(String patient_cert_code);
 }

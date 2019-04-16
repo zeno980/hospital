@@ -219,4 +219,15 @@ public class MapperTest extends BaseTest {
         patientService.alterPatientInfoByCert(patientDao);
     }
 
+    @Test
+    public void test19(){
+        logger=LoggerFactory.getLogger(getClass());
+        TreatmentDao treatmentDao=new TreatmentDao();
+        treatmentDao.setPatient_cert_code("2");
+        Map<String,Object> TreatmentCount=patientService.getTreatmentCountByCert(treatmentDao);
+        for (String k : TreatmentCount.keySet()) {
+            logger.info(k+": "+TreatmentCount.get(k));
+            //System.out.print(" "+k+": "+TreatmentCount.get(k));
+        }
+    }
 }

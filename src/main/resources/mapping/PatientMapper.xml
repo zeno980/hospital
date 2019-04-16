@@ -308,4 +308,22 @@
     from patient
     where cert_code=#{cert_code}
   </select>
+
+  <select id="getCompletedTreatment" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select doctor_cert_code, patient_cert_code, treatment_name, treatment_time, treatment_fee, create_date, complete
+    from treatment
+    where patient_cert_code=#{patient_cert_code} and complete='Y'
+  </select>
+
+  <select id="getNotCompletedTreatment" parameterType="java.lang.String" resultType="com.zakary.dao.TreatmentDao">
+    select doctor_cert_code, patient_cert_code, treatment_name, treatment_time, treatment_fee, create_date, complete
+    from treatment
+    where patient_cert_code=#{patient_cert_code} and complete='N'
+  </select>
+
+  <select id="getPatientNameByCert" parameterType="java.lang.String" resultType="java.lang.String">
+    select patient_name
+    from patient
+    where cert_code=#{patient-cert_code}
+  </select>
 </mapper>
