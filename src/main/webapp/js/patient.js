@@ -17,6 +17,7 @@ $(document).ready(function () {
             case '手术信息管理':
                 hideAll();
                 $('#floor').html('手术信息管理')
+                $('#treatment_info').show();
                 break;
             case '病床管理':
                 hideAll()
@@ -83,6 +84,17 @@ function showPatients() {
             }
         })
     })
+    form.on('submit(AddPatientSubmit)',function (data) {
+        $('#add_patient_modal').modal('hide');
+        var index = layer.load(2)
+        var text = $('#patient_modal_label').html();
+        var url = '';
+        if(text == '新增患者'){
+
+        }else if(text == '修改信息'){
+
+        }
+    })
     form.render();
     var table = layui.table;
     tableIns = table.render({
@@ -102,28 +114,33 @@ function showPatients() {
                 title: '操作',
                 width: '10%',
                 unresize: true,
-                toolbar: '<div><button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="make">修改信息</button></div>'
+                toolbar: '<div><button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="edit">修改信息</button></div>'
             }
         ]]
     });
     table.on('tool(patient_table)',function (obj) {
         var datas = obj.data;
-        if(obj.event=='make'){
-            $("#drug_cursor").empty();
-            $("#drug_cursor").append('<div class="layui-form-item" value="1">\n' +
-                '                                <div class="layui-inline">\n' +
-                '                                    <label class="layui-form-label">名称</label>\n' +
-                '                                    <div class="layui-input-inline">\n' +
-                '                                        <input type="text" name="drug_name1" placeholder="药品名称" autocomplete="off" lay-verify="required" class="layui-input">\n' +
-                '                                    </div>\n' +
-                '                                    <div class="layui-form-mid">数量</div>\n' +
-                '                                    <div class="layui-input-inline">\n' +
-                '                                        <input type="number" name="drug_num1" placeholder="药品数量" autocomplete="off" lay-verify="required" class="layui-input">\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '                            </div>');
-            form.val("drug_form",{"patient_cert_code":datas.patient_cert_code})
-            $('#prescription_Modal').modal('show')
+        // if(obj.event=='make'){
+        //     $("#drug_cursor").empty();
+        //     $("#drug_cursor").append('<div class="layui-form-item" value="1">\n' +
+        //         '                                <div class="layui-inline">\n' +
+        //         '                                    <label class="layui-form-label">名称</label>\n' +
+        //         '                                    <div class="layui-input-inline">\n' +
+        //         '                                        <input type="text" name="drug_name1" placeholder="药品名称" autocomplete="off" lay-verify="required" class="layui-input">\n' +
+        //         '                                    </div>\n' +
+        //         '                                    <div class="layui-form-mid">数量</div>\n' +
+        //         '                                    <div class="layui-input-inline">\n' +
+        //         '                                        <input type="number" name="drug_num1" placeholder="药品数量" autocomplete="off" lay-verify="required" class="layui-input">\n' +
+        //         '                                    </div>\n' +
+        //         '                                </div>\n' +
+        //         '                            </div>');
+        //     form.val("drug_form",{"patient_cert_code":datas.patient_cert_code})
+        //     $('#prescription_Modal').modal('show')
+        // }
+        if(obj.event=='edit'){
+            form.val("addForm",datas)
+            $('#patient_modal_label').html('修改信息')
+            $('#add_patient_modal').modal('show');
         }
     })
 }
@@ -132,8 +149,9 @@ function search() {
     $('#search_id').val('');
 }
 function insert() {
-    form.val("insertForm",{"patient_cert_code":"","treatment_time":"","treatment_name":"","treatment_fee":""})
-    $('#myModal').modal('show');
+    form.val("addForm",{"cert_code":"","patient_name":"","patient_gender":"男","patient_age":"","patient_tel":""})
+    $('#patient_modal_label').html('新增患者')
+    $('#add_patient_modal').modal('show');
 }
 function insertPatient() {
     $('#hideSubmit').click()
@@ -241,4 +259,8 @@ function searchRom () {
 function hideAll() {
     $('#patient_info').hide();
     $('#sick_rom').hide();
+    $('#treatment_info').hide();
+}
+function PatientSubmit() {
+
 }

@@ -96,6 +96,22 @@
                 </script>
             </div>
         </div>
+        <div id="treatment_info" hidden>
+            <blockquote class="layui-elem-quote">手术信息管理</blockquote>
+            <div style="padding: 1%">
+                <div>
+                    搜索证件号：
+                    <div class="layui-inline">
+                        <input class="layui-input" name="id" id="search_id_treatment" autocomplete="off">
+                    </div>
+                    <button class="layui-btn" onclick="searchRom()">搜索</button>
+                </div>
+                <table id="treatment_table" lay-filter="sick_rom_table"></table>
+<!--                <script type="text/html" id="sick_bar">-->
+<!--                    <button class="layui-btn layui-btn-sm layui-btn-normal {{ d.has_sickbed=='N'?'':'layui-btn-disabled' }}" lay-event="allot" {{ d.has_sickbed=='N'?'':'disabled' }}>分配病房</button>-->
+<!--                </script>-->
+            </div>
+        </div>
     </div>
 
     <div class="layui-footer" id="floor">
@@ -236,6 +252,61 @@
         </div><!-- /.modal -->
     </div>
 </div>
-
+<div>
+    <div class="modal fade" id="add_patient_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="patient_modal_label"></h4>
+                </div>
+                <div class="modal-body">
+                    <form class="layui-form" action="" lay-filter="addForm">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">姓名</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="patient_name" required lay-verify="required"  autocomplete="off" class="layui-input" placeholder="请输入患者姓名">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">证件号</label>
+                            <div class="layui-input-block">
+                                <input type="number" name="cert_code" required lay-verify="required"  autocomplete="off" class="layui-input" placeholder="请输入患者身份证号码">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">性别</label>
+                            <div class="layui-input-block">
+                                <input type="radio" name="patient_gender" value="男" title="男" checked>
+                                <input type="radio" name="patient_gender" value="女" title="女">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">年龄</label>
+                            <div class="layui-input-block">
+                                <input type="number" name="patient_age" required lay-verify="required"  autocomplete="off" class="layui-input" placeholder="请输入患者年龄">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">电话</label>
+                            <div class="layui-input-block">
+                                <input type="number" name="patient_tel" required  lay-verify="required"  autocomplete="off" class="layui-input" placeholder="请输入患者电话">
+                            </div>
+                        </div>
+                        <div class="layui-form-item" hidden>
+                            <div class="layui-input-block">
+                                <div class="layui-btn"  type="button" lay-submit id="addPatientHideSubmit" lay-filter="AddPatientSubmit"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="layui-btn layui-btn-warm" data-dismiss="modal">关闭</button>
+                    <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:$('#addPatientHideSubmit').click()">提交</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</div>
 </body>
 </html>
