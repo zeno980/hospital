@@ -207,4 +207,16 @@ public class MapperTest extends BaseTest {
 
     }
 
+    @Test
+    public void test18(){
+        PatientDao patientDao=new PatientDao();
+        patientDao.setCert_code("7");
+        patientDao.setOld_cert_code("7");
+        patientDao.setPatient_name("p8");
+        patientDao.setPatient_gender("男");
+        patientDao.setPatient_age(12);
+        patientDao.setPatient_tel("110");
+        patientService.alterPatientInfoByCert(patientDao);
+    }
+
 }

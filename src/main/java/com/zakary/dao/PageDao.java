@@ -73,4 +73,5 @@ public class PageDao {  //分页查询需要
     public void setDoctor_cert_code(String doctor_cert_code) {
         this.doctor_cert_code = doctor_cert_code;
     }
+
 }

@@ -237,10 +237,34 @@ public class PatientServiceImpl implements PatientService {
         patientDao.setType(2);
         patientMapper.insertPatient(patientDao);
     }
+
+    @Override
     public List<TreatmentDao> getAllTreatmentByPatientCertCode(TreatmentDao treatmentDao){
         if(treatmentDao.getPatient_cert_code()==null
             &&"".equals(treatmentDao.getPatient_cert_code()))
             throw new BusinessException("必要参数为空");
         return patientMapper.selectAllTreatmentByPatientCertCode(treatmentDao);
+    }
+
+    @Override
+    public void alterPatientInfoByCert(PatientDao patientDao){
+        if(patientDao.getCert_code()==null
+            &&patientDao.getPatient_name()==null
+            &&patientDao.getPatient_gender()==null
+            &&patientDao.getPatient_age()==null
+            &&patientDao.getOld_cert_code()==null
+            &&"".equals(patientDao.getCert_code())
+            &&"".equals(patientDao.getPatient_name())
+            &&"".equals(patientDao.getPatient_age())
+            &&"".equals(patientDao.getPatient_gender())
+            &&"".equals(patientDao.getOld_cert_code())){
+            throw new BusinessException("必要参数为空");
+        }
+        if(patientDao.getCert_code()!=patientDao.getOld_cert_code()){
+            if(patientMapper.getCountInPatientBycert(patientDao.getCert_code())!=0){
+                throw new BusinessException("数据库中已存在此编号");
+            }
+        }
+        patientMapper.updatePatientInfoBycert(patientDao);
     }
 }

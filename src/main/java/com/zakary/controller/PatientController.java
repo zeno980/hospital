@@ -275,4 +275,12 @@ public class PatientController {
         jsonResultDao.setMsg("success");
         return jsonResultDao;
     }
+
+    @RequestMapping("/alterPatientInfo")
+    @ResponseBody
+    //json传入cert——code
+    public JsonResultDao alterPatientInfo(@RequestBody PatientDao patientDao){
+        patientService.alterPatientInfoByCert(patientDao);
+        return new JsonResultDao(0);
+    }
 }
