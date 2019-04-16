@@ -252,7 +252,7 @@ public class PatientController {
         return jsonResultDao;
     }
 
-    @RequestMapping("/addPatientByInfo/addPatientByInfo")
+    @RequestMapping("/addPatientByInfo")
     @ResponseBody
     //往patient表中添加患者，json含有certcode name gender tel
     public JsonResultDao addPatientByInfo(HttpServletRequest request,@RequestBody PatientDao patientDao){

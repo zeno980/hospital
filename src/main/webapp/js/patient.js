@@ -90,10 +90,27 @@ function showPatients() {
         var text = $('#patient_modal_label').html();
         var url = '';
         if(text == '新增患者'){
-
+            url = '/hospital/patient/addPatientByInfo'
         }else if(text == '修改信息'){
 
         }
+        $.ajax({
+            url:url,
+            type:'post',
+            contentType:"application/json",
+            datatype:"json",
+            data : JSON.stringify(data.field)
+        }).done(function (data) {
+            if(data.code==0){
+                layer.close(index);
+                layer.msg("添加成功",{time: 1000},function () {
+                    tableIns.reload({where: {patient_cert_code: '',}, page: {curr: 1}})
+                })
+            }else{
+                layer.close(index);
+                layer.msg(data.msg,{time:1000})
+            }
+        })
     })
     form.render();
     var table = layui.table;
