@@ -6,22 +6,17 @@ import java.util.Date;
 
 public class PatientDao {
     private Integer patient_id;
-
     private String cert_code;
-
     private String patient_name;
-
     private String patient_gender;
-
     private Integer patient_age;
-
     private String patient_tel;
     private Integer type;
-
     private String doctor_cert_code;
     private String has_sickbed;
     @JSONField(format = "yyyy-MM-dd")
     private Date create_date;
+    private String old_cert_code;
 
     public String getDoctor_cert_code() {
         return doctor_cert_code;
@@ -116,5 +111,13 @@ public class PatientDao {
     }
     public Integer getType(Integer type){
         return type;
+    }
+
+    public String getOld_cert_code() {
+        return old_cert_code;
+    }
+
+    public void setOld_cert_code(String old_cert_code) {
+        this.old_cert_code = old_cert_code;
     }
 }

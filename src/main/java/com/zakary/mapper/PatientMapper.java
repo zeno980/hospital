@@ -44,4 +44,6 @@ public interface PatientMapper {
     int insertHlistInfo(PatientDao patientDao);
     void insertPatient(PatientDao patientDao);
     List<TreatmentDao> selectAllTreatmentByPatientCertCode(TreatmentDao treatmentDao);
+    void updatePatientInfoBycert(PatientDao patientDao);
+    int getCountInPatientBycert(String cert_code);
 }
