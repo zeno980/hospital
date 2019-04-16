@@ -251,4 +251,28 @@ public class PatientController {
         jsonResultDao.setCount(infos.size());
         return jsonResultDao;
     }
+
+    @RequestMapping("/addPatientByInfo/addPatientByInfo")
+    @ResponseBody
+    //往patient表中添加患者，json含有certcode name gender tel
+    public JsonResultDao addPatientByInfo(HttpServletRequest request,@RequestBody PatientDao patientDao){
+        HttpSession session=request.getSession();
+        String doctor_cert_code=(String)session.getAttribute("cert_code");
+        patientService.addPatient(doctor_cert_code,patientDao);
+        return new JsonResultDao(0);
+    }
+
+    @RequestMapping("/getAllTreatmentByPatientCert")
+    @ResponseBody
+    //得到一个病人的所有手术
+    //json传入cert——code
+    public JsonResultDao getAllTreatmentByPatientCert(@RequestBody TreatmentDao treatmentDao){
+        List<TreatmentDao> all=patientService.getAllTreatmentByPatientCertCode(treatmentDao);
+        JsonResultDao jsonResultDao=new JsonResultDao();
+        jsonResultDao.setData(all);
+        jsonResultDao.setCount(all.size());
+        jsonResultDao.setCode(0);
+        jsonResultDao.setMsg("success");
+        return jsonResultDao;
+    }
 }

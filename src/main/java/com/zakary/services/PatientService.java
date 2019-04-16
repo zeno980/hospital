@@ -26,4 +26,6 @@ public interface PatientService {
     void makePrescribtion(List<PrescriptionAttributeDao> prescriptionAttributeDaos,String doctor_cert_code);
     List<Map<String,Object>> getAllPatientSickbed(PageDao pageDao);
     List<Map<String,Object>> getAllPatientNoSickbed(PageDao pageDao);
+    void addPatient(String doctor_cert_code,PatientDao patientDao);
+    List<TreatmentDao> getAllTreatmentByPatientCertCode(TreatmentDao treatmentDao);
 }

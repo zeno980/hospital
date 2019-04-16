@@ -15,9 +15,9 @@ public class PatientDao {
 
     private Integer patient_age;
 
-    private Integer patient_tel;
+    private String patient_tel;
+    private Integer type;
 
-    private String type;
     private String doctor_cert_code;
     private String has_sickbed;
     @JSONField(format = "yyyy-MM-dd")
@@ -79,20 +79,12 @@ public class PatientDao {
         this.patient_age = patient_age;
     }
 
-    public Integer getPatient_tel() {
+    public String getPatient_tel() {
         return patient_tel;
     }
 
-    public void setPatient_tel(Integer patient_tel) {
+    public void setPatient_tel(String patient_tel) {
         this.patient_tel = patient_tel;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getCert_code() {
@@ -117,5 +109,12 @@ public class PatientDao {
                 ", has_sickbed='" + has_sickbed + '\'' +
                 ", create_date=" + create_date +
                 '}';
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+    public Integer getType(Integer type){
+        return type;
     }
 }

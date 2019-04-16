@@ -26,6 +26,7 @@ public class MapperTest extends BaseTest {
     private DepartmentService departmentService;
 //    @Autowired
 //    private DoctorService doctorService;
+    private Logger logger;
     @Autowired
     private PatientService patientService;
     @Test
@@ -182,4 +183,28 @@ public class MapperTest extends BaseTest {
             System.out.println();
         }
     }
+
+    @Test
+    public void test16(){
+        PatientDao patientDao=new PatientDao();
+        String doctor_cert_code="2";
+        patientDao.setDoctor_cert_code("2");
+        patientDao.setCert_code("8");
+        patientDao.setPatient_name("p8");
+        patientDao.setPatient_age(19);
+        patientDao.setPatient_gender("男");
+        patientDao.setPatient_tel("123");
+        patientService.addPatient(doctor_cert_code,patientDao);
+    }
+
+    @Test
+    public void test17(){
+        logger=LoggerFactory.getLogger(getClass());
+        TreatmentDao treatmentDao=new TreatmentDao();
+        treatmentDao.setPatient_cert_code("2");
+        List<TreatmentDao> all=patientService.getAllTreatmentByPatientCertCode(treatmentDao);
+        logger.info("all.size:"+all.size());
+
+    }
+
 }

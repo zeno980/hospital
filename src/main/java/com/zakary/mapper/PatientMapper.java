@@ -42,4 +42,6 @@ public interface PatientMapper {
     List<Map<String,Object>> selectAllPatientNoSickbed(PageDao pageDao);
     void updatePatientHasSickbed(SickbedDao sickbedDao);
     int insertHlistInfo(PatientDao patientDao);
+    void insertPatient(PatientDao patientDao);
+    List<TreatmentDao> selectAllTreatmentByPatientCertCode(TreatmentDao treatmentDao);
 }

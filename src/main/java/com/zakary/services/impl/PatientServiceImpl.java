@@ -219,4 +219,28 @@ public class PatientServiceImpl implements PatientService {
     public List<Map<String,Object>> getAllPatientNoSickbed(PageDao pageDao){
         return patientMapper.selectAllPatientNoSickbed(pageDao);
     }
+
+    @Override
+    public void addPatient(String doctor_cert_code,PatientDao patientDao){
+        patientDao.setDoctor_cert_code(doctor_cert_code);
+        if(patientDao.getCert_code()==null
+            &&patientDao.getDoctor_cert_code()==null
+            &&patientDao.getPatient_gender()==null
+            &&patientDao.getPatient_name()==null
+            &&patientDao.getPatient_age()==null
+            &&"".equals(patientDao.getCert_code())
+            &&"".equals(patientDao.getDoctor_cert_code())
+            &&"".equals(patientDao.getPatient_name())
+            &&"".equals(patientDao.getPatient_gender())){
+            throw new BusinessException("必要参数为空");
+        }
+        patientDao.setType(2);
+        patientMapper.insertPatient(patientDao);
+    }
+    public List<TreatmentDao> getAllTreatmentByPatientCertCode(TreatmentDao treatmentDao){
+        if(treatmentDao.getPatient_cert_code()==null
+            &&"".equals(treatmentDao.getPatient_cert_code()))
+            throw new BusinessException("必要参数为空");
+        return patientMapper.selectAllTreatmentByPatientCertCode(treatmentDao);
+    }
 }

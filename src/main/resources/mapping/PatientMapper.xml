@@ -281,4 +281,15 @@
     and a.cert_code = c.patient_cert_code and c.doctor_cert_code = d.cert_code
     and f.sickroom_id = b.sickroom_id and a.cert_code=#{cert_code}
   </insert>
+
+  <insert id="insertPatient" parameterType="com.zakary.dao.PatientDao">
+    insert into patient (cert_code,patient_name,patient_gender,patient_age,patient_tel,has_sickbed,create_date,doctor_cert_code,type)
+    values (#{cert_code},#{patient_name},#{patient_gender},#{patient_age},#{patient_tel},'N',NOW(),#{doctor_cert_code},#{type})
+  </insert>
+
+    <select id="selectAllTreatmentByPatientCertCode" parameterType="com.zakary.dao.TreatmentDao" resultType="com.zakary.dao.TreatmentDao">
+        select doctor_cert_code, patient_cert_code, treatment_name, treatment_time, treatment_fee, create_date
+        from treatment
+        where treatment.patient_cert_code=#{patient_cert_code}
+    </select>
 </mapper>

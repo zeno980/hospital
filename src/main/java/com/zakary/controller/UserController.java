@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired  //这个别忘了
+    @Autowired
     private DoctorService doctorService;
     @Autowired
     private DepartmentService departmentService;
