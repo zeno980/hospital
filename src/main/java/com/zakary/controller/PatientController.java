@@ -283,4 +283,15 @@ public class PatientController {
         patientService.alterPatientInfoByCert(patientDao);
         return new JsonResultDao(0);
     }
+
+    @RequestMapping("/getTreatmentCount")
+    @ResponseBody
+    //json传入patient_cert_code,传出为patient_cert_code，patient_name,completed,not_complete,all_count
+    public JsonResultDao getTreatmentCount(@RequestBody TreatmentDao treatmentDao){
+        Map<String,Object> TreatmentCount=patientService.getTreatmentCountByCert(treatmentDao);
+        JsonResultDao jsonResultDao=new JsonResultDao();
+        jsonResultDao.setData(TreatmentCount);
+        jsonResultDao.setMsg("success");
+        return jsonResultDao;
+    }
 }

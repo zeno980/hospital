@@ -14,7 +14,7 @@ public class TreatmentDao {
     @JSONField(format = "yyyy-MM-dd")
     private Date treatment_time;
     private Double treatment_fee;
-
+    private String Complete;
 
     public String getTreatment_name() {
         return treatment_name;
@@ -54,6 +54,14 @@ public class TreatmentDao {
 
     public void setPatient_cert_code(String patient_cert_code) {
         this.patient_cert_code = patient_cert_code;
+    }
+
+    public String getComplete() {
+        return Complete;
+    }
+
+    public void setComplete(String complete) {
+        Complete = complete;
     }
 
     /*public Integer getCert_code() {
