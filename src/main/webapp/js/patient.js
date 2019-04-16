@@ -85,6 +85,8 @@ function showPatients() {
         })
     })
     form.on('submit(AddPatientSubmit)',function (data) {
+        var jsonObj = data.field;
+        jsonObj.old_cert_code = data.field.cert_code
         $('#add_patient_modal').modal('hide');
         var index = layer.load(2)
         var text = $('#patient_modal_label').html();
@@ -92,19 +94,19 @@ function showPatients() {
         if(text == '新增患者'){
             url = '/hospital/patient/addPatientByInfo'
         }else if(text == '修改信息'){
-
+            url = '/hospital/patient/alterPatientInfo'
         }
         $.ajax({
             url:url,
             type:'post',
             contentType:"application/json",
             datatype:"json",
-            data : JSON.stringify(data.field)
+            data : JSON.stringify(jsonObj)
         }).done(function (data) {
             if(data.code==0){
                 layer.close(index);
-                layer.msg("添加成功",{time: 1000},function () {
-                    tableIns.reload({where: {patient_cert_code: '',}, page: {curr: 1}})
+                layer.msg("成功",{time: 1000},function () {
+                    tableIns.reload({where: {patient_cert_code: ''}})
                 })
             }else{
                 layer.close(index);
