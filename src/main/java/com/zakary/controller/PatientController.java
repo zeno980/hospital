@@ -1,6 +1,5 @@
 package com.zakary.controller;
 
-
 import com.zakary.dao.*;
 import com.zakary.dao.utils.DoctorPatients;
 import com.zakary.dao.utils.PatientSickbed;

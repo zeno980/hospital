@@ -13,7 +13,7 @@
   <sql id="Base_Column_List" >
     patient_id, patien_tname, patient_gender, patient_age, patient_tel, type
   </sql>
-  <select id="selectByPrimaryKey"  parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey"  parameterType="java.lang.Integer" resultType="com.zakary.dao.PatientDao">
     select 
     <include refid="Base_Column_List" />
     from patient
@@ -309,7 +309,7 @@
     where cert_code=#{cert_code}
   </select>
 
-  <select id="getCompletedTreatment" parameterType="java.lang.String" resultType="java.lang.Integer">
+  <select id="getCompletedTreatment" parameterType="java.lang.String" resultType="com.zakary.dao.TreatmentDao">
     select doctor_cert_code, patient_cert_code, treatment_name, treatment_time, treatment_fee, create_date, complete
     from treatment
     where patient_cert_code=#{patient_cert_code} and complete='Y'
