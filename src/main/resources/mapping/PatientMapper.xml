@@ -140,8 +140,8 @@
   </select>
 
   <insert id="insertPatientTreatmnet" parameterType="com.zakary.dao.TreatmentDao">
-    insert into treatment(doctor_cert_code, patient_cert_code, treatment_name, treatment_time, treatment_fee)
-    values (#{doctor_cert_code,jdbcType=VARCHAR},#{patient_cert_code,jdbcType=VARCHAR},#{treatment_name,jdbcType=VARCHAR},#{treatment_time},#{treatment_fee,jdbcType=DECIMAL})
+    insert into treatment(doctor_cert_code, patient_cert_code, treatment_name, treatment_time, treatment_fee, create_date, complete)
+    values (#{doctor_cert_code},#{patient_cert_code},#{treatment_name},#{treatment_time},#{treatment_fee},NOW(),'N')
   </insert>
 
   <select id="selectTreatmentByCert" parameterType="java.lang.String" resultType="com.zakary.dao.TreatmentDao">
