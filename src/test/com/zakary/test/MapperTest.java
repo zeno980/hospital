@@ -173,7 +173,7 @@ public class MapperTest extends BaseTest {
     public void test15(){
         PageDao pageDao=new PageDao();
         pageDao.setLimit(10);
-        pageDao.setPage(1);
+        pageDao.setPage(0);
         List<Map<String,Object>> infos=patientService.getAllPatientNoSickbed(pageDao);
         for (Map<String, Object> m : infos) {
             for (String k : m.keySet()) {
@@ -222,12 +222,12 @@ public class MapperTest extends BaseTest {
     @Test
     public void test19(){
         logger=LoggerFactory.getLogger(getClass());
-        TreatmentDao treatmentDao=new TreatmentDao();
-        treatmentDao.setPatient_cert_code("2");
-        Map<String,Object> TreatmentCount=patientService.getTreatmentCountByCert(treatmentDao);
-        for (String k : TreatmentCount.keySet()) {
-            logger.info(k+": "+TreatmentCount.get(k));
-            //System.out.print(" "+k+": "+TreatmentCount.get(k));
-        }
+        PageDao pageDao = new PageDao();
+        pageDao.setLimit(10);
+        pageDao.setPage(0);
+        pageDao.setPatient_cert_code("8");
+        pageDao.setDoctor_cert_code("2");
+        List<Map<String,Object>> TreatmentCount=patientService.getTreatmentCountByCert(pageDao);
+        System.out.println(TreatmentCount);
     }
 }

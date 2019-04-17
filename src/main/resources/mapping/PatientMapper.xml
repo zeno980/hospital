@@ -326,4 +326,23 @@
     from patient
     where cert_code=#{patient-cert_code}
   </select>
+  <select id="getAllTreatmentInfo" parameterType="com.zakary.dao.PageDao" resultType="java.util.HashMap">
+    select b.patient_name,b.cert_code,
+    count((a.complete='N' and patient_cert_code=a.patient_cert_code) or null) undone,
+    count((a.complete='Y' and patient_cert_code=a.patient_cert_code) or null) done,
+    count(a.patient_cert_code=a.patient_cert_code) all_count
+    from  treatment a,patient b
+    where a.patient_cert_code in (select cert_code from patient where doctor_cert_code=#{doctor_cert_code})
+    and a.patient_cert_code=b.cert_code
+      <if test="patient_cert_code !=null and patient_cert_code!=''">
+        and a.patient_cert_code=#{patient_cert_code}
+      </if>
+        GROUP BY b.cert_code
+        UNION
+        select patient_name,cert_code,0,0,0 from patient where cert_code not in (select DISTINCT(patient_cert_code) from treatment)
+      <if test="patient_cert_code !=null and patient_cert_code!=''">
+        and cert_code=#{patient_cert_code}
+      </if>
+        limit #{page},#{limit}
+  </select>
 </mapper>

@@ -49,4 +49,5 @@ public interface PatientMapper {
     List<TreatmentDao> getCompletedTreatment(String patient_cert_code);
     List<TreatmentDao> getNotCompletedTreatment(String patient_cert_code);
     String getPatientNameByCert(String patient_cert_code);
+    List<Map<String,Object>> getAllTreatmentInfo(PageDao pageDao);
 }

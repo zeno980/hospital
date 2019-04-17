@@ -1,5 +1,6 @@
 var tableIns;
 var tableInsRom;
+var tableInsTreatment;
 var form;
 var layer;
 $(document).ready(function () {
@@ -16,6 +17,7 @@ $(document).ready(function () {
                 break;
             case '手术信息管理':
                 hideAll();
+                showTreatment();
                 $('#floor').html('手术信息管理')
                 $('#treatment_info').show();
                 break;
@@ -271,6 +273,29 @@ function showSickRom() {
         }
     })
 }
+function showTreatment() {
+    var table = layui.table;
+    tableInsTreatment = table.render({
+        elem: '#treatment_table',
+        url: '/hospital/patient/getTreatmentCount', //数据接口
+        skin: 'row ', //行边框风格
+        page: true,
+        cols: [[
+            {field: 'patient_name', title: '姓名', width: '10%', unresize: true},
+            {field: 'cert_code', title: '证件号', width: '20%', unresize: true},
+            {field: 'done', title: '已完成', width: '20%', unresize: true},
+            {field: 'undone', title: '未完成', width: '20%', unresize: true},
+            {field: 'all_count', title: '总数', width: '20%', unresize: true},
+            // {
+            //     field: 'action',
+            //     title: '操作',
+            //     width: '10%',
+            //     unresize: true,
+            //     templet: '#sick_bar'
+            // }
+        ]]
+    });
+}
 function searchRom () {
     tableInsRom.reload({where: {patient_cert_code: $('#search_id_rom').val(),}, page: {curr: 1}})
     $('#search_id_rom').val('');
@@ -280,6 +305,7 @@ function hideAll() {
     $('#sick_rom').hide();
     $('#treatment_info').hide();
 }
-function PatientSubmit() {
-
+function searchTreatment() {
+    tableInsTreatment.reload({where: {patient_cert_code: $('#search_id_treatment').val(),}, page: {curr: 1}})
+    $('#search_id_treatment').val('');
 }
