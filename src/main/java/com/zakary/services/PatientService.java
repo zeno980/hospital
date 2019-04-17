@@ -29,5 +29,5 @@ public interface PatientService {
     void addPatient(String doctor_cert_code,PatientDao patientDao);
     List<TreatmentDao> getAllTreatmentByPatientCertCode(TreatmentDao treatmentDao);
     void alterPatientInfoByCert(PatientDao patientDao);
-    Map<String,Object> getTreatmentCountByCert(TreatmentDao treatmentDao);
+    List<Map<String,Object>> getTreatmentCountByCert(PageDao pageDao);
 }

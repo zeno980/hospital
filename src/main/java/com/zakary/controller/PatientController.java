@@ -287,10 +287,23 @@ public class PatientController {
     @RequestMapping("/getTreatmentCount")
     @ResponseBody
     //json传入patient_cert_code,传出为patient_cert_code，patient_name,completed,not_complete,all_count
-    public JsonResultDao getTreatmentCount(@RequestBody TreatmentDao treatmentDao){
-        Map<String,Object> TreatmentCount=patientService.getTreatmentCountByCert(treatmentDao);
+    public JsonResultDao getTreatmentCount(HttpServletRequest request){
+        String doctor_cert_code = (String)request.getSession().getAttribute("cert_code");
+        String patient_cert_code = request.getParameter("patient_cert_code");
+        int pageNum=Integer.parseInt(request.getParameter("page"));
+        int limit=Integer.parseInt(request.getParameter("limit"));
+        PageDao pageDao = new PageDao();
+        pageDao.setLimit(limit);
+        pageDao.setPage((pageNum-1)*limit);
+        pageDao.setDoctor_cert_code(doctor_cert_code);
+        if(patient_cert_code!=null&&!patient_cert_code.trim().equals("")){
+            pageDao.setPatient_cert_code(patient_cert_code);
+        }
+        List<Map<String,Object>> treatmentCount=patientService.getTreatmentCountByCert(pageDao);
         JsonResultDao jsonResultDao=new JsonResultDao();
-        jsonResultDao.setData(TreatmentCount);
+        jsonResultDao.setData(treatmentCount);
+        jsonResultDao.setCode(0);
+        jsonResultDao.setCount(pageDao.getPatient_cert_code()==null?patientService.getPatientsCounts(pageDao):treatmentCount.size());
         jsonResultDao.setMsg("success");
         return jsonResultDao;
     }
