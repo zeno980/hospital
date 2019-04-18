@@ -12,6 +12,7 @@ public class TreatmentDao {
     private String patient_cert_code;
     private String treatment_name;
     @JSONField(format = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date treatment_time;
     private Double treatment_fee;
     private String Complete;
@@ -72,4 +73,15 @@ public class TreatmentDao {
         this.cert_code = cert_code;
     }*/
 
+    @Override
+    public String toString() {
+        return "TreatmentDao{" +
+                "doctor_cert_code='" + doctor_cert_code + '\'' +
+                ", patient_cert_code='" + patient_cert_code + '\'' +
+                ", treatment_name='" + treatment_name + '\'' +
+                ", treatment_time=" + treatment_time +
+                ", treatment_fee=" + treatment_fee +
+                ", Complete='" + Complete + '\'' +
+                '}';
+    }
 }

@@ -10,11 +10,13 @@ import com.zakary.services.PatientService;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 
+import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -240,11 +242,17 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<TreatmentDao> getAllTreatmentByPatientCertCode(TreatmentDao treatmentDao){
+    public List<Map<String,Object>> getAllTreatmentByPatientCertCode(TreatmentDao treatmentDao){
         if(treatmentDao.getPatient_cert_code()==null
-            &&"".equals(treatmentDao.getPatient_cert_code()))
+            &&"".equals(treatmentDao.getPatient_cert_code())) {
             throw new BusinessException("必要参数为空");
-        return patientMapper.selectAllTreatmentByPatientCertCode(treatmentDao);
+        }
+        List<Map<String, Object>> result = new ArrayList<>();
+        patientMapper.selectAllTreatmentByPatientCertCode(treatmentDao).forEach((value)->{
+            value.put("complete",value.get("complete").equals("N")?"未完成":"已完成");
+            result.add(value);
+        });
+        return result;
     }
 
     @Override

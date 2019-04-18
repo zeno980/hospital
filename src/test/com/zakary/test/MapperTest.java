@@ -8,6 +8,7 @@ import com.zakary.services.DepartmentService;
 import com.zakary.services.DoctorService;
 import com.zakary.services.PatientService;
 import org.junit.Test;
+import org.omg.CORBA.OBJ_ADAPTER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -163,10 +164,12 @@ public class MapperTest extends BaseTest {
     public void test14(){
         PageDao pageDao=new PageDao();
         pageDao.setLimit(10);
-        pageDao.setPage(1);
-        pageDao.setPatient_cert_code("6");
+        pageDao.setPage(0);
+//        pageDao.setPatient_cert_code("6");
+        pageDao.setDoctor_cert_code("2");
         List<Map<String,Object>> infos=patientService.getAllPatientSickbed(pageDao);
         System.out.println(infos);
+        System.out.println(infos.size());
     }
 
     @Test
@@ -202,8 +205,9 @@ public class MapperTest extends BaseTest {
         logger=LoggerFactory.getLogger(getClass());
         TreatmentDao treatmentDao=new TreatmentDao();
         treatmentDao.setPatient_cert_code("2");
-        List<TreatmentDao> all=patientService.getAllTreatmentByPatientCertCode(treatmentDao);
-        logger.info("all.size:"+all.size());
+        List<Map<String, Object>> all=patientService.getAllTreatmentByPatientCertCode(treatmentDao);
+        logger.info(""+all);
+
 
     }
 

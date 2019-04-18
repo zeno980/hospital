@@ -244,8 +244,9 @@
     select  patient.cert_code, patient.patient_name, patient.patient_gender, patient.patient_age,  patient.has_sickbed,  sickbed.sickroom_id, sickbed.sickbed_id, patient.has_sickbed
     from patient left join sickbed
     on patient.cert_code=sickbed.patient_cert_code
+    where  patient.doctor_cert_code=#{doctor_cert_code}
     <if test="patient_cert_code!=null and patient_cert_code!=0">
-      where patient.cert_code=#{patient_cert_code}
+      and patient.cert_code=#{patient_cert_code}
     </if>
     limit #{page},#{limit}
   </select>
@@ -287,10 +288,10 @@
     values (#{cert_code},#{patient_name},#{patient_gender},#{patient_age},#{patient_tel},'N',NOW(),#{doctor_cert_code},#{type})
   </insert>
 
-    <select id="selectAllTreatmentByPatientCertCode" parameterType="com.zakary.dao.TreatmentDao" resultType="com.zakary.dao.TreatmentDao">
-        select doctor_cert_code, patient_cert_code, treatment_name, treatment_time, treatment_fee, create_date
-        from treatment
-        where treatment.patient_cert_code=#{patient_Ocert_code}
+    <select id="selectAllTreatmentByPatientCertCode" parameterType="com.zakary.dao.TreatmentDao" resultType="java.util.HashMap">
+        select b.patient_name,a.doctor_cert_code, a.patient_cert_code, a.treatment_name, a.treatment_time, a.treatment_fee, a.create_date,a.complete
+        from treatment a,patient b
+        where a.patient_cert_code = b.cert_code and a.patient_cert_code=#{patient_cert_code}
     </select>
 
   <update id="updatePatientInfoBycert" parameterType="com.zakary.dao.PatientDao" >
@@ -339,7 +340,7 @@
       </if>
         GROUP BY b.cert_code
         UNION
-        select patient_name,cert_code,0,0,0 from patient where cert_code not in (select DISTINCT(patient_cert_code) from treatment)
+        select patient_name,cert_code,0,0,0 from patient where cert_code not in (select DISTINCT(patient_cert_code) from treatment) and doctor_cert_code=#{doctor_cert_code}
       <if test="patient_cert_code !=null and patient_cert_code!=''">
         and cert_code=#{patient_cert_code}
       </if>

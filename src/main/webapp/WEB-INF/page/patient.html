@@ -112,6 +112,12 @@
 <!--                </script>-->
             </div>
         </div>
+        <div id="treatment_infos" hidden>
+            <blockquote class="layui-elem-quote">详细信息</blockquote>
+            <div style="padding: 1%">
+                <table id="treatment_table_info" lay-filter="treatment_table_info"></table>
+            </div>
+        </div>
     </div>
 
     <div class="layui-footer" id="floor">
@@ -123,14 +129,20 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">新增患者</h4>
+                <h4 class="modal-title" id="myModalLabel">新增手术</h4>
             </div>
             <div class="modal-body">
                 <form class="layui-form" action="" lay-filter="insertForm">
                     <div class="layui-form-item">
                         <label class="layui-form-label">证件号</label>
                         <div class="layui-input-block">
-                            <input type="number" name="patient_cert_code" required lay-verify="required"  autocomplete="off" class="layui-input" placeholder="请输入患者身份证号码">
+                            <input type="number" name="cert_code" required lay-verify="required"  autocomplete="off" class="layui-input layui-disabled" disabled >
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">姓名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="patient_name" required lay-verify="required"  autocomplete="off" class="layui-input layui-disabled" disabled>
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -154,13 +166,14 @@
                     <div class="layui-form-item" hidden>
                         <div class="layui-input-block">
                             <div class="layui-btn"  type="button" lay-submit id="hideSubmit" lay-filter="doSubmit"/>
+                            <button type="reset" class="layui-btn layui-btn-primary" id="hideReset"/>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="layui-btn" data-dismiss="modal">关闭</button>
-                <button type="button" class="layui-btn layui-btn-normal" onclick="insertPatient()">提交更改</button>
+                <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:$('#hideSubmit').click()">提交更改</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
