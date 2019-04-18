@@ -32,16 +32,23 @@ public class PatientController {
 
     @RequestMapping("/getSickroomCount")
 
-    //获取病房的总数
-    //不需要json传数据
+    /**
+     *@description: 获取病房的总数
+     *@param:
+     *@return: 病房的总数
+    */
     @ResponseBody
     public JsonResultDao getSickroomCount(){
         JsonResultDao jsonResultDao=new JsonResultDao();
         jsonResultDao.setData(patientService.selectSickroomCount());
         return jsonResultDao;
     }
-    //第一个功能，添加病人在treatment表里，病人必须在patient表里存在
-    //json传patient_cert_code,treatment_time,treatment_name,treatment_fee
+
+    /**
+     *@description: 添加病人在treatment表里，病人必须在patient表里存在
+     *@param: patient_cert_code,treatment_time,treatment_name,treatment_fee
+     *@return:
+    */
     @RequestMapping("/doctor_addpatient")
     @ResponseBody
     public JsonResultDao addPatient(HttpServletRequest request,@RequestBody TreatmentDao treatmentDao){
@@ -53,10 +60,13 @@ public class PatientController {
         return new JsonResultDao("success");
     }
 
-    //第二个功能，查看此医生治疗的所有患者的基本信息,搜索患者
+    /**
+     *@description: 查看此医生治疗的所有患者的基本信息,搜索患者
+     *@param: cert_code（医生身份证），patient_cert_code
+     *@return: List<PatientDao>
+    */
     @RequestMapping("/doctor_patients")
     @ResponseBody
-    //json中含有cert_code（医生身份证），patient_cert_code
     public JsonResultDao getPatients(HttpServletRequest request){
         int pageNum=Integer.parseInt(request.getParameter("page"));
         int limit=Integer.parseInt(request.getParameter("limit"));
@@ -82,11 +92,13 @@ public class PatientController {
         jsonResultDao.setCount(patientService.getPatientsCounts(pageDao));
         return jsonResultDao;
     }
-
-    //安排病房
+    /**
+     *@description: 安排病房
+     *@param: patient_cert_code，sickroom，sickbed
+     *@return:
+    */
     @RequestMapping("/ArrangeSickbed")
     @ResponseBody
-    //json中含有patient_cert_code，sickroom，sickbed
     public JsonResultDao arrangeSickbed(HttpServletRequest request,@RequestBody SickbedDao sickbedDao){
         //SickbedDao sickbedDao=new SickbedDao();
         //JsonResultDao jsonResultDao=new JsonResultDao();
@@ -106,9 +118,13 @@ public class PatientController {
     }
 
     //病房管理 查询病房信息,搜索患者所属的病房
+    /**
+     *@description:  查询病房信息,搜索患者所属的病房
+     *@param: atient_cert_code
+     *@return: patientSickbeds
+    */
     @RequestMapping("/GetAllSickbedInfo")
     @ResponseBody
-    //json中：如果传入空值则查询所有信息，传入patient_cert_code不为空，则查询当前的病人病床信息
     public JsonResultDao getAllSickbedInfo(HttpServletRequest request){
         int pageNum=Integer.parseInt(request.getParameter("page"));
         int limit=Integer.parseInt(request.getParameter("limit"));
@@ -127,26 +143,31 @@ public class PatientController {
         return jsonResultDao;
     }
 
-    //开处方
+    /**
+     *@description: 开处方
+     *@param: patient_id，prescrptionAttributeDaos获得drug_name,drug_num
+     *@return:
+    */
     @RequestMapping("/makePrescribtion")
     @ResponseBody
-    //json中prescriptionDao获得patient——id，prescrptionAttributeDaos获得drug_name,drug_num
     public JsonResultDao makePrescribtion(HttpServletRequest request,
                                           @RequestBody List<PrescriptionAttributeDao> prescriptionAttributeDaos){
         //获得医生cert-code
+        Logger logger=LoggerFactory.getLogger(getClass());
+        logger.info(""+prescriptionAttributeDaos.get(0).getDrug_name());
         HttpSession session = request.getSession();
         String doctor_cert_code = (String)session.getAttribute("cert_code");
         logger.info(doctor_cert_code);
         patientService.makePrescribtion(prescriptionAttributeDaos,doctor_cert_code);
         return  new JsonResultDao();
     }
-
+    /**
+     *@description: 获得病房信息
+     *@param: atient_cert_code
+     *@return: PrescriptionAttribute的doctor_cet_codes属性和prescription_id属性
+    */
     @RequestMapping("/getPrescriptionAttribute")
     @ResponseBody
-    //json传入patient_cert_code即可
-    //json中存储PrescriptionAttribute的doctor_cet_codes属性和prescription_id属性
-    //获得的map中含有所有信息，只需要提取drognum,drugname
-    //前台计算总价，方法如下
     public List<Map<String,Object>> getPrescriptionAttribute(HttpServletRequest request, @RequestBody PrescriptionAttributeDao prescriptionAttributeDao){
         HttpSession session=request.getSession();
         String doctor_cert_code=(String)session.getAttribute("cert_code");
@@ -164,11 +185,14 @@ public class PatientController {
         //logger.info("总价 ："+alldrugprice);
         return infos;
     }
-    //获取某个病人的药品总价
+
+    /**
+     *@description: 获取某个病人的药品总价
+     *@param: patient_cert_code
+     *@return: allprice
+    */
     @RequestMapping("/getallDrugPrice")
     @ResponseBody
-    //json传入patient_cert_code即可
-    //json返回为一个double总价
     public JsonResultDao getallDrugPrice(HttpServletRequest request, @RequestBody PrescriptionAttributeDao prescriptionAttributeDao){
         HttpSession session=request.getSession();
         String doctor_cert_code=(String)session.getAttribute("cert_code");
@@ -185,10 +209,14 @@ public class PatientController {
         logger.info("总价 ："+alldrugprice);
         return new JsonResultDao(alldrugprice);
     }
-    //生成病历单
+
+    /**
+     *@description: 生成病历单
+     *@param: patient_cert_code
+     *@return:
+    */
     @RequestMapping("/setHlist")
     @ResponseBody
-    //json传入patient_cert_code
     public JsonResultDao setHlist(HttpServletRequest request,@RequestBody HlistDao hlistDao){
         //JsonResultDao jsonResultDao=new JsonResultDao();
         HttpSession session=request.getSession();
@@ -199,19 +227,26 @@ public class PatientController {
         return new JsonResultDao();
     }
 
+    /**
+     *@description: 查看某位病人的病历单
+     *@param: patient_cert_code
+     *@return: HlistDao
+    */
     @RequestMapping("/getHlistInfo")
     @ResponseBody
-    //查看某位病人的病历单，json中传入patient_cert_code
     public JsonResultDao getHlistInfo(@RequestBody HlistDao hlistDao){
         JsonResultDao jsonResultDao=new JsonResultDao();
         HlistDao hlistDao1=patientService.getHlistByCert(hlistDao.getPatient_cert_code());
         jsonResultDao.setData(hlistDao1);
         return jsonResultDao;
     }
+    /**
+     *@description: 病房管理，获取所有病人的的病房信息
+     *@param: patient_cert_code
+     *@return: List<Map<String,Object>> infos
+    */
     @RequestMapping("/getAllPatientsSickbedInfo")
     @ResponseBody
-    //病房管理，获取所有病人的的病房信息
-    //传递页面参数，查询的话，传入patient_cert_code
     public JsonResultDao getAllPatientsSickbedInfo(HttpServletRequest request){
         PageDao pageDao=new PageDao();
         String doctor_cert_code = (String) request.getSession().getAttribute("cert_code");
@@ -232,9 +267,13 @@ public class PatientController {
         return jsonResultDao;
     }
 
+    /**
+     *@description: 得到所有没有分配病房的病人信息
+     *@param:
+     *@return: List<Map<String,Object>>
+    */
     @RequestMapping("/getPatientsNoSickbed")
     @ResponseBody
-    //得到所有没有分配病房的病人信息
     public JsonResultDao getPatientsNoSickbed(HttpServletRequest request){
         PageDao pageDao=new PageDao();
         int pageNum=Integer.parseInt(request.getParameter("page"));
@@ -253,9 +292,13 @@ public class PatientController {
         return jsonResultDao;
     }
 
+    /**
+     *@description: 往patient表中添加患者
+     *@param: certcode name gender tel
+     *@return:
+    */
     @RequestMapping("/addPatientByInfo")
     @ResponseBody
-    //往patient表中添加患者，json含有certcode name gender tel
     public JsonResultDao addPatientByInfo(HttpServletRequest request,@RequestBody PatientDao patientDao){
         HttpSession session=request.getSession();
         String doctor_cert_code=(String)session.getAttribute("cert_code");
@@ -263,10 +306,13 @@ public class PatientController {
         return new JsonResultDao(0);
     }
 
+    /**
+     *@description: 得到一个病人的所有手术
+     *@param: cert——code
+     *@return: List<Map<String,Object>>
+    */
     @RequestMapping("/getAllTreatmentByPatientCert")
     @ResponseBody
-    //得到一个病人的所有手术
-    //json传入cert——code
     public JsonResultDao getAllTreatmentByPatientCert(HttpServletRequest request){
         String patient_cert_code = (String) request.getParameter("patient_cert_code");
         TreatmentDao treatmentDao = new TreatmentDao();
@@ -280,17 +326,25 @@ public class PatientController {
         return jsonResultDao;
     }
 
+    /**
+     *@description: 添加病人信息
+     *@param: cert——code
+     *@return:
+    */
     @RequestMapping("/alterPatientInfo")
     @ResponseBody
-    //json传入cert——code
     public JsonResultDao alterPatientInfo(@RequestBody PatientDao patientDao){
         patientService.alterPatientInfoByCert(patientDao);
         return new JsonResultDao(0);
     }
 
+    /**
+     *@description: 得到末位病人的所有手术
+     *@param: patient_cert_code
+     *@return: patient_cert_code，patient_name,completed,not_complete,all_count
+    */
     @RequestMapping("/getTreatmentCount")
     @ResponseBody
-    //json传入patient_cert_code,传出为patient_cert_code，patient_name,completed,not_complete,all_count
     public JsonResultDao getTreatmentCount(HttpServletRequest request){
         String doctor_cert_code = (String)request.getSession().getAttribute("cert_code");
         String patient_cert_code = request.getParameter("patient_cert_code");
@@ -309,6 +363,34 @@ public class PatientController {
         jsonResultDao.setCode(0);
         jsonResultDao.setCount(pageDao.getPatient_cert_code()==null?patientService.getPatientsCounts(pageDao):treatmentCount.size());
         jsonResultDao.setMsg("success");
+        return jsonResultDao;
+    }
+
+    /**
+     *@description: 得到某个病人的所有处方id，通过list.size获取数量
+     *@param: PrescriptionDao.patient_cert_code
+     *@return: List<PrescriptionDao>
+     */
+    @RequestMapping("/getAllPrescription")
+    @ResponseBody
+    public JsonResultDao getAllPrescription(@RequestBody PrescriptionDao prescriptionDao){
+        List<PrescriptionDao> prescriptionDaos=patientService.getAllPrescriptionByCert(prescriptionDao);
+        JsonResultDao jsonResultDao=new JsonResultDao();
+        jsonResultDao.setData(prescriptionDaos);
+        return jsonResultDao;
+    }
+
+    /**
+     *@description: 通过处方id得到所有的药品内容
+     *@param: prescriptionId
+     *@return: list<Prescription_Attribute>
+     */
+    @RequestMapping("/getAllPrescriptionAttribute")
+    @ResponseBody
+    public JsonResultDao getAllPrescriptionAttribute(@RequestBody PrescriptionAttributeDao prescriptionAttributeDao){
+        List<PrescriptionAttributeDao> prescriptionAttributeDaos=patientService.getAllPrescriptionAttributeByPrescriptionId(prescriptionAttributeDao);
+        JsonResultDao jsonResultDao=new JsonResultDao();
+        jsonResultDao.setData(prescriptionAttributeDaos);
         return jsonResultDao;
     }
 }

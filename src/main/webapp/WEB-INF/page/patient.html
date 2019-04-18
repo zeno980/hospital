@@ -43,6 +43,9 @@
                         <dd><a href="javascript:;">基本信息管理</a></dd>
                         <dd><a href="javascript:;">手术信息管理</a></dd>
                         <dd><a href="javascript:;">病床管理</a></dd>
+                        <!--
+                        <dd><a href="javascript:;">处方管理</a></dd>
+                        -->
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -59,6 +62,7 @@
                         <dd><a href="javascript:;">功能7</a></dd>
                         <dd><a href="javascript:;">功能8</a></dd>
                         <dd><a href="javascript:;">功能9</a></dd>
+
                     </dl>
                 </li>
             </ul>
@@ -80,6 +84,7 @@
                 <table id="patient" lay-filter="patient_table"></table>
             </div>
         </div>
+
         <div id="sick_rom" hidden>
             <blockquote class="layui-elem-quote">病床管理</blockquote>
             <div style="padding: 1%">
@@ -96,8 +101,9 @@
                 </script>
             </div>
         </div>
+
         <div id="treatment_info" hidden>
-            <blockquote class="layui-elem-quote">手术信息管理</blockquote>
+            <blockquote class="layui-elem-quote">处方信息管理</blockquote>
             <div style="padding: 1%">
                 <div>
                     搜索证件号：
@@ -112,12 +118,35 @@
 <!--                </script>-->
             </div>
         </div>
+
+<!--
+        <div id="prescription_info" hidden>
+            <blockquote class="layui-elem-quote">手术信息管理</blockquote>
+            <div style="padding: 1%">
+                <div>
+                    搜索患者证件号：
+                    <div class="layui-inline">
+                        <input class="layui-input" name="id" id="searchpatient_id" autocomplete="off">
+                    </div>
+                    <button class="layui-btn" onclick="search()">搜索</button>
+                    <button class="layui-btn layui-btn-normal" onclick="insert()">新增</button>
+                </div>
+                <table id="patientPrescription" lay-filter="patientPrescription_table"></table>
+            </div>
+        </div>
+-->
+
+
+
         <div id="treatment_infos" hidden>
             <blockquote class="layui-elem-quote">详细信息</blockquote>
             <div style="padding: 1%">
                 <table id="treatment_table_info" lay-filter="treatment_table_info"></table>
             </div>
         </div>
+
+
+
     </div>
 
     <div class="layui-footer" id="floor">

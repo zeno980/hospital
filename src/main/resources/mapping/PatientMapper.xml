@@ -201,8 +201,8 @@
   </select>
 
   <insert id="insertPrescriptionAttributeDao" parameterType="com.zakary.dao.PrescriptionAttributeDao">
-    insert into prescription_attribute(prescription_id, drug_name, drug_num, patient_cert_code, doctor_cert_code)
-    values (#{prescription_id},#{drug_name},#{drug_num},#{patient_cert_code},#{doctor_cert_code})
+    insert into prescription_attribute(prescription_id, drug_name, drug_num, patient_cert_code, doctor_cert_code, drug_id)
+    values (#{prescription_id},#{drug_name},#{drug_num},#{patient_cert_code},#{doctor_cert_code},#{drug_id})
   </insert>
 
     <select id="selectPrescriptionIdByCert" parameterType="java.lang.String" resultType="java.lang.Integer">
@@ -345,5 +345,23 @@
         and cert_code=#{patient_cert_code}
       </if>
         limit #{page},#{limit}
+  </select>
+
+  <select id="selectAllPrescriptionByCert" parameterType="com.zakary.dao.PrescriptionDao" resultType="com.zakary.dao.PrescriptionDao">
+    select prescription_id, doctor_cert_code, patient_cert_code, create_date
+    from prescription
+    where patient_cert_code=#{patient_cert_code}
+  </select>
+
+  <select id="selectAllPrescriptionAttributeByPrescriptionId" parameterType="com.zakary.dao.PrescriptionAttributeDao" resultType="com.zakary.dao.PrescriptionAttributeDao">
+    select prescription_id, drug_name, drug_num, patient_cert_code, doctor_cert_code, drug_id
+    from prescription_attribute
+    where prescription_id=#{prescription_id}
+  </select>
+
+  <select id="getDrugId" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select drug_id
+    from drug
+    where drug_name=#{drug_name}
   </select>
 </mapper>

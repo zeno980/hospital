@@ -30,4 +30,6 @@ public interface PatientService {
     List<Map<String,Object>> getAllTreatmentByPatientCertCode(TreatmentDao treatmentDao);
     void alterPatientInfoByCert(PatientDao patientDao);
     List<Map<String,Object>> getTreatmentCountByCert(PageDao pageDao);
+    List<PrescriptionDao> getAllPrescriptionByCert(PrescriptionDao prescriptionDao);
+    List<PrescriptionAttributeDao> getAllPrescriptionAttributeByPrescriptionId(PrescriptionAttributeDao prescriptionAttributeDao);
 }

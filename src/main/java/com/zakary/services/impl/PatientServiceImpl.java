@@ -58,8 +58,8 @@ public class PatientServiceImpl implements PatientService {
             throw new BusinessException("必要参数为空");
         else if(patientMapper.getCountByCert(treatmentDao.getPatient_cert_code())==0)
             throw new BusinessException("此患者不存在");
-        else if(patientMapper.getCountByCertInTreatment(treatmentDao.getPatient_cert_code())!=0)
-            throw new BusinessException("此患者已存在在治疗名单中");
+        //else if(patientMapper.getCountByCertInTreatment(treatmentDao.getPatient_cert_code())!=0)
+            //throw new BusinessException("此患者已存在在治疗名单中");
         else
             patientMapper.insertPatientTreatmnet(treatmentDao);
     }
@@ -135,6 +135,7 @@ public class PatientServiceImpl implements PatientService {
         }
         else {
             System.out.println(prescriptionAttributeDao.getDrug_num());
+            prescriptionAttributeDao.setDrug_id(patientMapper.getDrugId(prescriptionAttributeDao.getDrug_name()));
             patientMapper.insertPrescriptionAttributeDao(prescriptionAttributeDao);
         }
     }
@@ -280,6 +281,19 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public List<Map<String, Object>> getTreatmentCountByCert(PageDao pageDao) {
         return patientMapper.getAllTreatmentInfo(pageDao);
+    }
+
+    @Override
+    public List<PrescriptionDao> getAllPrescriptionByCert(PrescriptionDao prescriptionDao){
+        if(patientMapper.getCountByCert(prescriptionDao.getPatient_cert_code())==0){
+            throw new BusinessException("此患者不存在");
+        }
+        return patientMapper.selectAllPrescriptionByCert(prescriptionDao);
+    }
+
+    @Override
+    public List<PrescriptionAttributeDao> getAllPrescriptionAttributeByPrescriptionId(PrescriptionAttributeDao prescriptionAttributeDao){
+        return patientMapper.selectAllPrescriptionAttributeByPrescriptionId(prescriptionAttributeDao);
     }
 
 //    @Override

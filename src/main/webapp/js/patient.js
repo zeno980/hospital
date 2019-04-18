@@ -27,6 +27,12 @@ $(document).ready(function () {
                 $('#floor').html('病床管理')
                 $('#sick_rom').show()
                 break;
+            //case '处方管理':
+             //   hideAll();
+             //   showPatientPrescription();
+             //   $('#floor').html('处方管理')
+              //  $('#prescription').show()
+
         }
     })
     element.init();
@@ -135,34 +141,40 @@ function showPatients() {
                 title: '操作',
                 width: '10%',
                 unresize: true,
-                toolbar: '<div><button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="edit">修改信息</button></div>'
+                toolbar: '<div>' +
+                    '<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="edit">修改信息</button>' +
+                    '<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="make">开处方</button>' +
+                    '</div>'
             }
         ]]
     });
     table.on('tool(patient_table)',function (obj) {
         var datas = obj.data;
-        // if(obj.event=='make'){
-        //     $("#drug_cursor").empty();
-        //     $("#drug_cursor").append('<div class="layui-form-item" value="1">\n' +
-        //         '                                <div class="layui-inline">\n' +
-        //         '                                    <label class="layui-form-label">名称</label>\n' +
-        //         '                                    <div class="layui-input-inline">\n' +
-        //         '                                        <input type="text" name="drug_name1" placeholder="药品名称" autocomplete="off" lay-verify="required" class="layui-input">\n' +
-        //         '                                    </div>\n' +
-        //         '                                    <div class="layui-form-mid">数量</div>\n' +
-        //         '                                    <div class="layui-input-inline">\n' +
-        //         '                                        <input type="number" name="drug_num1" placeholder="药品数量" autocomplete="off" lay-verify="required" class="layui-input">\n' +
-        //         '                                    </div>\n' +
-        //         '                                </div>\n' +
-        //         '                            </div>');
-        //     form.val("drug_form",{"patient_cert_code":datas.patient_cert_code})
-        //     $('#prescription_Modal').modal('show')
-        // }
+
+         if(obj.event=='make'){
+             $("#drug_cursor").empty();
+             $("#drug_cursor").append('<div class="layui-form-item" value="1">\n' +
+                 '                                <div class="layui-inline">\n' +
+                 '                                    <label class="layui-form-label">名称</label>\n' +
+                 '                                    <div class="layui-input-inline">\n' +
+                 '                                        <input type="text" name="drug_name1" placeholder="药品名称" autocomplete="off" lay-verify="required" class="layui-input">\n' +
+                 '                                    </div>\n' +
+                 '                                    <div class="layui-form-mid">数量</div>\n' +
+                 '                                    <div class="layui-input-inline">\n' +
+                 '                                        <input type="number" name="drug_num1" placeholder="药品数量" autocomplete="off" lay-verify="required" class="layui-input">\n' +
+                 '                                    </div>\n' +
+                 '                                </div>\n' +
+                 '                            </div>');
+             form.val("drug_form",{"patient_cert_code":datas.cert_code})
+             $('#prescription_Modal').modal('show')
+         }
+
         if(obj.event=='edit'){
             form.val("addForm",datas)
             $('#patient_modal_label').html('修改信息')
             $('#add_patient_modal').modal('show');
         }
+
     })
 }
 function search() {
@@ -362,6 +374,7 @@ function hideAll() {
     $('#sick_rom').hide();
     $('#treatment_info').hide();
     $('#treatment_infos').hide();
+    //$('#prescription').hide();
 }
 function searchTreatment() {
     tableInsTreatment.reload({where: {patient_cert_code: $('#search_id_treatment').val(),}, page: {curr: 1}})

@@ -6,6 +6,7 @@ public class PrescriptionAttributeDao {
     private String patient_cert_code;
     private String drug_name;
     private int drug_num;
+    private int drug_id;
 
     public int getPrescription_id() {
         return prescription_id;
@@ -45,5 +46,13 @@ public class PrescriptionAttributeDao {
 
     public void setDrug_name(String drug_name) {
         this.drug_name = drug_name;
+    }
+
+    public int getDrug_id() {
+        return drug_id;
+    }
+
+    public void setDrug_id(int drug_id) {
+        this.drug_id = drug_id;
     }
 }

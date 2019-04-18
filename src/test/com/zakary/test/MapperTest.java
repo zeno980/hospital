@@ -234,4 +234,22 @@ public class MapperTest extends BaseTest {
         List<Map<String,Object>> TreatmentCount=patientService.getTreatmentCountByCert(pageDao);
         System.out.println(TreatmentCount);
     }
+
+    @Test
+    public void test20(){
+        PrescriptionDao prescriptionDao=new PrescriptionDao();
+        prescriptionDao.setPatient_cert_code("1");
+        List<PrescriptionDao> prescriptionDaos=patientService.getAllPrescriptionByCert(prescriptionDao);
+        logger=LoggerFactory.getLogger(getClass());
+        logger.info(prescriptionDaos.size()+"");
+    }
+
+    @Test
+    public void test21(){
+        PrescriptionAttributeDao prescriptionAttributeDao=new PrescriptionAttributeDao();
+        prescriptionAttributeDao.setPrescription_id(13);
+        List<PrescriptionAttributeDao> prescriptionAttributeDaos=patientService.getAllPrescriptionAttributeByPrescriptionId(prescriptionAttributeDao);
+        logger=LoggerFactory.getLogger(getClass());
+        logger.info(prescriptionAttributeDaos.size()+"");
+    }
 }
