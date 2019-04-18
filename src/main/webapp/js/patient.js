@@ -286,15 +286,72 @@ function showTreatment() {
             {field: 'done', title: '已完成', width: '20%', unresize: true},
             {field: 'undone', title: '未完成', width: '20%', unresize: true},
             {field: 'all_count', title: '总数', width: '20%', unresize: true},
-            // {
-            //     field: 'action',
-            //     title: '操作',
-            //     width: '10%',
-            //     unresize: true,
-            //     templet: '#sick_bar'
-            // }
+            {
+                field: 'action',
+                title: '操作',
+                width: '10%',
+                unresize: true,
+                templet: '<div><button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="add">新增</button>' +
+                    '<button class="layui-btn layui-btn-sm layui-btn-normal" lay-event="showInfo">查看详情</button></div>'
+            }
         ]]
     });
+    table.on('tool(treatment_table)',function (obj) {
+        var datas = obj.data;
+        if(obj.event=='add'){
+            var laydate = layui.laydate;
+            laydate.render({elem: '#time',type: 'datetime'});
+            form.val("insertForm",{"cert_code":datas.cert_code,"patient_name":datas.patient_name,"treatment_name":"","treatment_time":null,"treatment_fee":""});
+            form.on('submit(doSubmit)',function (data) {
+                $('#myModal').modal('hide')
+                var index = layer.load(2);
+                var jsonObj = data.field;
+                jsonObj.patient_cert_code = jsonObj.cert_code;
+                delete jsonObj['cert_code'];
+                delete jsonObj['patient_name'];
+                $.ajax({
+                    url:'/hospital/patient/doctor_addpatient',
+                    type:'post',
+                    contentType:"application/json",
+                    datatype:"json",
+                    data:JSON.stringify(jsonObj)
+                }).done(function (data) {
+                    if(data.code==0){
+                        layer.close(index)
+                        layer.msg("成功",{time: 1000},function () {
+                            tableInsTreatment.reload({where: {patient_cert_code: ''}})
+                        })
+                    }else{
+                        layer.close(index)
+                        layer.msg(data.msg)
+                    }
+                })
+            })
+            $('#myModal').modal('show')
+        }else if(obj.event=='showInfo'){
+            var util = layui.util;
+            var table = layui.table;
+            table.render({
+                elem: '#treatment_table_info',
+                url: '/hospital/patient/getAllTreatmentByPatientCert', //数据接口
+                where:{patient_cert_code:datas.cert_code},
+                skin: 'row ', //行边框风格
+                toolbar: '<div><button class="layui-btn layui-btn-sm layui-btn-normal" onclick="back()">返回</button></div>',
+                page: true,
+                cols: [[
+                    {field: 'patient_name', title: '姓名', width: '10%', unresize: true},
+                    {field: 'patient_cert_code', title: '证件号', width: '20%', unresize: true},
+                    {field: 'treatment_name', title: '手术名称', width: '20%', unresize: true},
+                    {field: 'treatment_fee', title: '手术费用', width: '20%', unresize: true},
+                    {field: 'treatment_time', title: '手术时间', width: '20%', unresize: true,templet:function(d){return util.toDateString(d.treatment_time)}},
+                    {field: 'complete', title: '状态', width: '10%', unresize: true}
+                ]]
+            });
+            hideAll();
+            $('#floor').html('手术信息管理/'+datas.patient_name)
+            $('#treatment_infos').show()
+        }
+    })
 }
 function searchRom () {
     tableInsRom.reload({where: {patient_cert_code: $('#search_id_rom').val(),}, page: {curr: 1}})
@@ -304,8 +361,14 @@ function hideAll() {
     $('#patient_info').hide();
     $('#sick_rom').hide();
     $('#treatment_info').hide();
+    $('#treatment_infos').hide();
 }
 function searchTreatment() {
     tableInsTreatment.reload({where: {patient_cert_code: $('#search_id_treatment').val(),}, page: {curr: 1}})
     $('#search_id_treatment').val('');
+}
+function back() {
+    $('#floor').html('手术信息管理')
+    hideAll();
+    $('#treatment_info').show();
 }

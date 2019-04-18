@@ -266,8 +266,11 @@ public class PatientController {
     @ResponseBody
     //得到一个病人的所有手术
     //json传入cert——code
-    public JsonResultDao getAllTreatmentByPatientCert(@RequestBody TreatmentDao treatmentDao){
-        List<TreatmentDao> all=patientService.getAllTreatmentByPatientCertCode(treatmentDao);
+    public JsonResultDao getAllTreatmentByPatientCert(HttpServletRequest request){
+        String patient_cert_code = (String) request.getParameter("patient_cert_code");
+        TreatmentDao treatmentDao = new TreatmentDao();
+        treatmentDao.setPatient_cert_code(patient_cert_code);
+        List<Map<String,Object>> all=patientService.getAllTreatmentByPatientCertCode(treatmentDao);
         JsonResultDao jsonResultDao=new JsonResultDao();
         jsonResultDao.setData(all);
         jsonResultDao.setCount(all.size());

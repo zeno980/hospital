@@ -43,7 +43,7 @@ public interface PatientMapper {
     void updatePatientHasSickbed(SickbedDao sickbedDao);
     int insertHlistInfo(PatientDao patientDao);
     void insertPatient(PatientDao patientDao);
-    List<TreatmentDao> selectAllTreatmentByPatientCertCode(TreatmentDao treatmentDao);
+    List<Map<String,Object>> selectAllTreatmentByPatientCertCode(TreatmentDao treatmentDao);
     void updatePatientInfoBycert(PatientDao patientDao);
     int getCountInPatientBycert(String cert_code);
     List<TreatmentDao> getCompletedTreatment(String patient_cert_code);
