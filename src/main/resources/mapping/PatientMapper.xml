@@ -244,8 +244,9 @@
     select  patient.cert_code, patient.patient_name, patient.patient_gender, patient.patient_age,  patient.has_sickbed,  sickbed.sickroom_id, sickbed.sickbed_id, patient.has_sickbed
     from patient left join sickbed
     on patient.cert_code=sickbed.patient_cert_code
+    where  patient.doctor_cert_code=#{doctor_cert_code}
     <if test="patient_cert_code!=null and patient_cert_code!=0">
-      where patient.cert_code=#{patient_cert_code}
+      and patient.cert_code=#{patient_cert_code}
     </if>
     limit #{page},#{limit}
   </select>

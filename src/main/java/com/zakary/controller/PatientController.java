@@ -215,10 +215,12 @@ public class PatientController {
     //传递页面参数，查询的话，传入patient_cert_code
     public JsonResultDao getAllPatientsSickbedInfo(HttpServletRequest request){
         PageDao pageDao=new PageDao();
+        String doctor_cert_code = (String) request.getSession().getAttribute("cert_code");
         int pageNum=Integer.parseInt(request.getParameter("page"));
         int limit=Integer.parseInt(request.getParameter("limit"));
         pageDao.setPage((pageNum-1)*limit);
         pageDao.setLimit(limit);
+        pageDao.setDoctor_cert_code(doctor_cert_code);
         JsonResultDao jsonResultDao=new JsonResultDao();
         String patient_cert_code=request.getParameter("patient_cert_code");
         if(patient_cert_code!=null&&!patient_cert_code.trim().equals(""))//查询患者的病床信息
@@ -227,7 +229,7 @@ public class PatientController {
         jsonResultDao.setData(infos);
         jsonResultDao.setCode(0);
         jsonResultDao.setMsg("success");
-        jsonResultDao.setCount(infos.size());
+        jsonResultDao.setCount(pageDao.getPatient_cert_code()==null?patientService.getPatientsCounts(pageDao):infos.size());
         return jsonResultDao;
     }
 

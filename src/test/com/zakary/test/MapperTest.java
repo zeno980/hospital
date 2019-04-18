@@ -164,10 +164,12 @@ public class MapperTest extends BaseTest {
     public void test14(){
         PageDao pageDao=new PageDao();
         pageDao.setLimit(10);
-        pageDao.setPage(1);
-        pageDao.setPatient_cert_code("6");
+        pageDao.setPage(0);
+//        pageDao.setPatient_cert_code("6");
+        pageDao.setDoctor_cert_code("2");
         List<Map<String,Object>> infos=patientService.getAllPatientSickbed(pageDao);
         System.out.println(infos);
+        System.out.println(infos.size());
     }
 
     @Test
