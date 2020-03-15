@@ -1,5 +1,4 @@
-# hospital提交日志
-### 2019.4.2
-- 增加doctor搜索功能
-- 增加doctor删除功能
-- 实现doctor分页查询
+# hospital
+### 基于ssm框架的医院后台管理系统
+### 前端采用layui框架
+### 技术栈 ： ssm+layui+jquery+ajax
